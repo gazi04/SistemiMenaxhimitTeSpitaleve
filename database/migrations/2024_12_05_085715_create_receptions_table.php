@@ -19,6 +19,8 @@ return new class extends Migration
             $table->dateTime('check_out');
             $table->string('notes');
             $table->timestamps();
+            $table->foreign('receptionists_id')->references('id')->on('receptionists');
+            $table->foreign('patient_id')->references('id')->on('patients');
         });
     }
 
