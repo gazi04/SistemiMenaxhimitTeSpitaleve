@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\GeneratesCustomId;
 
 class Doctor extends Model
 {
+    use GeneratesCustomId;
+
     protected $fillable = [
-        'doctor_id',
         'personal_id',
         'departament_id',
         'first_name',
@@ -15,4 +17,6 @@ class Doctor extends Model
         'phone_number',
         'email',
     ];
+
+    public static $customIdColumn = 'doctor_id';
 }

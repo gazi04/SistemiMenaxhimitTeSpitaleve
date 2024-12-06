@@ -3,14 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\GeneratesCustomId;
+
 
 class Admin extends Model
 {
+    use GeneratesCustomId;
+
     protected $fillable = [
-        'admin_id',
         'password',
-        'departament_id',
         'name',
         'email',
     ];
+
+    public static $customIdColumn = 'admin_id';
 }
