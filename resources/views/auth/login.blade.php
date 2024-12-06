@@ -36,7 +36,7 @@
           <div class="account-box">
             <form
             {{--#TODO: need to fix the action attribute--}}
-              action="{ route('login') }}"
+              action="{{ route('login') }}"
               method="POST"
               class="form-signin"
             >
