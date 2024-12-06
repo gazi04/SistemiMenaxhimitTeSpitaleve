@@ -40,6 +40,30 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        'doctor' => [
+            'driver' => 'session',
+            'provider' => 'doctors',
+        ],
+        'nurse' => [
+            'driver' => 'session',
+            'provider' => 'nurses',
+        ],
+        'technologist' => [
+            'driver' => 'session',
+            'provider' => 'technologists',
+        ],
+        'receptionist' => [
+            'driver' => 'session',
+            'provider' => 'receptionists',
+        ],
+        'patient' => [
+            'driver' => 'session',
+            'provider' => 'patients',
+        ],
     ],
 
     /*
@@ -60,9 +84,39 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'web' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Admin::class),
+        ],
+
+        'doctors' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Doctor::class),
+        ],
+
+        'patients' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Patient::class),
+        ],
+
+        'nurses' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Nurse::class),
+        ],
+
+        'technologists' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Technologist::class),
+        ],
+
+        'receptionists' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Receptionist::class),
         ],
 
         // 'users' => [
