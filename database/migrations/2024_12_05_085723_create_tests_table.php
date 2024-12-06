@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('tests', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('patient_id');
+            $table->unsignedBigInteger('technologist_id');
             $table->string('test_type', 100);
             # TODO: find how to store the results of a test
             $table->string('results');
             $table->dateTime('create_at');
 
             $table->foreign('patient_id')->references('id')->on('patients');
+            $table->foreign('technologist_id')->references('id')->on('technologists');
         });
     }
 
