@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class PatientMiddleware
 {
@@ -15,6 +16,12 @@ class PatientMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        $user = Auth::guard('patient')->user();
+
+        if ($user && $user->id_number[0] === 'P') {
+            return $next($request);
+        }
+
+        return redirect('/login');
     }
 }

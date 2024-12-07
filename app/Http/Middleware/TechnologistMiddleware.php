@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class TechnologitsMiddleware
 {
@@ -15,6 +16,12 @@ class TechnologitsMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        $user = Auth::guard('technologist')->user();
+
+        if ($user && $user->id_number[0] === 'T') {
+            return $next($request);
+        }
+
+        return redirect('/login');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class ReceptionistMiddleware
 {
@@ -15,6 +16,12 @@ class ReceptionistMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        $user = Auth::guard('receptionist')->user();
+
+        if ($user && $user->id_number[0] === 'R') {
+            return $next($request);
+        }
+
+        return redirect('/login');
     }
 }
