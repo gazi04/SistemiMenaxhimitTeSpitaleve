@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\GeneratesCustomId;
 
-class Nurse extends Model
+class Nurse extends Model implements AuthenticatableContract
 {
-    use GeneratesCustomId;
+    use Authenticatable, GeneratesCustomId;
 
     protected $fillable = [
         'personal_id',

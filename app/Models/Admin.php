@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\GeneratesCustomId;
 
 
-class Admin extends Model
+class Admin extends Model implements AuthenticatableContract
 {
-    use GeneratesCustomId;
+    use Authenticatable, GeneratesCustomId;
 
     protected $fillable = [
         'password',
