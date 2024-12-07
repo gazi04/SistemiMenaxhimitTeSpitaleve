@@ -49,36 +49,36 @@ class LoginController extends Controller
         $admin = Admin::where($credentials)->first();
         if ($admin) {
             Auth::guard('admin')->login($admin);
-            return $admin;
+            return redirect()->route('admin-dashboard');
         }
         $doctor = Doctor::where($credentials)->first();
         if ($doctor) {
             Auth::guard('doctor')->login($doctor);
-            return $doctor;
+            return redirect()->route('doctor-dashboard');
         }
 
         $patient = Patient::where($credentials)->first();
         if ($patient) {
             Auth::guard('patient')->login($patient);
-            return $patient;
+            return redirect()->route('patient-dashboard');
         }
 
         $nurse = Nurse::where($credentials)->first();
         if ($nurse) {
             Auth::guard('nurse')->login($nurse);
-            return $nurse;
+            return redirect()->route('nurse-dashboard');
         }
 
         $technologist = Technologist::where($credentials)->first();
         if ($technologist) {
             Auth::guard('technologist')->login($technologist);
-            return $technologist;
+            return redirect()->route('technologist-dashboard');
         }
 
         $receptionist = Receptionist::where($credentials)->first();
         if ($receptionist) {
             Auth::guard('receptionist')->login($receptionist);
-            return $receptionist;
+            return redirect()->route('receptionist-dashboard');
         }
 
 
