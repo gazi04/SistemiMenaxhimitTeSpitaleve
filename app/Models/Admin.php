@@ -10,7 +10,7 @@ use App\Traits\GeneratesCustomId;
 
 class Admin extends Model implements AuthenticatableContract
 {
-    use Authenticatable, GeneratesCustomId;
+   use Authenticatable, GeneratesCustomId;
 
     protected $fillable = [
         'password',

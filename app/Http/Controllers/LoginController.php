@@ -17,22 +17,22 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if(Auth::guard('admin')->check()) {
-            return Auth::guard('admin');
+            return redirect()->route('admin-dashboard');
         }
         if(Auth::guard('doctor')->check()) {
-            return Auth::guard('doctor');
+            return redirect()->route('doctor-dashboard');
         }
         if(Auth::guard('patient')->check()) {
-            return Auth::guard('patient');
+            return redirect()->route('patient-dashboard');
         }
         if(Auth::guard('nurse')->check()) {
-            return Auth::guard('nurse');
+            return redirect()->route('nurse-dashboard');
         }
         if(Auth::guard('technologist')->check()) {
-            return Auth::guard('technologist');
+            return redirect()->route('technologist-dashboard');
         }
         if(Auth::guard('receptionist')->check()) {
-            return Auth::guard('receptionist');
+            return redirect()->route('receptionist-dashboard');
         }
 
         return view('auth.login');
