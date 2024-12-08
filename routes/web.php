@@ -27,7 +27,7 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::post('/departaments/save', [AdminController::class, 'saveDepartament'])->name('save-departament');
     Route::post('/departaments/update', [AdminController::class, 'updateDepartament'])->name('update-departament');
 
-    Route::get('/users', function(){return 'menagjo perdoruesit';})->name('manage-users');
+    Route::get('/users', function(){return 'menagjo perdoruesit';})->name('show-users');
 });
 
 Route::middleware(DoctorMiddleware::class)->group(function () {

@@ -1,3 +1,3 @@
-<a href="{{ route('manage-departaments') }}">Manage Departaments</a>
+<a href="{{ route('show-departaments') }}">Manage Departaments</a>
 <br>
-<a href="{{ route('manage-users') }}">Manage Users</a>
+<a href="{{ route('show-users') }}">Manage Users</a>
