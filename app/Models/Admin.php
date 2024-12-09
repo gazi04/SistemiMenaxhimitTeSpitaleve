@@ -18,5 +18,5 @@ class Admin extends Model implements AuthenticatableContract
         'email',
     ];
 
-    public static $customIdColumn = 'admin_id';
+    public static $customIdColumn = 'id_number';
 }

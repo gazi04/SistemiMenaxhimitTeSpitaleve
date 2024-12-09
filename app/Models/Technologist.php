@@ -19,5 +19,5 @@ class Technologist extends Model implements AuthenticatableContract
         'email',
     ];
 
-    public static $customIdColumn = 'technologist_id';
+    public static $customIdColumn = 'id_number';
 }

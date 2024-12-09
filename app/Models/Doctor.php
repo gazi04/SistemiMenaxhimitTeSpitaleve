@@ -20,5 +20,5 @@ class Doctor extends Model implements AuthenticatableContract
         'email',
     ];
 
-    public static $customIdColumn = 'doctor_id';
+    public static $customIdColumn = 'id_number';
 }

@@ -20,5 +20,5 @@ class Nurse extends Model implements AuthenticatableContract
         'email',
     ];
 
-    public static $customIdColumn = 'nurse_id';
+    public static $customIdColumn = 'id_number';
 }

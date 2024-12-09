@@ -19,5 +19,5 @@ class Receptionist extends Model implements AuthenticatableContract
         'email',
     ];
 
-    public static $customIdColumn = 'receptionists_id';
+    public static $customIdColumn = 'id_number';
 }
