@@ -27,7 +27,9 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::post('/departaments/save', [AdminController::class, 'saveDepartament'])->name('save-departament');
     Route::post('/departaments/update', [AdminController::class, 'updateDepartament'])->name('update-departament');
 
-    Route::get('/users', function(){return 'menagjo perdoruesit';})->name('show-users');
+    Route::get('/users', [AdminController::class, 'showUsers'])->name('show-users');
+    Route::get('/user/create', function(){return view('admin.createUser');})->name('create-user');
+    Route::post('/user/create', [AdminController::class, 'createUser']);
 });
 
 Route::middleware(DoctorMiddleware::class)->group(function () {

@@ -4,19 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Departament;
+use App\Models\Admin;
 use App\Models\Doctor;
+use App\Models\Nurse;
+use App\Models\Patient;
+use App\Models\Receptionist;
+use App\Models\Technologist;
 
 class AdminController extends Controller
 {
-    public function dashboard()
-    {
-        return view('admin.dashboard');
-    }
+    public function dashboard() { return view('admin.dashboard'); }
 
-    public function showDepartaments()
-    {
-        return view('admin.manageDepartaments', ['departaments' => Departament::all()]);
-    }
+    public function showDepartaments() { return view('admin.manageDepartaments', ['departaments' => Departament::all()]); }
 
     public function saveDepartament(Request $request)
     {
@@ -51,5 +50,23 @@ class AdminController extends Controller
             $departament->delete();
             return redirect()->route('show-departaments')->with('test', 'Departament deleted successfully.');
         }
+    }
+
+    public function showUsers()
+    {
+        $data =  [
+            'admins' => Admin::all(),
+            'doctors' => Doctor::all(),
+            'patients' => Patient::all(),
+            'nurses' => Nurse::all(),
+            'receptionists' => Receptionist::all(),
+            'technologists' => Technologist::all()
+        ];
+        return view('admin.manageUsers', $data);
+    }
+
+    public function createUser(Request $request)
+    {
+        return 'test';
     }
 }
