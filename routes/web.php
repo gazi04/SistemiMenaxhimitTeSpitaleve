@@ -28,8 +28,21 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::post('/departaments/update', [AdminController::class, 'updateDepartament'])->name('update-departament');
 
     Route::get('/users', [AdminController::class, 'showUsers'])->name('show-users');
-    Route::get('/user/create', function(){return view('admin.createUser');})->name('create-user');
-    Route::post('/user/create', [AdminController::class, 'createUser']);
+
+    Route::get('/user/create/admin', function(){return view('admin.user.createAdmin');})->name('create-admin');
+    Route::post('/user/create/admin', [AdminController::class, 'createAdmin']);
+
+    Route::get('/user/create/doctor', function(){return view('admin.user.createDoctor');})->name('create-doctor');
+    Route::post('/user/create/doctor', [AdminController::class, 'createDoctor']);
+
+    Route::get('/user/create/nurse', function(){return view('admin.user.createNurse');})->name('create-nurse');
+    Route::post('/user/create/nurse', [AdminController::class, 'createNurse']);
+
+    Route::get('/user/create/receptionist', function(){return view('admin.user.createReceptionist');})->name('create-receptionist');
+    Route::post('/user/create/receptionist', [AdminController::class, 'createReceptionist']);
+
+    Route::get('/user/create/technologist', function(){return view('admin.user.createTechnologist');})->name('create-technologist');
+    Route::post('/user/create/techonolgist', [AdminController::class, 'createTechnologist']);
 });
 
 Route::middleware(DoctorMiddleware::class)->group(function () {

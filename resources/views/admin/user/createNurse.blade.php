@@ -1,5 +1,5 @@
-<h3 id="form-title">Create a new user</h3>
-<form id="departament-form" action="{{ route('create-user') }}" method="POST">
+<h3 id="form-title">Create a new nurse</h3>
+<form id="departament-form" action="{{ route('create-nurse') }}" method="POST">
     @csrf
     <input type="hidden" name="id" id="form-id">
     <div>
@@ -34,21 +34,6 @@
         <label for="phoneNumber">Phone Number:</label>
         <input type="text" id="phoneNumber" name="phoneNumber" value="{{ old('phoneNumber') }}" required><br>
         @error('phoneNumber')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-    <div>
-        <label for="role">Role:</label>
-        <select name="role">
-            <option value="">-- Select Role --</option>
-            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-            <option value="doctor" {{ old('role') == 'doctor' ? 'selected' : '' }}>Doctor</option>
-            <option value="nurse" {{ old('role') == 'nurse' ? 'selected' : '' }}>Nurse</option>
-            <option value="receptionist" {{ old('role') == 'receptionist' ? 'selected' : '' }}>Receptionist</option>
-            <option value="technologist" {{ old('role') == 'technologist' ? 'selected' : '' }}>Technologist</option>
-            <option value="technologit" {{ old('role') == 'technologist' ? 'selected' : '' }}>test error</option>
-        </select>
-        @error('role')
         <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>

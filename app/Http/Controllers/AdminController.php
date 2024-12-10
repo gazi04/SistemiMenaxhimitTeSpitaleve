@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Doctor;
 use App\Models\Nurse;
 use App\Models\Patient;
+use App\Models\Reception;
 use App\Models\Receptionist;
 use App\Models\Technologist;
 
@@ -67,6 +68,171 @@ class AdminController extends Controller
 
     public function createUser(Request $request)
     {
+        $validate = $request->validate([
+            'personal_id' => 'required|integer',
+            'surname' => 'required|string|max:100',
+            'name' => 'required|string|max:100',
+            'email' => [
+                'required', 'string', 'max:255', 'unique:admins,email',
+                'unique:doctors,email', 'unique:nurses,email', 'unique:receptionists,email',
+                'unique:technologists,email'
+            ],
+            'phoneNumber' => 'required|integer|max_digits:15|min_digits:7',
+            'role' => 'required|in:admin,doctor,nurse,receptionist,technologist'
+        ]);
         return 'test';
+
+        switch ($validate['role']) {
+            case 'admin':
+                $user = Admin::create([
+                    'personal_id' => $validate['personal_id'],
+                    'name' => $validate['name'],
+                    'email' => $validate['email']
+                ]);
+                return $user;
+                break;
+            case 'doctor':
+                $user = Doctor::create([
+                    'personal_id' => $validate['personal_id'],
+                    'first_name' => $validate['name'],
+                    'last_name' => $validate['surname'],
+                    'phone_number' => $validate['phoneNumber'],
+                    'email' => $validate['email']
+                ]);
+                return $user;
+                break;
+            case 'nurse':
+                $user = Nurse::create([
+                    'personal_id' => $validate['personal_id'],
+                    'first_name' => $validate['name'],
+                    'last_name' => $validate['surname'],
+                    'phone_number' => $validate['phoneNumber'],
+                    'email' => $validate['email']
+                ]);
+                return $user;
+                break;
+            case 'receptionist':
+                $user = Reception::create([
+                    'personal_id' => $validate['personal_id'],
+                    'first_name' => $validate['name'],
+                    'last_name' => $validate['surname'],
+                    'phone_number' => $validate['phoneNumber'],
+                    'email' => $validate['email']
+                ]);
+                return $user;
+                break;
+            case 'technologist':
+                $user = Technologist::create([
+                    'personal_id' => $validate['personal_id'],
+                    'first_name' => $validate['name'],
+                    'last_name' => $validate['surname'],
+                    'phone_number' => $validate['phoneNumber'],
+                    'email' => $validate['email']
+                ]);
+                return $user;
+                break;
+        }
+
+        return $validate['name'];
+
+        return redirect()->route('users.index')->with('success', ucfirst($validated['role']) . ' created successfully.');
+    }
+
+    public function createAdmin(Request $request)
+    {
+        $valid = $request->validate([
+            'personal_id' => 'required|integer',
+            'name' => 'required|string',
+            'email' => 'required|email:filter'
+        ]);
+
+        Admin::create([
+            'personal_id' => $valid['personal_id'],
+            'name' => $valid['name'],
+            'email' => $valid['email']
+        ]);
+        return redirect()->route('show-users')->with('success', 'Admin is created successfully');
+    }
+
+    public function createDoctor(Request $request)
+    {
+        $valid = $request->validate([
+            'personal_id' => 'required|integer',
+            'departament_id' => 'required|integer|in:departaments,id',
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'phoneNumber' => 'required|integer|max_digits:15|min_digits:7',
+            'email' => 'required|email:filter'
+        ]);
+
+        Doctor::create([
+            'personal_id' => $valid['personal_id'],
+            'departament_id' => $valid['departament_id'],
+            'first_name' => $valid['name'],
+            'last_name' => $valid['surname'],
+            'phone_number' => $valid['phoneNumber'],
+            'email' => $valid['email']
+        ]);
+        return redirect()->route('show-users')->with('success', 'Doctor is created successfully');
+    }
+
+    public function createNurse(Request $request)
+    {
+        $valid = $request->validate([
+            'personal_id' => 'required|integer',
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'phoneNumber' => 'required|integer|max_digits:15|min_digits:7',
+            'email' => 'required|email:filter'
+        ]);
+
+        Nurse::create([
+            'personal_id' => $valid['personal_id'],
+            'first_name' => $valid['name'],
+            'last_name' => $valid['surname'],
+            'phone_number' => $valid['phoneNumber'],
+            'email' => $valid['email']
+        ]);
+        return redirect()->route('show-users')->with('success', 'Nurse is created successfully');
+    }
+
+    public function createReceptionist(Request $request)
+    {
+        $valid = $request->validate([
+            'personal_id' => 'required|integer',
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'phoneNumber' => 'required|integer|max_digits:15|min_digits:7',
+            'email' => 'required|email:filter'
+        ]);
+
+        Receptionist::create([
+            'personal_id' => $valid['personal_id'],
+            'first_name' => $valid['name'],
+            'last_name' => $valid['surname'],
+            'phone_number' => $valid['phoneNumber'],
+            'email' => $valid['email']
+        ]);
+        return redirect()->route('show-users')->with('success', 'Receptionist is created successfully');
+    }
+
+    public function createTechnologist(Request $request)
+    {
+        $valid = $request->validate([
+            'personal_id' => 'required|integer',
+            'name' => 'required|string',
+            'surname' => 'required|string',
+            'phoneNumber' => 'required|integer|max_digits:15|min_digits:7',
+            'email' => 'required|email:filter'
+        ]);
+
+        Technologist::create([
+            'personal_id' => $valid['personal_id'],
+            'first_name' => $valid['name'],
+            'last_name' => $valid['surname'],
+            'phone_number' => $valid['phoneNumber'],
+            'email' => $valid['email']
+        ]);
+        return redirect()->route('show-users')->with('success', 'Technologist is created successfully');
     }
 }

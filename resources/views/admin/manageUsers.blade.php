@@ -4,7 +4,11 @@
     <div style="color: red;">{{ session('test') }}</div>
 @endif
 
-<a href='{{ route("create-user") }}'>Create a new user</a>
+<a href='{{ route("create-admin") }}'>Create Admin</a>
+<a href='{{ route("create-doctor") }}'>Create Doctor</a>
+<a href='{{ route("create-nurse") }}'>Create Nurse</a>
+<a href='{{ route("create-receptionist") }}'>Create Receptionist</a>
+<a href='{{ route("create-technologist") }}'>Create Technologist</a>
 <br>
 <h2>Admin</h2>
 <table>
@@ -114,7 +118,7 @@
         @foreach ($technologists as $techno)
             <tr>
                 <td>{{ $techno->id_number }}</td>
-                <td>{{ $techno->name }}</td>
+                <td>{{ $techno->first_name }}</td>
                 <td>{{ $techno->email }}</td>
             </tr>
         @endforeach
