@@ -13,7 +13,7 @@ class Admin extends Model implements AuthenticatableContract
    use Authenticatable, GeneratesCustomId;
 
     protected $fillable = [
-        'password',
+        'personal_id',
         'name',
         'email',
     ];
