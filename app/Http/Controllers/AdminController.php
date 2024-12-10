@@ -66,78 +66,6 @@ class AdminController extends Controller
         return view('admin.manageUsers', $data);
     }
 
-    public function createUser(Request $request)
-    {
-        $validate = $request->validate([
-            'personal_id' => 'required|integer',
-            'surname' => 'required|string|max:100',
-            'name' => 'required|string|max:100',
-            'email' => [
-                'required', 'string', 'max:255', 'unique:admins,email',
-                'unique:doctors,email', 'unique:nurses,email', 'unique:receptionists,email',
-                'unique:technologists,email'
-            ],
-            'phoneNumber' => 'required|integer|max_digits:15|min_digits:7',
-            'role' => 'required|in:admin,doctor,nurse,receptionist,technologist'
-        ]);
-        return 'test';
-
-        switch ($validate['role']) {
-            case 'admin':
-                $user = Admin::create([
-                    'personal_id' => $validate['personal_id'],
-                    'name' => $validate['name'],
-                    'email' => $validate['email']
-                ]);
-                return $user;
-                break;
-            case 'doctor':
-                $user = Doctor::create([
-                    'personal_id' => $validate['personal_id'],
-                    'first_name' => $validate['name'],
-                    'last_name' => $validate['surname'],
-                    'phone_number' => $validate['phoneNumber'],
-                    'email' => $validate['email']
-                ]);
-                return $user;
-                break;
-            case 'nurse':
-                $user = Nurse::create([
-                    'personal_id' => $validate['personal_id'],
-                    'first_name' => $validate['name'],
-                    'last_name' => $validate['surname'],
-                    'phone_number' => $validate['phoneNumber'],
-                    'email' => $validate['email']
-                ]);
-                return $user;
-                break;
-            case 'receptionist':
-                $user = Reception::create([
-                    'personal_id' => $validate['personal_id'],
-                    'first_name' => $validate['name'],
-                    'last_name' => $validate['surname'],
-                    'phone_number' => $validate['phoneNumber'],
-                    'email' => $validate['email']
-                ]);
-                return $user;
-                break;
-            case 'technologist':
-                $user = Technologist::create([
-                    'personal_id' => $validate['personal_id'],
-                    'first_name' => $validate['name'],
-                    'last_name' => $validate['surname'],
-                    'phone_number' => $validate['phoneNumber'],
-                    'email' => $validate['email']
-                ]);
-                return $user;
-                break;
-        }
-
-        return $validate['name'];
-
-        return redirect()->route('users.index')->with('success', ucfirst($validated['role']) . ' created successfully.');
-    }
-
     public function createAdmin(Request $request)
     {
         $valid = $request->validate([
@@ -154,14 +82,18 @@ class AdminController extends Controller
         return redirect()->route('show-users')->with('success', 'Admin is created successfully');
     }
 
+    public function createDoctorView()
+    {
+        return view('admin.user.createDoctor', ['departaments' => Departament::all()]);
+    }
     public function createDoctor(Request $request)
     {
         $valid = $request->validate([
             'personal_id' => 'required|integer',
-            'departament_id' => 'required|integer|in:departaments,id',
+            'departament_id' => 'required|integer|exists:departaments,id',
             'name' => 'required|string',
             'surname' => 'required|string',
-            'phoneNumber' => 'required|integer|max_digits:15|min_digits:7',
+            'phoneNumber' => 'required|numeric|max_digits:15|min_digits:7',
             'email' => 'required|email:filter'
         ]);
 
@@ -182,7 +114,7 @@ class AdminController extends Controller
             'personal_id' => 'required|integer',
             'name' => 'required|string',
             'surname' => 'required|string',
-            'phoneNumber' => 'required|integer|max_digits:15|min_digits:7',
+            'phoneNumber' => 'required|numeric|max_digits:15|min_digits:7',
             'email' => 'required|email:filter'
         ]);
 
@@ -202,7 +134,7 @@ class AdminController extends Controller
             'personal_id' => 'required|integer',
             'name' => 'required|string',
             'surname' => 'required|string',
-            'phoneNumber' => 'required|integer|max_digits:15|min_digits:7',
+            'phoneNumber' => 'required|numeric|max_digits:15|min_digits:7',
             'email' => 'required|email:filter'
         ]);
 
@@ -222,7 +154,7 @@ class AdminController extends Controller
             'personal_id' => 'required|integer',
             'name' => 'required|string',
             'surname' => 'required|string',
-            'phoneNumber' => 'required|integer|max_digits:15|min_digits:7',
+            'phoneNumber' => 'required|numeric|max_digits:15|min_digits:7',
             'email' => 'required|email:filter'
         ]);
 
