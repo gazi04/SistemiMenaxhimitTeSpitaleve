@@ -82,6 +82,11 @@ class AdminController extends Controller
         return redirect()->route('show-users')->with('success', 'Admin is created successfully');
     }
 
+    public function deleteAdmin($id)
+    {
+        return 'admin deleted with id='.$id;
+    }
+
     public function createDoctorView()
     {
         return view('admin.user.createDoctor', ['departaments' => Departament::all()]);

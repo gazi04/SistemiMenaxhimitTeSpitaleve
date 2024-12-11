@@ -31,18 +31,23 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 
     Route::get('/users/create/admin', function(){return view('admin.user.createAdmin');})->name('create-admin');
     Route::post('/users/create/admin', [AdminController::class, 'createAdmin']);
+    Route::delete('/admin/delete/{id}', [AdminController::class, 'deleteAdmin'])->name('delete-admin');
 
     Route::get('/users/create/doctor', [AdminController::class, 'createDoctorView'])->name('create-doctor');
     Route::post('/users/create/doctor', [AdminController::class, 'createDoctor']);
+    Route::delete('/doctor/delete/{id}', [AdminController::class, 'deleteDoctor'])->name('delete-doctor');
 
     Route::get('/users/create/nurse', function(){return view('admin.user.createNurse');})->name('create-nurse');
     Route::post('/users/create/nurse', [AdminController::class, 'createNurse']);
+    Route::delete('/nurse/delete/{id}', [AdminController::class, 'deleteNurse'])->name('delete-nurse');
 
     Route::get('/users/create/receptionist', function(){return view('admin.user.createReceptionist');})->name('create-receptionist');
     Route::post('/users/create/receptionist', [AdminController::class, 'createReceptionist']);
+    Route::delete('/receptionist/delete/{id}', [AdminController::class, 'deleteReceptionist'])->name('delete-receptionist');
 
     Route::get('/users/create/technologist', function(){return view('admin.user.createTechnologist');})->name('create-technologist');
     Route::post('/users/create/technologist', [AdminController::class, 'createTechnologist']);
+    Route::delete('/technologist/delete/{id}', [AdminController::class, 'deleteTechnologist'])->name('delete-technologist');
 });
 
 Route::middleware(DoctorMiddleware::class)->group(function () {

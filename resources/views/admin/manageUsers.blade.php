@@ -17,6 +17,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -25,6 +26,15 @@
                 <td>{{ $admin->id_number }}</td>
                 <td>{{ $admin->name }}</td>
                 <td>{{ $admin->email }}</td>
+                <td>
+                    <form action="{{ route('delete-admin', $admin->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
+                        <button type="button" onclick="populateForm({{ $admin }})">Edit</button>
+                    </form>
+                </td>
+
             </tr>
         @endforeach
     </tbody>
@@ -44,6 +54,14 @@
                 <td>{{ $doctor->id_number }}</td>
                 <td>{{ $doctor->first_name }}</td>
                 <td>{{ $doctor->email }}</td>
+                <td>
+                    <form action="{{ route('delete-departament', $doctor->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
+                        <button type="button" onclick="populateForm({{ $doctor }})">Edit</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </tbody>
@@ -55,6 +73,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -63,6 +82,14 @@
                 <td>{{ $patient->id_number }}</td>
                 <td>{{ $patient->first_name }}</td>
                 <td>{{ $patient->email }}</td>
+                <td>
+                    <form action="{{ route('delete-departament', $patient->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
+                        <button type="button" onclick="populateForm({{ $patient }})">Edit</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </tbody>
@@ -74,6 +101,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -82,6 +110,14 @@
                 <td>{{ $nurse->id_number }}</td>
                 <td>{{ $nurse->first_name }}</td>
                 <td>{{ $nurse->email }}</td>
+                <td>
+                    <form action="{{ route('delete-departament', $nurse->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
+                        <button type="button" onclick="populateForm({{ $nurse }})">Edit</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </tbody>
@@ -93,6 +129,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -101,6 +138,14 @@
                 <td>{{ $receptionst->id_number }}</td>
                 <td>{{ $receptionst->first_name }}</td>
                 <td>{{ $receptionst->email }}</td>
+                <td>
+                    <form action="{{ route('delete-departament', $receptionst->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
+                        <button type="button" onclick="populateForm({{ $receptionst }})">Edit</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </tbody>
@@ -112,6 +157,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -120,6 +166,14 @@
                 <td>{{ $techno->id_number }}</td>
                 <td>{{ $techno->first_name }}</td>
                 <td>{{ $techno->email }}</td>
+                <td>
+                    <form action="{{ route('delete-departament', $techno->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
+                        <button type="button" onclick="populateForm({{ $techno }})">Edit</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </tbody>
