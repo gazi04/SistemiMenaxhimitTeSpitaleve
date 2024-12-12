@@ -2,6 +2,8 @@
     <div style="color: green;">{{ session('success') }}</div>
 @elseif (session('test'))
     <div style="color: red;">{{ session('test') }}</div>
+@elseif (session('error'))
+    <div style="color: red;">{{ session('error') }}</div>
 @endif
 
 <a href='{{ route("create-admin") }}'>Create Admin</a>
@@ -30,11 +32,10 @@
                     <form action="{{ route('delete-admin', $admin->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
-                        <button type="button" onclick="populateForm({{ $admin }})">Edit</button>
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this Admin user?')">Delete</button>
                     </form>
+                    <a href="{{ route('edit-admin-view', $admin->id) }}">Edit</a>
                 </td>
-
             </tr>
         @endforeach
     </tbody>
@@ -55,12 +56,12 @@
                 <td>{{ $doctor->first_name }}</td>
                 <td>{{ $doctor->email }}</td>
                 <td>
-                    <form action="{{ route('delete-departament', $doctor->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('delete-doctor', $doctor->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
-                        <button type="button" onclick="populateForm({{ $doctor }})">Edit</button>
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this Doctor user?')">Delete</button>
                     </form>
+                    <a href="{{ route('edit-doctor-view', $doctor->id) }}">Edit</a>
                 </td>
             </tr>
         @endforeach
@@ -83,11 +84,10 @@
                 <td>{{ $patient->first_name }}</td>
                 <td>{{ $patient->email }}</td>
                 <td>
-                    <form action="{{ route('delete-departament', $patient->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('delete-patient', $patient->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
-                        <button type="button" onclick="populateForm({{ $patient }})">Edit</button>
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this Patient User?')">Delete</button>
                     </form>
                 </td>
             </tr>
@@ -111,12 +111,12 @@
                 <td>{{ $nurse->first_name }}</td>
                 <td>{{ $nurse->email }}</td>
                 <td>
-                    <form action="{{ route('delete-departament', $nurse->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('delete-nurse', $nurse->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
-                        <button type="button" onclick="populateForm({{ $nurse }})">Edit</button>
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this Nurse User?')">Delete</button>
                     </form>
+                    <a href="{{ route('edit-nurse-view', $nurse->id) }}">Edit</a>
                 </td>
             </tr>
         @endforeach
@@ -133,18 +133,18 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($receptionists as $receptionst)
+        @foreach ($receptionists as $receptionist)
             <tr>
-                <td>{{ $receptionst->id_number }}</td>
-                <td>{{ $receptionst->first_name }}</td>
-                <td>{{ $receptionst->email }}</td>
+                <td>{{ $receptionist->id_number }}</td>
+                <td>{{ $receptionist->first_name }}</td>
+                <td>{{ $receptionist->email }}</td>
                 <td>
-                    <form action="{{ route('delete-departament', $receptionst->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('delete-receptionist', $receptionist->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
-                        <button type="button" onclick="populateForm({{ $receptionst }})">Edit</button>
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this Receptionist User?')">Delete</button>
                     </form>
+                    <a href="{{ route('edit-receptionist-view', $receptionist->id) }}">Edit</a>
                 </td>
             </tr>
         @endforeach
@@ -167,12 +167,12 @@
                 <td>{{ $techno->first_name }}</td>
                 <td>{{ $techno->email }}</td>
                 <td>
-                    <form action="{{ route('delete-departament', $techno->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('delete-technologist', $techno->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this departament?')">Delete</button>
-                        <button type="button" onclick="populateForm({{ $techno }})">Edit</button>
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this technologist?')">Delete</button>
                     </form>
+                    <a href="{{ route('edit-technologist-view', $techno->id) }}">Edit</a>
                 </td>
             </tr>
         @endforeach
