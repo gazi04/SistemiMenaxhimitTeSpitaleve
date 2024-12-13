@@ -1,7 +1,5 @@
-@if (session('success'))
-    <div style="color: green;">{{ session('success') }}</div>
-@elseif (session('test'))
-    <div style="color: red;">{{ session('test') }}</div>
+@if (session('message'))
+    <div{{ session('message') }}</div>
 @endif
 
 <table>

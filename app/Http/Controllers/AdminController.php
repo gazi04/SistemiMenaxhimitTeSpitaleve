@@ -16,7 +16,7 @@ use Ramsey\Uuid\Type\Integer;
 
 class AdminController extends Controller
 {
-    public function dashboard() { return view('admin.dashboard'); }
+    public function index() { return view('admin.dashboard'); }
 
     public function showDepartaments() { return view('admin.manageDepartaments', ['departaments' => Departament::all()]); }
 
@@ -27,7 +27,7 @@ class AdminController extends Controller
             'description' => 'required|string|max:255',
         ]);
         Departament::create($validated);
-        return redirect()->route('show-departaments')->with('success', 'Departament inserted successfully.');
+        return redirect()->route('show-departaments')->with('message', 'Departamenti u krijua me sukses.');
     }
 
     public function updateDepartament(Request $request)
@@ -37,30 +37,32 @@ class AdminController extends Controller
             'name' => 'required|string|max:100',
             'description' => 'required|string|max:255',
         ]);
-        try {
-            $departament = Departament::findOrFail($validated['id']);
-        }
+
+        try { $departament = Departament::findOrFail($validated['id']); }
         catch(ModelNotFoundException $e) {
-            return 'ERROR: this id '.$validated['id'].' doesn\'t exists in the database.';
+            return redirect()->route('show-departaments')->with('message', 'Nuk ekziston departamenti me ID '.$validated['id'].' ne databaze.');
         }
+
         $departament->update($validated);
-        return redirect()->route('show-departaments')->with('success', 'Departament updated successfully.');
+        return redirect()->route('show-departaments')->with('message', 'Departamenti u perditesua me sukses.');
     }
 
     public function deleteDepartament($id)
     {
         try { $departament = Departament::findOrFail($id); }
         catch(ModelNotFoundException $e) {
-            return 'ERROR: this id '.$id.' doesn\'t exists in the database.';
+            return redirect()->route('show-departaments')->with('message', 'Nuk ekziston departamenti me ID '.$id.' ne databaze.');
         }
+
         $doctor = Doctor::where('departament_id', $id)->first();
         if ($doctor) {
-            $message = 'Departament can\'t be deleted since a doctor is in that departament. His name is '.$doctor->first_name;
-            return redirect()->route('show-departaments')->with('test', $message);
+            $message = 'Departamenti nuk mund te fshihet pasi nje mjek eshte ne ate departament. Emri i tij eshte '.$doctor->first_name;
         } else {
             $departament->delete();
-            return redirect()->route('show-departaments')->with('test', 'Departament deleted successfully.');
+            $message =  'Departamenti u fshi me sukses.';
         }
+
+        return redirect()->route('show-departaments')->with('message', $message);
     }
 
     public function showUsers()
@@ -73,6 +75,7 @@ class AdminController extends Controller
             'receptionists' => Receptionist::all(),
             'technologists' => Technologist::all()
         ];
+
         return view('admin.manageUsers', $data);
     }
 
@@ -89,16 +92,23 @@ class AdminController extends Controller
             'name' => $valid['name'],
             'email' => $valid['email']
         ]);
-        return redirect()->route('show-users')->with('success', 'Admin is created successfully');
+
+        return redirect()->route('show-users')->with('message', 'Administratori eshte krijuar me sukses');
     }
 
-    public function editAdminView($id)
+    public function openEditAdminView($id)
     {
         try { $admin = Admin::findOrFail($id); }
         catch(ModelNotFoundException $e){
-            return 'ska admin me id '.$id;
+            return redirect()->route('show-users')->with('message', 'Nuk ekziston administratori me ID '.$id.' ne databaze.');
         }
-        return view('admin.user.editAdmin', ['id' => $admin->id, 'personal_id' => $admin->personal_id, 'adminName' => $admin->name, 'adminEmail' => $admin->email]);
+
+        return view('admin.user.editAdmin', [
+            'id' => $admin->id,
+            'personal_id' => $admin->personal_id,
+            'adminName' => $admin->name,
+            'adminEmail' => $admin->email
+        ]);
     }
 
     public function editAdmin(Request $request)
@@ -109,29 +119,30 @@ class AdminController extends Controller
             'name' => 'required|string',
             'email' => 'required|email:filter'
         ]);
+
         try { $admin = Admin::findOrFail($request['id']); }
         catch(ModelNotFoundException $e){
-            return 'ska admin me id '.$request['id'];
+            return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet administratori me ID '.$request['id']);
         }
+
         $admin->update($valid);
-        return redirect()->route('show-users');
+        return redirect()->route('show-users')->with('message', 'Administratori eshte perditesuar me sukses');
     }
 
     public function deleteAdmin($id)
     {
+        /* todo- need to take the needed action to verify that the data can be deleted */
         $admin = Admin::findOrFail($id);
         if ($admin) {
             $admin->delete();
-            return redirect()->route('show-users')->with('success', 'Admin with id '.$id.'is deleted successfully');
+            $message = 'Administratori me ID '.$id.'eshte fshir me sukses';
         } else {
-            return redirect()->route('show-users')->with('error', "Admin can't be deleted cause the id doesn't exists in the dabase");
+            $message = "Administratori nuk mund te fshihet sepse ID-ja nuk ekziston ne bazen e te dhenave";
         }
+        return redirect()->route('show-users')->with('message', $message);
     }
 
-    public function createDoctorView()
-    {
-        return view('admin.user.createDoctor', ['departaments' => Departament::all()]);
-    }
+    public function openCreateDoctorView() { return view('admin.user.createDoctor', ['departaments' => Departament::all()]); }
 
     public function createDoctor(Request $request)
     {
@@ -152,18 +163,22 @@ class AdminController extends Controller
             'phone_number' => $valid['phoneNumber'],
             'email' => $valid['email']
         ]);
-        return redirect()->route('show-users')->with('success', 'Doctor is created successfully');
+        return redirect()->route('show-users')->with('message', 'Doktor eshte krijuar me sukses');
     }
 
     public function editDoctorView($id)
     {
-        try {
-            $doctor = Doctor::findOrFail($id);
-            return view('admin.user.editDoctor', ['id' => $doctor->id, 'personal_id' => $doctor->personal_id, 'doctorName' => $doctor->first_name, 'doctorEmail' => $doctor->email]);
-        }
+        try { $doctor = Doctor::findOrFail($id); }
         catch(ModelNotFoundException $e){
-            return 'ska doktor me id '.$id;
+            return redirect()->route('show-users')->with('message', 'Nuk ekziston doktori me ID '.$id.' ne databaze.');
         }
+
+        return view('admin.user.editDoctor', [
+            'id' => $doctor->id,
+            'personal_id' => $doctor->personal_id,
+            'doctorName' => $doctor->first_name,
+            'doctorEmail' => $doctor->email
+        ]);
     }
 
     public function editDoctor(Request $request)
@@ -174,23 +189,25 @@ class AdminController extends Controller
             'name' => 'required|string',
             'email' => 'required|email:filter'
         ]);
+
         try { $doctor = Doctor::findOrFail($request['id']); }
         catch(ModelNotFoundException $e){
-            return 'ska doktor me id '.$request['id'];
+            return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet doktori me ID '.$request['id']);
         }
+
         $doctor->update($valid);
-        return redirect()->route('show-users');
+        return redirect()->route('show-users')->with('message', 'Doktori eshte perditesuar me sukses');
     }
 
     public function deleteDoctor($id)
     {
-        $doctor = Doctor::findOrFail($id);
-        if ($doctor) {
-            $doctor->delete();
-            return redirect()->route('show-users')->with('success', 'Doctor with id '.$id.'is deleted successfully');
-        } else {
-            return redirect()->route('show-users')->with('error', "Doctor can't be deleted cause the id doesn't exists in the dabase");
+        try { $doctor = Doctor::findOrFail($id); }
+        catch(ModelNotFoundException $e){
+            return 'Doktori me ID '.$id.' nuk ekziston';
         }
+
+        $doctor->delete();
+        return redirect()->route('show-users')->with('message', 'Doktori me ID '.$id.'eshte fshire me sukses.');
     }
 
     public function createNurse(Request $request)
@@ -210,17 +227,23 @@ class AdminController extends Controller
             'phone_number' => $valid['phoneNumber'],
             'email' => $valid['email']
         ]);
-        return redirect()->route('show-users')->with('success', 'Nurse is created successfully');
+
+        return redirect()->route('show-users')->with('message', 'Infermieri/ja eshte krijuar me sukses');
     }
 
-    public function editNurseView($id)
+    public function openEditNurseView($id)
     {
         try {
             $nurse = Nurse::findOrFail($id);
-            return view('admin.user.editNurse', ['id' => $nurse->id, 'personal_id' => $nurse->personal_id, 'nurseName' => $nurse->first_name, 'nurseEmail' => $nurse->email]);
+            return view('admin.user.editNurse', [
+                'id' => $nurse->id,
+                'personal_id' => $nurse->personal_id,
+                'nurseName' => $nurse->first_name,
+                'nurseEmail' => $nurse->email
+            ]);
         }
         catch(ModelNotFoundException $e){
-            return 'ska admin me id '.$id;
+            return redirect()->route('show-users')->with('message', 'Nuk ekziston infermieri/ja me ID '.$id.' ne databaze.');
         }
     }
 
@@ -232,23 +255,25 @@ class AdminController extends Controller
             'name' => 'required|string',
             'email' => 'required|email:filter'
         ]);
+
         try { $nurse = Nurse::findOrFail($request['id']); }
         catch(ModelNotFoundException $e){
-            return 'ska nurse me id '.$request['id'];
+            return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet infermieri/ja me ID '.$request['id']);
         }
+
         $nurse->update($valid);
         return redirect()->route('show-users');
     }
 
     public function deleteNurse($id)
     {
-        $nurse = Nurse::findOrFail($id);
-        if ($nurse) {
-            $nurse->delete();
-            return redirect()->route('show-users')->with('success', 'Nurse with id '.$id.'is deleted successfully');
-        } else {
-            return redirect()->route('show-users')->with('error', "Nurse can't be deleted cause the id doesn't exists in the dabase");
+        try { $nurse = Nurse::findOrFail($id); }
+        catch(ModelNotFoundException $e){
+            return 'Infermieri/ja me ID '.$id.' nuk ekziston';
         }
+
+        $nurse->delete();
+        return redirect()->route('show-users')->with('message', 'Infermieri/ja me ID-n '.$id.'eshte fshire me sukses.');
     }
 
     public function createReceptionist(Request $request)
@@ -268,17 +293,22 @@ class AdminController extends Controller
             'phone_number' => $valid['phoneNumber'],
             'email' => $valid['email']
         ]);
-        return redirect()->route('show-users')->with('success', 'Receptionist is created successfully');
+        return redirect()->route('show-users')->with('message', 'Recepsionisti eshte krijuar me sukses');
     }
 
-    public function editReceptionistView($id)
+    public function openEditReceptionistView($id)
     {
         try {
             $receptionist = Receptionist::findOrFail($id);
-            return view('admin.user.editReceptionist', ['id' => $receptionist->id, 'personal_id' => $receptionist->personal_id, 'receptionistName' => $receptionist->first_name, 'receptionistEmail' => $receptionist->email]);
+            return view('admin.user.editReceptionist', [
+                'id' => $receptionist->id,
+                'personal_id' => $receptionist->personal_id,
+                'receptionistName' => $receptionist->first_name,
+                'receptionistEmail' => $receptionist->email
+            ]);
         }
         catch(ModelNotFoundException $e){
-            return 'ska receptionist me id '.$id;
+            return redirect()->route('show-users')->with('message', 'Nuk ekziston recepsionist me ID '.$id.' ne databaze.');
         }
     }
 
@@ -290,23 +320,25 @@ class AdminController extends Controller
             'name' => 'required|string',
             'email' => 'required|email:filter'
         ]);
+
         try { $receptionist = Receptionist::findOrFail($request['id']); }
         catch(ModelNotFoundException $e){
-            return 'ska recepcionist me id '.$request['id'];
+            return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet recepsionisti me ID '.$request['id']);
         }
+
         $receptionist->update($valid);
         return redirect()->route('show-users');
     }
 
     public function deleteReceptionist($id)
     {
-        $receptionist = Receptionist::findOrFail($id);
-        if ($receptionist) {
-            $receptionist->delete();
-            return redirect()->route('show-users')->with('success', 'Receptionist with id '.$id.'is deleted successfully');
-        } else {
-            return redirect()->route('show-users')->with('error', "Receptionist can't be deleted cause the id doesn't exists in the dabase");
+        try { $receptionist = Receptionist::findOrFail($id); }
+        catch(ModelNotFoundException $e){
+            return 'Recepsionist me ID '.$id.' nuk ekziston ne databaze';
         }
+
+        $receptionist->delete();
+        return redirect()->route('show-users')->with('message', 'Recepsionisti me ID '.$id.'eshte fshire me sukses.');
     }
 
     public function createTechnologist(Request $request)
@@ -326,17 +358,23 @@ class AdminController extends Controller
             'phone_number' => $valid['phoneNumber'],
             'email' => $valid['email']
         ]);
-        return redirect()->route('show-users')->with('success', 'Technologist is created successfully');
+
+        return redirect()->route('show-users')->with('message', 'Teknologu eshte krijuar me sukses');
     }
 
-    public function editTechnologistView($id)
+    public function openEditTechnologistView($id)
     {
         try {
             $technologist = Technologist::findOrFail($id);
-            return view('admin.user.editTechnologist', ['id' => $technologist->id, 'personal_id' => $technologist->personal_id, 'technologistName' => $technologist->first_name, 'technologistEmail' => $technologist->email]);
+            return view('admin.user.editTechnologist', [
+                'id' => $technologist->id,
+                'personal_id' => $technologist->personal_id,
+                'technologistName' => $technologist->first_name,
+                'technologistEmail' => $technologist->email
+            ]);
         }
         catch(ModelNotFoundException $e){
-            return 'ska teknologu me id '.$id;
+            return redirect()->route('show-users')->with('message', 'Nuk ekziston teknologu me ID '.$id.' ne databaze.');
         }
     }
 
@@ -348,22 +386,24 @@ class AdminController extends Controller
             'name' => 'required|string',
             'email' => 'required|email:filter'
         ]);
+
         try { $technologists = Technologist::findOrFail($request['id']); }
         catch(ModelNotFoundException $e){
-            return 'ska teknolog me id '.$request['id'];
+            return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet teknologu me ID '.$request['id']);
         }
+
         $technologists->update($valid);
         return redirect()->route('show-users');
     }
 
     public function deleteTechnologist($id)
     {
-        $technologist = Technologist::findOrFail($id);
-        if ($technologist) {
-            $technologist->delete();
-            return redirect()->route('show-users')->with('success', 'Technologist with id '.$id.'is deleted successfully');
-        } else {
-            return redirect()->route('show-users')->with('error', "Technologist can't be deleted cause the id doesn't exists in the dabase");
+        try { $technologist = Technologist::findOrFail($id); }
+        catch(ModelNotFoundException $e){
+            return 'Teknologu me ID '.$id.' nuk ekziston ne databaze';
         }
+
+        $technologist->delete();
+        return redirect()->route('show-users')->with('message', 'Teknologu me ID '.$id.'eshte fshire me sukses.');
     }
 }
