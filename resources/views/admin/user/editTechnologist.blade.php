@@ -10,9 +10,23 @@
         @enderror
     </div>
     <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{{ $technologistName }}" required><br>
+        <label for="first_name">Name:</label>
+        <input type="text" id="first_name" name="first_name" value="{{ $technologistName }}" required><br>
         @error('name')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
+    <div>
+        <label for="last_name">Lastname:</label>
+        <input type="text" id="last_name" name="last_name" value="{{ $technologistLastName }}" required><br>
+        @error('name')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
+    <div>
+        <label for="phone_number">Phone Number:</label>
+        <input type="text" id="phone_number" name="phone_number" value="{{ $phoneNumber }}" required><br>
+        @error('phoneNumber')
         <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>

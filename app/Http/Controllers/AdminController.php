@@ -178,7 +178,9 @@ class AdminController extends Controller
             'personal_id' => $doctor->personal_id,
             'departament_id' => $doctor->departament_id,
             'doctorName' => $doctor->first_name,
+            'doctorLastName' => $doctor->last_name,
             'doctorEmail' => $doctor->email,
+            'phoneNumber' => $doctor->phone_number,
             'departaments' => Departament::all()
         ]);
     }
@@ -189,7 +191,9 @@ class AdminController extends Controller
             'id' => 'required|integer',
             'personal_id' => 'required|integer',
             'name' => 'required|string',
+            'last_name' => 'required|string',
             'email' => 'required|email:filter',
+            'phone_number' => 'required|numeric|max_digits:15|min_digits:7',
             'departament_id' => 'required|exists:departaments,id'
         ]);
 
@@ -242,7 +246,9 @@ class AdminController extends Controller
                 'id' => $nurse->id,
                 'personal_id' => $nurse->personal_id,
                 'nurseName' => $nurse->first_name,
-                'nurseEmail' => $nurse->email
+                'nurseLastName' => $nurse->last_name,
+                'nurseEmail' => $nurse->email,
+                'phoneNumber' => $nurse->phone_number
             ]);
         }
         catch(ModelNotFoundException $e){
@@ -255,8 +261,10 @@ class AdminController extends Controller
         $valid = $request->validate([
             'id' => 'required|integer',
             'personal_id' => 'required|integer',
-            'name' => 'required|string',
-            'email' => 'required|email:filter'
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email:filter',
+            'phone_number' => 'required|numeric|max_digits:15|min_digits:7'
         ]);
 
         try { $nurse = Nurse::findOrFail($request['id']); }
@@ -307,7 +315,9 @@ class AdminController extends Controller
                 'id' => $receptionist->id,
                 'personal_id' => $receptionist->personal_id,
                 'receptionistName' => $receptionist->first_name,
-                'receptionistEmail' => $receptionist->email
+                'receptionistLastName' => $receptionist->last_name,
+                'receptionistEmail' => $receptionist->email,
+                'phoneNumber' => $receptionist->phone_number
             ]);
         }
         catch(ModelNotFoundException $e){
@@ -320,12 +330,15 @@ class AdminController extends Controller
         $valid = $request->validate([
             'id' => 'required|integer',
             'personal_id' => 'required|integer',
-            'name' => 'required|string',
-            'email' => 'required|email:filter'
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email:filter',
+            'phone_number' => 'required|numeric|max_digits:15|min_digits:7'
         ]);
 
         try { $receptionist = Receptionist::findOrFail($request['id']); }
         catch(ModelNotFoundException $e){
+            return 'test';
             return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet recepsionisti me ID '.$request['id']);
         }
 
@@ -373,7 +386,9 @@ class AdminController extends Controller
                 'id' => $technologist->id,
                 'personal_id' => $technologist->personal_id,
                 'technologistName' => $technologist->first_name,
-                'technologistEmail' => $technologist->email
+                'technologistLastName' => $technologist->last_name,
+                'technologistEmail' => $technologist->email,
+                'phoneNumber' => $technologist->phone_number
             ]);
         }
         catch(ModelNotFoundException $e){
@@ -386,8 +401,10 @@ class AdminController extends Controller
         $valid = $request->validate([
             'id' => 'required|integer',
             'personal_id' => 'required|integer',
-            'name' => 'required|string',
-            'email' => 'required|email:filter'
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email:filter',
+            'phone_number' => 'required|numeric|max_digits:15|min_digits:7'
         ]);
 
         try { $technologists = Technologist::findOrFail($request['id']); }
