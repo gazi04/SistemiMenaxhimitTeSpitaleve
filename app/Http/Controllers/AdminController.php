@@ -166,7 +166,7 @@ class AdminController extends Controller
         return redirect()->route('show-users')->with('message', 'Doktor eshte krijuar me sukses');
     }
 
-    public function editDoctorView($id)
+    public function openEditDoctorView($id)
     {
         try { $doctor = Doctor::findOrFail($id); }
         catch(ModelNotFoundException $e){
