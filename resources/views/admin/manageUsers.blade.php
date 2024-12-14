@@ -42,7 +42,10 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Description</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -50,7 +53,9 @@
             <tr>
                 <td>{{ $doctor->id_number }}</td>
                 <td>{{ $doctor->first_name }}</td>
+                <td>{{ $doctor->last_name }}</td>
                 <td>{{ $doctor->email }}</td>
+                <td>{{ $doctor->phone_number }}</td>
                 <td>
                     <form action="{{ route('delete-doctor', $doctor->id) }}" method="POST" style="display:inline;">
                         @csrf
@@ -69,7 +74,9 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Description</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -78,7 +85,9 @@
             <tr>
                 <td>{{ $patient->id_number }}</td>
                 <td>{{ $patient->first_name }}</td>
-                <td>{{ $patient->email }}</td>
+                <td>{{ $doctor->last_name }}</td>
+                <td>{{ $doctor->email }}</td>
+                <td>{{ $doctor->phone_number }}</td>
                 <td>
                     <form action="{{ route('delete-patient', $patient->id) }}" method="POST" style="display:inline;">
                         @csrf
@@ -96,7 +105,9 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Description</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -105,7 +116,9 @@
             <tr>
                 <td>{{ $nurse->id_number }}</td>
                 <td>{{ $nurse->first_name }}</td>
-                <td>{{ $nurse->email }}</td>
+                <td>{{ $doctor->last_name }}</td>
+                <td>{{ $doctor->email }}</td>
+                <td>{{ $doctor->phone_number }}</td>
                 <td>
                     <form action="{{ route('delete-nurse', $nurse->id) }}" method="POST" style="display:inline;">
                         @csrf
@@ -124,7 +137,9 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Description</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -133,7 +148,9 @@
             <tr>
                 <td>{{ $receptionist->id_number }}</td>
                 <td>{{ $receptionist->first_name }}</td>
-                <td>{{ $receptionist->email }}</td>
+                <td>{{ $doctor->last_name }}</td>
+                <td>{{ $doctor->email }}</td>
+                <td>{{ $doctor->phone_number }}</td>
                 <td>
                     <form action="{{ route('delete-receptionist', $receptionist->id) }}" method="POST" style="display:inline;">
                         @csrf
@@ -152,7 +169,9 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Description</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -161,7 +180,9 @@
             <tr>
                 <td>{{ $techno->id_number }}</td>
                 <td>{{ $techno->first_name }}</td>
-                <td>{{ $techno->email }}</td>
+                <td>{{ $doctor->last_name }}</td>
+                <td>{{ $doctor->email }}</td>
+                <td>{{ $doctor->phone_number }}</td>
                 <td>
                     <form action="{{ route('delete-technologist', $techno->id) }}" method="POST" style="display:inline;">
                         @csrf
