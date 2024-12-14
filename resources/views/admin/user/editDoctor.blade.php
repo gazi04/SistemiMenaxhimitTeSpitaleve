@@ -24,6 +24,18 @@
         @enderror
     </div>
     <div>
+        <label for="departaments">Departament:</label>
+        <select name="departament_id">
+            <option value="">-- Select Departament --</option>
+            @foreach ($departaments as $departament)
+                <option value="{{ $departament['id'] }}" {{ $departament_id == $departament['id']? 'selected' : '' }}>{{ $departament['name'] }}</option>
+            @endforeach
+        </select>
+        @error('departament_id')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
+    </div>
+    <div>
         <button type="submit">Save</button>
     </div>
 </form>

@@ -176,8 +176,10 @@ class AdminController extends Controller
         return view('admin.user.editDoctor', [
             'id' => $doctor->id,
             'personal_id' => $doctor->personal_id,
+            'departament_id' => $doctor->departament_id,
             'doctorName' => $doctor->first_name,
-            'doctorEmail' => $doctor->email
+            'doctorEmail' => $doctor->email,
+            'departaments' => Departament::all()
         ]);
     }
 
@@ -187,7 +189,8 @@ class AdminController extends Controller
             'id' => 'required|integer',
             'personal_id' => 'required|integer',
             'name' => 'required|string',
-            'email' => 'required|email:filter'
+            'email' => 'required|email:filter',
+            'departament_id' => 'required|exists:departaments,id'
         ]);
 
         try { $doctor = Doctor::findOrFail($request['id']); }
