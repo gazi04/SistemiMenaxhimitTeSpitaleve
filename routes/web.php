@@ -36,33 +36,42 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 
     Route::get('/users/create/admin', function(){return view('admin.user.createAdmin');})->name('create-admin');
     Route::post('/users/create/admin', [AdminController::class, 'createAdmin']);
-    Route::delete('/admin/delete/{id}', [AdminController::class, 'deleteAdmin'])->name('delete-admin');
     Route::get('/users/edit/admin/{id}', [AdminController::class, 'openEditAdminView'])->name('edit-admin-view');
     Route::post('/users/edit/admin', [AdminController::class, 'editAdmin'])->name('edit-admin');
+    Route::post('/users/fire/admin', [AdminController::class, 'fireAdmin'])->name('fire-admin');
+    Route::post('/users/hire/admin', [AdminController::class, 'hireAdmin'])->name('hire-admin');
 
     Route::get('/users/create/doctor', [AdminController::class, 'openCreateDoctorView'])->name('create-doctor');
     Route::post('/users/create/doctor', [AdminController::class, 'createDoctor']);
     Route::delete('/doctor/delete/{id}', [AdminController::class, 'deleteDoctor'])->name('delete-doctor');
     Route::get('/users/edit/doctor/{id}', [AdminController::class, 'openEditDoctorView'])->name('edit-doctor-view');
     Route::post('/users/edit/doctor', [AdminController::class, 'editDoctor'])->name('edit-doctor');
+    Route::post('/users/fire/doctor', [AdminController::class, 'fireDoctor'])->name('fire-doctor');
+    Route::post('/users/hire/doctor', [AdminController::class, 'hireDoctor'])->name('hire-doctor');
 
     Route::get('/users/create/nurse', function(){return view('admin.user.createNurse');})->name('create-nurse');
     Route::post('/users/create/nurse', [AdminController::class, 'createNurse']);
     Route::delete('/nurse/delete/{id}', [AdminController::class, 'deleteNurse'])->name('delete-nurse');
     Route::get('/users/edit/nurse/{id}', [AdminController::class, 'openEditNurseView'])->name('edit-nurse-view');
     Route::post('/users/edit/nurse', [AdminController::class, 'editNurse'])->name('edit-nurse');
+    Route::post('/users/fire/nurse', [AdminController::class, 'fireNurse'])->name('fire-nurse');
+    Route::post('/users/hire/nurse', [AdminController::class, 'hireNurse'])->name('hire-nurse');
 
     Route::get('/users/create/receptionist', function(){return view('admin.user.createReceptionist');})->name('create-receptionist');
     Route::post('/users/create/receptionist', [AdminController::class, 'createReceptionist']);
     Route::delete('/receptionist/delete/{id}', [AdminController::class, 'deleteReceptionist'])->name('delete-receptionist');
     Route::get('/users/edit/receptionist/{id}', [AdminController::class, 'openEditReceptionistView'])->name('edit-receptionist-view');
     Route::post('/users/edit/receptionist', [AdminController::class, 'editReceptionist'])->name('edit-receptionist');
+    Route::post('/users/fire/receptionist', [AdminController::class, 'fireReceptionist'])->name('fire-receptionist');
+    Route::post('/users/hire/receptionist', [AdminController::class, 'hireReceptionist'])->name('hire-receptionist');
 
     Route::get('/users/create/technologist', function(){return view('admin.user.createTechnologist');})->name('create-technologist');
     Route::post('/users/create/technologist', [AdminController::class, 'createTechnologist']);
     Route::delete('/technologist/delete/{id}', [AdminController::class, 'deleteTechnologist'])->name('delete-technologist');
     Route::get('/users/edit/technologist/{id}', [AdminController::class, 'openEditTechnologistView'])->name('edit-technologist-view');
     Route::post('/users/edit/technologist', [AdminController::class, 'editTechnologist'])->name('edit-technologist');
+    Route::post('/users/fire/technologist', [AdminController::class, 'fireTechnologist'])->name('fire-technologist');
+    Route::post('/users/hire/technologist', [AdminController::class, 'hireTechnologist'])->name('hire-technologist');
 });
 
 /* -------------------------------DOCTOR DASHBOARD------------------------------- */

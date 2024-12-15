@@ -18,6 +18,7 @@ class Nurse extends Model implements AuthenticatableContract
         'phone_number',
         // TODO: look up the create_nurse_table migration
         'email',
+        'is_employed'
     ];
 
     public static $customIdColumn = 'id_number';
