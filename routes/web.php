@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\DoctorMiddleware;
@@ -76,7 +77,7 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 
 /* -------------------------------DOCTOR DASHBOARD------------------------------- */
 Route::middleware(DoctorMiddleware::class)->group(function () {
-    Route::get('/doctor-dashboard',function(){ return 'doctor dashboar';})->name('doctor-dashboard');
+    Route::get('/doctor/dashboard', [DoctorController::class, 'index'])->name('doctor-dashboard');
 });
 
 /* -------------------------------PATIENT DASHBOARD------------------------------- */
