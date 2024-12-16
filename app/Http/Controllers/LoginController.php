@@ -40,7 +40,6 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        /* TODO: need to change in all the table the role id to id_number */
         $credentials = $request->validate([
             'id_number' => 'required',
             'personal_id' => 'required',
@@ -81,35 +80,6 @@ class LoginController extends Controller
             return redirect()->route('receptionist-dashboard');
         }
 
-
-
-        // Check in Admin table first
-        /* $admin = Admin::where('id_number', $credentials['id_number']) */
-        /*     ->where('personal_id', $credentials['personal_id']) */
-        /*     ->first(); */
-        /**/
-        /* Log::debug("LoginController Admin"); */
-        /* Log::debug($admin); */
-        /* Log::debug("--------------------------------------------------"); */
-        /**/
-        /* if ($admin) { */
-        /*     Auth::guard('web')->login($admin); */
-        /*     return redirect()->route('adminDash'); */
-        /* } */
-        /**/
-        /* // Check in User table next */
-        /* $user = User::where('id_number', $credentials['id_number']) */
-        /*     ->where('personal_id', $credentials['personal_id']) */
-        /*     ->first(); */
-        /* Log::debug("LoginController User"); */
-        /* Log::debug($user); */
-        /* Log::debug("--------------------------------------------------"); */
-        /**/
-        /* if ($user) { */
-        /*     Auth::guard('web')->login($user); */
-        /*     return redirect()->route('userDash'); */
-        /* } */
-
         return back()->withErrors([
             'credentials' => 'Invalid ID Number or Personal ID.',
         ]);
@@ -117,9 +87,6 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        /* Auth::logout(); */
-        /* return redirect('/login'); */
-
         if (Auth::guard('admin')->check()) {
             Auth::guard('admin')->logout();
         }
