@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
@@ -46,12 +48,17 @@ class LoginController extends Controller
         ]);
 
         $admin = Admin::where($credentials)->first();
+
         if ($admin) {
-            Auth::guard('admin')->login($admin);
+            $this->isEmployed($admin);
+            try {Auth::guard('admin')->login($admin);}
+            catch(Exception $e){ return 'error!!!';}
             return redirect()->route('admin-dashboard');
         }
+
         $doctor = Doctor::where($credentials)->first();
         if ($doctor) {
+            $this->isEmployed($doctor);
             Auth::guard('doctor')->login($doctor);
             return redirect()->route('doctor-dashboard');
         }
@@ -64,22 +71,26 @@ class LoginController extends Controller
 
         $nurse = Nurse::where($credentials)->first();
         if ($nurse) {
+            $this->isEmployed($nurse);
             Auth::guard('nurse')->login($nurse);
             return redirect()->route('nurse-dashboard');
         }
 
         $technologist = Technologist::where($credentials)->first();
         if ($technologist) {
+            $this->isEmployed($technologist);
             Auth::guard('technologist')->login($technologist);
             return redirect()->route('technologist-dashboard');
         }
 
         $receptionist = Receptionist::where($credentials)->first();
         if ($receptionist) {
+            $this->isEmployed($receptionist);
             Auth::guard('receptionist')->login($receptionist);
             return redirect()->route('receptionist-dashboard');
         }
 
+        /* TODO- NEED TO DISPLAY THIS ERROR TO THE END-USER */
         return back()->withErrors([
             'credentials' => 'Invalid ID Number or Personal ID.',
         ]);
@@ -107,5 +118,11 @@ class LoginController extends Controller
         }
 
         return redirect('/login');
+    }
+
+    private function isEmployed(Model $model)
+    {
+        if (!$model->is_employed) { return 'nuk mund te kyqesh je pushuar nga puna'; }
+        return true;
     }
 }
