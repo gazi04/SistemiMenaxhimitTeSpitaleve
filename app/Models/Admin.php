@@ -13,10 +13,11 @@ class Admin extends Model implements AuthenticatableContract
    use Authenticatable, GeneratesCustomId;
 
     protected $fillable = [
-        'password',
+        'personal_id',
         'name',
         'email',
+        'is_employed'
     ];
 
-    public static $customIdColumn = 'admin_id';
+    public static $customIdColumn = 'id_number';
 }

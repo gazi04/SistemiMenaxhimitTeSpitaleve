@@ -18,7 +18,8 @@ class Doctor extends Model implements AuthenticatableContract
         'last_name',
         'phone_number',
         'email',
+        'is_employed'
     ];
 
-    public static $customIdColumn = 'doctor_id';
+    public static $customIdColumn = 'id_number';
 }
