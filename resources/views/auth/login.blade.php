@@ -1,3 +1,6 @@
+@if (session('message'))
+    <div>{{ session('message') }}</div>
+@endif
 <!DOCTYPE html>
 <html lang="en">
   <head>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
@@ -40,86 +42,80 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        /* TODO: need to change in all the table the role id to id_number */
         $credentials = $request->validate([
             'id_number' => 'required',
             'personal_id' => 'required',
         ]);
 
         $admin = Admin::where($credentials)->first();
+
         if ($admin) {
-            Auth::guard('admin')->login($admin);
+            $this->isEmployed($admin);
+            try {Auth::guard('admin')->login($admin);}
+            catch(Exception $e) {
+                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            }
             return redirect()->route('admin-dashboard');
         }
+
         $doctor = Doctor::where($credentials)->first();
         if ($doctor) {
+            try {$this->isEmployed($doctor);}
+            catch(Exception $e) {
+                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            }
             Auth::guard('doctor')->login($doctor);
             return redirect()->route('doctor-dashboard');
         }
 
         $patient = Patient::where($credentials)->first();
         if ($patient) {
-            Auth::guard('patient')->login($patient);
+            try {Auth::guard('patient')->login($patient);}
+            catch(Exception $e) {
+                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            }
             return redirect()->route('patient-dashboard');
         }
 
         $nurse = Nurse::where($credentials)->first();
         if ($nurse) {
-            Auth::guard('nurse')->login($nurse);
+            $this->isEmployed($nurse);
+            try {Auth::guard('nurse')->login($nurse);}
+            catch(Exception $e) {
+                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            }
             return redirect()->route('nurse-dashboard');
         }
 
         $technologist = Technologist::where($credentials)->first();
         if ($technologist) {
-            Auth::guard('technologist')->login($technologist);
+            $this->isEmployed($technologist);
+            try {Auth::guard('technologist')->login($technologist);}
+            catch(Exception $e) {
+                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            }
             return redirect()->route('technologist-dashboard');
         }
 
         $receptionist = Receptionist::where($credentials)->first();
         if ($receptionist) {
-            Auth::guard('receptionist')->login($receptionist);
+            $this->isEmployed($receptionist);
+            try {Auth::guard('receptionist')->login($receptionist);}
+            catch(Exception $e) {
+                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            }
             return redirect()->route('receptionist-dashboard');
         }
 
-
-
-        // Check in Admin table first
-        /* $admin = Admin::where('id_number', $credentials['id_number']) */
-        /*     ->where('personal_id', $credentials['personal_id']) */
-        /*     ->first(); */
-        /**/
-        /* Log::debug("LoginController Admin"); */
-        /* Log::debug($admin); */
-        /* Log::debug("--------------------------------------------------"); */
-        /**/
-        /* if ($admin) { */
-        /*     Auth::guard('web')->login($admin); */
-        /*     return redirect()->route('adminDash'); */
-        /* } */
-        /**/
-        /* // Check in User table next */
-        /* $user = User::where('id_number', $credentials['id_number']) */
-        /*     ->where('personal_id', $credentials['personal_id']) */
-        /*     ->first(); */
-        /* Log::debug("LoginController User"); */
-        /* Log::debug($user); */
-        /* Log::debug("--------------------------------------------------"); */
-        /**/
-        /* if ($user) { */
-        /*     Auth::guard('web')->login($user); */
-        /*     return redirect()->route('userDash'); */
-        /* } */
-
-        return back()->withErrors([
-            'credentials' => 'Invalid ID Number or Personal ID.',
-        ]);
+        /* TODO- NEED TO DISPLAY THIS ERROR TO THE END-USER */
+        return redirect()->route('login')->with('message', 'Kredencialet e pavlefshme');
+        /* return back()->withErrors([ */
+        /*     'credentials' => 'Invalid ID Number or Personal ID.', */
+        /* ]); */
     }
 
     public function logout(Request $request)
     {
-        /* Auth::logout(); */
-        /* return redirect('/login'); */
-
         if (Auth::guard('admin')->check()) {
             Auth::guard('admin')->logout();
         }
@@ -140,5 +136,11 @@ class LoginController extends Controller
         }
 
         return redirect('/login');
+    }
+
+    private function isEmployed(Model $model)
+    {
+        if (!$model->is_employed) { return 'nuk mund te kyqesh je pushuar nga puna'; }
+        return true;
     }
 }
