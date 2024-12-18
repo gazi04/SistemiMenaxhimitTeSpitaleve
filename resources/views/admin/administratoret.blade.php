@@ -67,10 +67,10 @@
                                     <i class="fa fa-pencil"></i> Modifiko
                                 </a>
                                 <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete_doctor">
-                                <i class="fa fa-trash-o"></i> Fshij
-                            </a>
+                                    <i class="fa fa-trash-o"></i> Fshij
+                                </a>
+                            </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
             </div>
@@ -90,4 +90,4 @@
             </div>
         </div>
     </div>
-    @endsection
+@endsection
