@@ -38,13 +38,17 @@
                                                     <i class="fa fa-pencil"></i>
                                                     Modifiko
                                                 </a>
-                                                {{--TODO- te butoni fshirjes ekziston nje problem --}}
-                                                {{--butoni me posht hap pop up-in duhet te i jepet edhe id e departamentit te cilit eshte --}}
-                                                {{--klikuar Fshij butoni--}}
-                                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete_doctor" data-id="{{ $dep->id }}">
-                                                    <i class="fa fa-trash-o"></i>
-                                                    Fshij
-                                                </a>
+                                                {{--<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete_doctor" data-id="{{ $dep->id }}">--}}
+                                                {{--    <i class="fa fa-trash-o"></i>--}}
+                                                {{--    Fshij--}}
+                                                {{--</a> --}}
+                                                <form action="{{ route('delete-departament', $dep->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('A jeni i sigurt qe doni ta fshini?')">
+                                                        <i class="fa fa-trash-o"></i> Fshij
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
@@ -64,7 +68,7 @@
                     <h3>A jeni i sigurt qe deshironi te fshini dhenat e Departamentit?</h3>
                     <div class="m-t-20">
                         <a href="#" class="btn btn-white" data-dismiss="modal">Mbylle</a>
-                        <form id="delete-form" action="" method="POST" style="display:inline;">
+                        <form id="delete-form" action="{{ route('delete-departament', 0) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Fshij</button>
@@ -75,18 +79,4 @@
         </div>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        $('#delete_modal').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget);
-            var id = button.data('id');
-            var form = $('#delete-form');
-
-            var actionUrl = "{{ route('delete-departament', ':id') }}";
-            actionUrl = actionUrl.replace(':id', id);
-
-            form.attr('action', actionUrl);
-        });
-    });
-</script>
 @endsection
