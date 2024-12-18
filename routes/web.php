@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 /* -------------------------------ADMIN DASHBOARD------------------------------- */
 Route::middleware(AdminMiddleware::class)->group(function () {
@@ -26,7 +26,9 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     /* -------------------------------DEPARTAMENT MANAGEMENT------------------------------- */
     Route::get('/departaments', [AdminController::class, 'showDepartaments'])->name('show-departaments');
     Route::delete('/departaments/delete/{id}', [AdminController::class, 'deleteDepartament'])->name('delete-departament');
+    Route::get('/departaments/create', [AdminController::class, 'openCreateDepartamentView'])->name('create-departament-view');
     Route::post('/departaments/save', [AdminController::class, 'saveDepartament'])->name('save-departament');
+    Route::get('/departaments/update/{id}', [AdminController::class, 'openEditDepartamentView'])->name('edit-departament-view');
     Route::post('/departaments/update', [AdminController::class, 'updateDepartament'])->name('update-departament');
 
     /* -------------------------------USER MANAGEMENT------------------------------- */
@@ -34,6 +36,7 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 
     Route::delete('/patient/delete/{id}', [AdminController::class, 'deletePatient'])->name('delete-patient');
 
+    Route::get('/users/admin', [AdminController::class, 'openAdminView'])->name('open-admin-view');
     Route::get('/users/create/admin', function(){return view('admin.user.createAdmin');})->name('create-admin');
     Route::post('/users/create/admin', [AdminController::class, 'createAdmin']);
     Route::get('/users/edit/admin/{id}', [AdminController::class, 'openEditAdminView'])->name('edit-admin-view');
@@ -41,6 +44,7 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::post('/users/fire/admin', [AdminController::class, 'fireAdmin'])->name('fire-admin');
     Route::post('/users/hire/admin', [AdminController::class, 'hireAdmin'])->name('hire-admin');
 
+    Route::get('/users/doctor', [AdminController::class, 'openDoctorView'])->name('open-doctor-view');
     Route::get('/users/create/doctor', [AdminController::class, 'openCreateDoctorView'])->name('create-doctor');
     Route::post('/users/create/doctor', [AdminController::class, 'createDoctor']);
     Route::delete('/doctor/delete/{id}', [AdminController::class, 'deleteDoctor'])->name('delete-doctor');

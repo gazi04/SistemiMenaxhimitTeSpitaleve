@@ -12,12 +12,19 @@ use App\Models\Receptionist;
 use App\Models\Technologist;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use PgSql\Lob;
+
+use function Laravel\Prompts\error;
 
 class AdminController extends Controller
 {
-    public function index() { return view('admin.dashboard'); }
+    public function index() { return view('admin.index'); }
 
-    public function showDepartaments() { return view('admin.manageDepartaments', ['departaments' => Departament::all()]); }
+    public function showDepartaments() { return view('admin.departamentet', ['departaments' => Departament::all()]); }
+
+    public function openCreateDepartamentView() { return view('admin.shto-departamente'); }
 
     public function saveDepartament(Request $request)
     {
@@ -29,16 +36,34 @@ class AdminController extends Controller
         return redirect()->route('show-departaments')->with('message', 'Departamenti u krijua me sukses.');
     }
 
+    public function openEditDepartamentView($id)
+    {
+        try { $dep = Departament::findOrFail($id); }
+        catch(ModelNotFoundException $e) {
+            return redirect()->route('show-departaments')->with('message', 'Nuk ekziston departamenti me ID '.$id.' ne databaze.');
+        }
+        return view('admin.modifiko-departament', ['departament' => $dep]);
+    }
+
     public function updateDepartament(Request $request)
     {
-        $validated = $request->validate([
-            'id' => 'required|exists:departaments,id',
-            'name' => 'required|string|max:100',
-            'description' => 'required|string|max:255',
-        ]);
+        try {
+            $validated = $request->validate([
+                'id' => 'required|exists:departaments,id',
+                'name' => 'required|string|max:100',
+                'description' => 'required|string|max:255',
+            ]);
+            Log::info('Validation passed: ', $validated);
+        } catch (ValidationException $e) {
+            Log:info('Validation failed: ', $e->errors());
+            return redirect()->back()
+                ->withErrors($e->errors())
+                ->withInput();
+        }
 
         try { $departament = Departament::findOrFail($validated['id']); }
         catch(ModelNotFoundException $e) {
+            Log::error("departament not found");
             return redirect()->route('show-departaments')->with('message', 'Nuk ekziston departamenti me ID '.$validated['id'].' ne databaze.');
         }
 
@@ -78,6 +103,8 @@ class AdminController extends Controller
         return view('admin.manageUsers', $data);
     }
 
+    public function openAdminView() { return view('admin.administratoret', ['admins' => Admin::all()]); }
+
     public function createAdmin(Request $request)
     {
         $validated = $request->validate([
@@ -102,7 +129,7 @@ class AdminController extends Controller
             return redirect()->route('show-users')->with('message', 'Nuk ekziston administratori me ID '.$id.' ne databaze.');
         }
 
-        return view('admin.user.editAdmin', [
+        return view('admin.modifiko-admin', [
             'id' => $admin->id,
             'personal_id' => $admin->personal_id,
             'adminName' => $admin->name,
@@ -112,6 +139,7 @@ class AdminController extends Controller
 
     public function editAdmin(Request $request)
     {
+        return 'test';
         $validated = $request->validate([
             'id' => 'required|integer',
             'personal_id' => 'required|integer',
@@ -154,6 +182,7 @@ class AdminController extends Controller
         return redirect()->route('show-users')->with('message', 'Administratori me ID '.$validated['id'].' eshte punesuar me sukses.');
     }
 
+    public function openDoctorView() { return view('admin.doktoret', ['admins' => Admin::all()]); }
     public function openCreateDoctorView() { return view('admin.user.createDoctor', ['departaments' => Departament::all()]); }
 
     public function createDoctor(Request $request)

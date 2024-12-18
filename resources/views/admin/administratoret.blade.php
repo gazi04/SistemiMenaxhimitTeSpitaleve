@@ -8,15 +8,16 @@
         <div class="content">
             <div class="row">
                 <div class="col-sm-4 col-3">
-                    <h4 class="page-title">Doktoret</h4>
+                    <h4 class="page-title">Administratoret</h4>
                 </div>
                 <div class="col-sm-8 col-9 text-right m-b-20">
                     <a href="{{ url('shto-doktor')}}" class="btn btn-primary btn-rounded float-right">
-                        <i class="fa fa-plus"></i>
-                        Shto një Doktor
+                        <i class="fa fa-plus"></i> Shto një Administrator
                     </a>
                 </div>
             </div>
+            {{--TODO- duhet te shfaqen administratoret --}}
+            {{--variabla ku jane te ruajtur administratoret si nje list eshte admins--}}
             <div class="row doctor-grid">
                 <div class="col-md-4 col-sm-4 col-lg-3">
                     <div class="profile-widget">
@@ -44,10 +45,34 @@
                             </a>
                         </div>
                     </div>
+                    @foreach ($admins as $admin)
+                        <div class="profile-widget">
+                            <div class="doctor-img">
+                                <a class="avatar" href="{{url('profile')}}">
+                                    <img alt="" src="{{asset('assets/img/doctor-thumb-03.jpg')}}" />
+                                </a>
+                            </div>
+                            <h4 class="doctor-name text-ellipsis">
+                                <a href="{{ url('profile')}}">{{ $admin->name }}</a>
+                            </h4>
+                            <div class="doc-prof">
+                                <span class="dep">Departamenti</span>
+                                <span>Gynecologist</span>
+                            </div>
+                            <div class="user-country">
+                                <i class="fa fa-envelope"></i> {{ $admin->email }}
+                            </div>
+                            <div class="action-buttons">
+                                <a href="{{ route('edit-admin-view', $admin->id) }}" class="btn btn-primary">
+                                    <i class="fa fa-pencil"></i> Modifiko
+                                </a>
+                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete_doctor">
+                                <i class="fa fa-trash-o"></i> Fshij
+                            </a>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
-
-
-
             </div>
         </div>
         <div id="delete_doctor" class="modal fade delete-modal" role="dialog">
