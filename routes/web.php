@@ -31,14 +31,13 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::get('/departaments/update/{id}', [AdminController::class, 'openEditDepartamentView'])->name('edit-departament-view');
     Route::post('/departaments/update', [AdminController::class, 'updateDepartament'])->name('update-departament');
 
-    /* -------------------------------USER MANAGEMENT------------------------------- */
-    Route::get('/users', [AdminController::class, 'showUsers'])->name('show-users');
-
+    /* TODO- need to remove this endpoint below */
     Route::delete('/patient/delete/{id}', [AdminController::class, 'deletePatient'])->name('delete-patient');
 
+    /* -------------------------------USER MANAGEMENT------------------------------- */
     Route::get('/users/admin', [AdminController::class, 'openAdminView'])->name('open-admin-view');
-    Route::get('/users/create/admin', function(){return view('admin.user.createAdmin');})->name('create-admin');
-    Route::post('/users/create/admin', [AdminController::class, 'createAdmin']);
+    Route::get('/users/create/admin', [AdminController::class, 'openCreateAdminView'])->name('create-admin-view');
+    Route::post('/users/create/admin', [AdminController::class, 'createAdmin'])->name('create-admin');
     Route::get('/users/edit/admin/{id}', [AdminController::class, 'openEditAdminView'])->name('edit-admin-view');
     Route::post('/users/edit/admin', [AdminController::class, 'editAdmin'])->name('edit-admin');
     Route::post('/users/fire/admin', [AdminController::class, 'fireAdmin'])->name('fire-admin');

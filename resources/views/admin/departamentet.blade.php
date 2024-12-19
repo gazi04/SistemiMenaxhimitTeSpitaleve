@@ -5,6 +5,15 @@
     @include('admin.includes.header')
     @include('admin.includes.sidebar')
     <div class="page-wrapper">
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @elseif (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="content">
             <div class="row">
                 <div class="col-sm-5 col-5">

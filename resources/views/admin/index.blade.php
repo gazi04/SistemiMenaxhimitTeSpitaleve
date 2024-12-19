@@ -4,6 +4,14 @@
 <div class="main-wrapper">
     @include('admin.includes.header')
     @include('admin.includes.sidebar')
+    @if (session('message'))
+        <div class="alert alert-success">
+            {{ session('message') }}
+        </div>
+    @endif
+        <div class="alert alert-success">
+            asdfasdf
+        </div>
     <div class="page-wrapper">
         <div class="content">
             <div class="row">

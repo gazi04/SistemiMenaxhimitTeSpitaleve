@@ -1,91 +1,57 @@
 @extends('layout')
 
 @section('content')
-<div class="main-wrapper">
-    @include('admin.includes.header')
-    @include('admin.includes.sidebar')
-    <div class="page-wrapper">
-        <div class="content">
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <h4 class="page-title">Shto Adminin</h4>
+    <div class="main-wrapper">
+        @include('admin.includes.header')
+        @include('admin.includes.sidebar')
+        <div class="page-wrapper">
+            <div class="content">
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <h4 class="page-title">Shto Adminin</h4>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8 offset-lg-2">
-                    <form action="{{ route('your.route.name') }}" method="POST">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="from-group">
-                                    <label>Numri Personal</label>
-                                    <input class="form-control" type="text" placeholder="Shkruani numrin personal" />
-                                </div>
-                            </div>
-                            <div class="col-sm-6 mt-4">
-                                <div class="form-group">
-                                    <label>Emri <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" placeholder="Shkruani emrin" />
-                                </div>
-                            </div>
-                            <div class="col-sm-6 mt-4">
-                                <div class="from-group">
-                                    <label>Mbiemri</label>
-                                    <input class="form-control" type="text" placeholder="Shkruani mbiemrin" />
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="from-group">
-                                    <label>Email <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="email" placeholder="Shkruani email-in" />
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 mt-4">
-                                <div class="from-group">
-                                    <label>Datëlindja</label>
-                                    <div class="cal-icon">
-                                        <input type="text" class="form-control datetimepicker"
-                                            placeholder="Zgjidhni datën" />
+                <div class="row">
+                    <div class="col-lg-8 offset-lg-2">
+                        <form action="{{ route('create-admin') }}" method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="from-group">
+                                        <label>Numri Personal</label>
+                                        <input class="form-control" type="text" name="personal_id" value="{{ old('personal_id') }}" placeholder="Shkruani numrin personal" required><br>
+                                        @error('personal_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 mt-4">
-                                <div class="from-group gender-select">
-                                    <label class="gen-label">Gjinia:</label>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" name="gender" class="form-check-input" />
-                                            Mashkull
-                                        </label>
-                                    </div>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" name="gender" class="form-check-input" />
-                                            Femër
-                                        </label>
+                                <div class="col-sm-6 mt-4">
+                                    <div class="form-group">
+                                        <label>Emri <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="name" value="{{ old('name') }}" placeholder="Shkruani emrin" required><br>
+                                        @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-12 mt-4">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="from-group">
-                                            <label>Numri Kontaktues</label>
-                                            <input class="form-control" type="text" placeholder="Shkruani numrin" />
-                                        </div>
+                                <div class="col-sm-12">
+                                    <div class="from-group">
+                                        <label>Email <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="text" name="email" value="{{ old('email') }}" placeholder="Shkruani email-in" required><br>
+                                        @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                     </div>
                                 </div>
+                                <div class="m-t-20 text-center">
+                                    <button class="btn btn-primary submit-btn" type="submit">
+                                        Ruaj të dhënat
+                                    </button>
+                                </div>
+                        </form>
                             </div>
-                        </div>
-                        <div class="m-t-20 text-center">
-                            <button class="btn btn-primary submit-btn">
-                                Ruaj të dhënat
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-@endsection
+    @endsection

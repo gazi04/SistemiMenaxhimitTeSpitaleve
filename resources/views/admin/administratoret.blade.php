@@ -5,47 +5,29 @@
     @include('admin.includes.header')
     @include('admin.includes.sidebar')
     <div class="page-wrapper">
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @elseif (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="content">
             <div class="row">
                 <div class="col-sm-4 col-3">
                     <h4 class="page-title">Administratoret</h4>
                 </div>
                 <div class="col-sm-8 col-9 text-right m-b-20">
-                    <a href="{{ url('shto-doktor')}}" class="btn btn-primary btn-rounded float-right">
+                    <a href="{{ route('create-admin-view')}}" class="btn btn-primary btn-rounded float-right">
                         <i class="fa fa-plus"></i> Shto një Administrator
                     </a>
                 </div>
             </div>
-            {{--TODO- duhet te shfaqen administratoret --}}
-            {{--variabla ku jane te ruajtur administratoret si nje list eshte admins--}}
             <div class="row doctor-grid">
-                <div class="col-md-4 col-sm-4 col-lg-3">
-                    <div class="profile-widget">
-                        <div class="doctor-img">
-                            <a class="avatar" href="{{url('profile')}}">
-                                <img alt="" src="{{asset('assets/img/doctor-thumb-03.jpg')}}" />
-                            </a>
-                        </div>
-                        <h4 class="doctor-name text-ellipsis">
-                            <a href="{{ url('profile')}}">Cristina Groves</a>
-                        </h4>
-                        <div class="doc-prof">
-                            <span class="dep">Departamenti</span>
-                            <span>Gynecologist</span>
-                        </div>
-                        <div class="user-country">
-                            <i class="fa fa-envelope"></i> cristina@gmail.com
-                        </div>
-                        <div class="action-buttons">
-                            <a href="{{ url('modifiko-doktor')}}" class="btn btn-primary">
-                                <i class="fa fa-pencil"></i> Modifiko
-                            </a>
-                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete_doctor">
-                                <i class="fa fa-trash-o"></i> Fshij
-                            </a>
-                        </div>
-                    </div>
-                    @foreach ($admins as $admin)
+                @foreach ($admins as $admin)
+                    <div class="col-md-4 col-sm-4 col-lg-3">
                         <div class="profile-widget">
                             <div class="doctor-img">
                                 <a class="avatar" href="{{url('profile')}}">
@@ -55,10 +37,6 @@
                             <h4 class="doctor-name text-ellipsis">
                                 <a href="{{ url('profile')}}">{{ $admin->name }}</a>
                             </h4>
-                            <div class="doc-prof">
-                                <span class="dep">Departamenti</span>
-                                <span>Gynecologist</span>
-                            </div>
                             <div class="user-country">
                                 <i class="fa fa-envelope"></i> {{ $admin->email }}
                             </div>
@@ -66,13 +44,26 @@
                                 <a href="{{ route('edit-admin-view', $admin->id) }}" class="btn btn-primary">
                                     <i class="fa fa-pencil"></i> Modifiko
                                 </a>
-                                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete_doctor">
-                                    <i class="fa fa-trash-o"></i> Fshij
-                                </a>
+                                {{--<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete_doctor">--}}
+                                    {{--    <i class="fa fa-trash-o"></i> Fshij--}}
+                                    {{--</a>--}}
+                                @if ($admin->is_employed)
+                                    <form action="{{ route('fire-admin', $admin->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        <input type="hidden" name="id" id="form-id" value="{{ $admin->id }}">
+                                        <button class="btn btn-danger" type="submit" onclick="return confirm('Deshironi vertet te largoni punetorin nga puna.')">Largon nga puna</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('hire-admin', $admin->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        <input type="hidden" name="id" id="form-id" value="{{ $admin->id }}">
+                                        <button class="btn btn-danger" type="submit" onclick="return confirm('Deshironi te punesoni punetorin')">Punëso</button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div id="delete_doctor" class="modal fade delete-modal" role="dialog">

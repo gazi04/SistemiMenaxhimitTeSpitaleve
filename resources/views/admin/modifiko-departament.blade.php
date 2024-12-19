@@ -18,17 +18,13 @@
                         <input type="hidden" name="id" id="form-id" value="{{ $departament->id }}">
                         <div class="form-group">
                             <label>Emri i Departamentit:</label>
-                            <input class="form-control" name="name" id="name" type="text" value="{{ $departament->name }}" />
-                            @error('name')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <input class="form-control" name="emri_departamentit" type="text" value="{{ $departament->name }}" />
+                            @error('emri_departamentit') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>
                         <div class="form-group">
                             <label>Pershkrimi:</label>
-                            <textarea cols="30" rows="4" class="form-control" name="description" id="description">{{ $departament->description }}</textarea>
-                            @error('description')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <textarea cols="30" rows="4" class="form-control" name="pershkrimi_departamentit">{{ $departament->description }}</textarea>
+                            @error('pershkrimi_departamentit') <div class="text-danger">{{ $message }}</div> @enderror
                         </div>
                         <div class="m-t-20 text-center">
                             <button class="btn btn-primary submit-btn">

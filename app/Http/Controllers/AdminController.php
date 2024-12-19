@@ -40,31 +40,22 @@ class AdminController extends Controller
     {
         try { $dep = Departament::findOrFail($id); }
         catch(ModelNotFoundException $e) {
-            return redirect()->route('show-departaments')->with('message', 'Nuk ekziston departamenti me ID '.$id.' ne databaze.');
+            return redirect()->route('show-departaments')->with('error', 'Nuk ekziston departamenti me ID '.$id.' ne databaze.');
         }
         return view('admin.modifiko-departament', ['departament' => $dep]);
     }
 
     public function updateDepartament(Request $request)
     {
-        try {
-            $validated = $request->validate([
-                'id' => 'required|exists:departaments,id',
-                'name' => 'required|string|max:100',
-                'description' => 'required|string|max:255',
-            ]);
-            Log::info('Validation passed: ', $validated);
-        } catch (ValidationException $e) {
-            Log:info('Validation failed: ', $e->errors());
-            return redirect()->back()
-                ->withErrors($e->errors())
-                ->withInput();
-        }
+        $validated = $request->validate([
+            'id' => 'required|exists:departaments,id',
+            'emri_departamentit' => 'required|string|max:100',
+            'pershkrimi_departamentit' => 'required|string|max:255',
+        ]);
 
         try { $departament = Departament::findOrFail($validated['id']); }
         catch(ModelNotFoundException $e) {
-            Log::error("departament not found");
-            return redirect()->route('show-departaments')->with('message', 'Nuk ekziston departamenti me ID '.$validated['id'].' ne databaze.');
+            return redirect()->route('show-departaments')->with('error', 'Nuk ekziston departamenti me ID '.$validated['id'].' ne databaze.');
         }
 
         $departament->update($validated);
@@ -80,30 +71,19 @@ class AdminController extends Controller
 
         $doctor = Doctor::where('departament_id', $id)->first();
         if ($doctor) {
-            $message = 'Departamenti nuk mund te fshihet pasi nje mjek eshte ne ate departament. Emri i tij eshte '.$doctor->first_name;
+            return redirect()->route('show-departaments')->with('error',  'Departamenti nuk mund te fshihet pasi nje mjek eshte ne ate departament. Emri i tij eshte '.$doctor->first_name);
         } else {
             $departament->delete();
-            $message =  'Departamenti u fshi me sukses.';
+            return redirect()->route('show-departaments')->with('message',  'Departamenti u fshi me sukses.');
         }
 
-        return redirect()->route('show-departaments')->with('message', $message);
     }
 
-    public function showUsers()
-    {
-        $data =  [
-            'admins' => Admin::all(),
-            'doctors' => Doctor::all(),
-            'patients' => Patient::all(),
-            'nurses' => Nurse::all(),
-            'receptionists' => Receptionist::all(),
-            'technologists' => Technologist::all()
-        ];
-
-        return view('admin.manageUsers', $data);
+    public function openAdminView() {
+        return view('admin.administratoret', ['admins' => Admin::all()]);
     }
 
-    public function openAdminView() { return view('admin.administratoret', ['admins' => Admin::all()]); }
+    public function openCreateAdminView() { return view('admin.shto-admin'); }
 
     public function createAdmin(Request $request)
     {
@@ -119,41 +99,40 @@ class AdminController extends Controller
             'email' => $validated['email']
         ]);
 
-        return redirect()->route('show-users')->with('message', 'Administratori eshte krijuar me sukses');
+        return redirect()->route('open-admin-view')->with('message', 'Administratori eshte krijuar me sukses');
     }
 
     public function openEditAdminView($id)
     {
         try { $admin = Admin::findOrFail($id); }
         catch(ModelNotFoundException $e){
-            return redirect()->route('show-users')->with('message', 'Nuk ekziston administratori me ID '.$id.' ne databaze.');
+            return redirect()->route('open-admin-view')->with('error', 'Nuk ekziston administratori me ID '.$id.' ne databaze.');
         }
 
         return view('admin.modifiko-admin', [
             'id' => $admin->id,
+            'id_number' => $admin->id_number,
             'personal_id' => $admin->personal_id,
             'adminName' => $admin->name,
-            'adminEmail' => $admin->email
+            'adminEmail' => $admin->email,
         ]);
     }
 
     public function editAdmin(Request $request)
     {
-        return 'test';
         $validated = $request->validate([
-            'id' => 'required|integer',
-            'personal_id' => 'required|integer',
-            'name' => 'required|string',
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
             'email' => 'required|email:filter'
         ]);
 
         try { $admin = Admin::findOrFail($validated['id']); }
         catch(ModelNotFoundException $e){
-            return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet administratori me ID '.$validated['id']);
+            return redirect()->route('open-admin-view')->with('error', 'Nuk mund te perditesohet administratori me ID '.$validated['id']);
         }
 
         $admin->update($validated);
-        return redirect()->route('show-users')->with('message', 'Administratori eshte perditesuar me sukses');
+        return redirect()->route('open-admin-view')->with('message', 'Administratori eshte perditesuar me sukses');
     }
 
     public function fireAdmin(Request $request)
@@ -163,10 +142,10 @@ class AdminController extends Controller
             $admin = Admin::findOrFail($validated['id']);
         }
         catch(Exception $e) {
-            return redirect()->route('show-users')->with('message', 'Administratori nuk mund te pushohet nga puna se nuk ekziston ID '.$request['id'].' ne databaze');
+            return redirect()->route('open-admin-view')->with('message', 'Administratori nuk mund te pushohet nga puna se nuk ekziston ID '.$request['id'].' ne databaze');
         }
         $admin->update(['is_employed' => false]);
-        return redirect()->route('show-users')->with('message', 'Administratori me ID '.$validated['id'].' eshte pushuar nga puna me sukses.');
+        return redirect()->route('open-admin-view')->with('message', 'Administratori me ID '.$validated['id'].' eshte pushuar nga puna me sukses.');
     }
 
     public function hireAdmin(Request $request)
@@ -176,10 +155,10 @@ class AdminController extends Controller
             $admin = Admin::findOrFail($validated['id']);
         }
         catch(Exception $e) {
-            return redirect()->route('show-users')->with('message', 'Administratori nuk mund te punesohet se nuk ekziston ID '.$request['id'].' ne databaze.');
+            return redirect()->route('open-admin-view')->with('message', 'Administratori nuk mund te punesohet se nuk ekziston ID '.$request['id'].' ne databaze.');
         }
         $admin->update(['is_employed' => true]);
-        return redirect()->route('show-users')->with('message', 'Administratori me ID '.$validated['id'].' eshte punesuar me sukses.');
+        return redirect()->route('open-admin-view')->with('message', 'Administratori me ID '.$validated['id'].' eshte punesuar me sukses.');
     }
 
     public function openDoctorView() { return view('admin.doktoret', ['admins' => Admin::all()]); }
