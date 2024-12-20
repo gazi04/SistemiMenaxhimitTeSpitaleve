@@ -13,51 +13,41 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
-                    <form action="{{ route('your.route.name') }}" method="POST">
+                    <form action="{{ route('edit-doctor') }}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>ID e Doktorit <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" value="D0001" readonly="" />
+                                    <input class="form-control" name="id" type="text" value="{{ $id }}" readonly="" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="from-group">
                                     <label>Numri Personal</label>
-                                    <input class="form-control" type="text" placeholder="Shkruani numrin personal" />
+                                    <input class="form-control" name="numri_personal" type="text" placeholder="Shkruani numrin personal" value="{{ $personal_id }}" />
+                                    @error('numri_personal') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Emri Doktorit</label>
+                                    <input class="form-control" name="emri" type="text" value="{{ $doctorName }}" />
+                                    @error('emri') <span class="text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="from-group">
+                                    <label>Mbiemri Doktorit</label>
+                                    <input class="form-control" name="mbiemri" type="text" placeholder="Shkruani numrin personal" value="{{ $doctorLastName }}" />
+                                    @error('mbiemri') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="from-group">
-                                    <label>Email <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="email" placeholder="Shkruani email-in" />
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 mt-4">
-                                <div class="from-group">
-                                    <label>Datëlindja</label>
-                                    <div class="cal-icon">
-                                        <input type="text" class="form-control datetimepicker"
-                                            placeholder="Zgjidhni datën" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 mt-4">
-                                <div class="from-group gender-select">
-                                    <label class="gen-label">Gjinia:</label>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" name="gender" class="form-check-input" />
-                                            Mashkull
-                                        </label>
-                                    </div>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                            <input type="radio" name="gender" class="form-check-input" />
-                                            Femër
-                                        </label>
-                                    </div>
+                                    <label>Email</label>
+                                    <input class="form-control" name="email" type="email" placeholder="Shkruani email-in" value="{{ $doctorEmail }}" />
+                                    @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                                 </div>
                             </div>
                             <div class="col-sm-12 mt-4">
@@ -65,20 +55,18 @@
                                     <div class="col-sm-6">
                                         <div class="from-group">
                                             <label>Numri Kontaktues</label>
-                                            <input class="form-control" type="text" placeholder="Shkruani numrin" />
+                                            <input class="form-control" name="numri_kontaktues" type="text" placeholder="Shkruani numrin" value="{{ $phoneNumber }}" />
+                                            @error('numri_kontaktues') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="from-group">
                                             <label>Departamenti</label>
-                                            <select class="form-control select">
+                                            <select class="form-control select" name="departamenti">
                                                 <option>Zgjidhni Departamentin</option>
-                                                <option>Stomatologjia</option>
-                                                <option>Oftamologjia</option>
-                                                <option>Otorinolaringugjia(ORL)</option>
-                                                <option>Neurologjia</option>
-                                                <option>Kirurgjia</option>
-                                                <option>Ortopedia</option>
+                                                @foreach ($departaments as $departament)
+                                                    <option value="{{ $departament['id'] }}" {{ $departament_id == $departament['id']? 'selected' : '' }}>{{ $departament['name'] }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

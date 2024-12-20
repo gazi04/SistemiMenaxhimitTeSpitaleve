@@ -4,7 +4,7 @@
             <ul>
                 <li class="menu-title">Main</li>
                 <li>
-                    <a href="{{ url('admin.paneliAdmin') }}"><i class="fa fa-dashboard"></i>
+                    <a href="{{ route('admin-dashboard') }}"><i class="fa fa-dashboard"></i>
                         <span>Paneli i Adminit</span></a>
                 </li>
                 <li class="submenu">
@@ -13,10 +13,10 @@
                     <ul style="display: none">
                         <li><a href="{{ route('open-admin-view') }}">Administratoret</a></li>
                         <li><a href="{{ route('open-doctor-view') }}">Doktoret</a></li>
-                        <li><a href="{{ url('infermieret') }}">Infermieret</a></li>
-                        <li><a href="{{ url('recepcionistet') }}">Recepcionistet</a></li>
+                        <li><a href="{{ route('open-nurse-view') }}">Infermieret</a></li>
+                        <li><a href="{{ route('open-receptionist-view') }}">Recepcionistet</a></li>
                         <li class="active">
-                            <a href="{{ url('laborantet') }}">Laborantet</a>
+                            <a href="{{ route('open-technologist-view') }}">Laborantet</a>
                         </li>
                     </ul>
                 </li>

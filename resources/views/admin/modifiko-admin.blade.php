@@ -9,6 +9,10 @@
             <div class="alert alert-success">
                 {{ session('message') }}
             </div>
+        @elseif (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
         @endif
         <div class="content">
             <div class="row">
@@ -20,11 +24,12 @@
                 <div class="col-lg-8 offset-lg-2">
                     <form id="departament-form" action="{{ route('edit-admin') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="id" id="form-id" value="{{ $id }}">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>ID e Admin <span class="text-danger">*</span></label>
-                                    <input name="id" class="form-control" type="text" value="{{ $id_number }}" readonly="" />
+                                    <input class="form-control" type="text" value="{{ $id_number }}" readonly="" />
                                 </div>
                             </div>
                             <div class="col-sm-6">

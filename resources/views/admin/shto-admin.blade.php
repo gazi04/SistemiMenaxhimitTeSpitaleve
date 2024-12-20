@@ -19,28 +19,22 @@
                                 <div class="col-sm-12">
                                     <div class="from-group">
                                         <label>Numri Personal</label>
-                                        <input class="form-control" type="text" name="personal_id" value="{{ old('personal_id') }}" placeholder="Shkruani numrin personal" required><br>
-                                        @error('personal_id')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                        <input class="form-control" type="text" name="numri_personal" value="{{ old('numri_personal') }}" placeholder="Shkruani numrin personal" required><br>
+                                        @error('numri_personal')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-6 mt-4">
                                     <div class="form-group">
                                         <label>Emri <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="name" value="{{ old('name') }}" placeholder="Shkruani emrin" required><br>
-                                        @error('name')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                        <input class="form-control" type="text" name="emri" value="{{ old('emri') }}" placeholder="Shkruani emrin" required><br>
+                                        @error('emri')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="from-group">
                                         <label>Email <span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" name="email" value="{{ old('email') }}" placeholder="Shkruani email-in" required><br>
-                                        @error('email')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                        @error('email')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                                 <div class="m-t-20 text-center">

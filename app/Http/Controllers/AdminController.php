@@ -22,7 +22,8 @@ class AdminController extends Controller
 {
     public function index() { return view('admin.index'); }
 
-    public function showDepartaments() { return view('admin.departamentet', ['departaments' => Departament::all()]); }
+    /* -------------------------------DEPARTAMENTS CRUD OPERATIONS------------------------------- */
+    public function displayDepartaments() { return view('admin.departamentet', ['departaments' => Departament::all()]); }
 
     public function openCreateDepartamentView() { return view('admin.shto-departamente'); }
 
@@ -58,7 +59,10 @@ class AdminController extends Controller
             return redirect()->route('show-departaments')->with('error', 'Nuk ekziston departamenti me ID '.$validated['id'].' ne databaze.');
         }
 
-        $departament->update($validated);
+        $departament->update([
+            'name' => $validated['emri_departamentit'],
+            'description' => $validated['pershkrimi_departamentit']
+        ]);
         return redirect()->route('show-departaments')->with('message', 'Departamenti u perditesua me sukses.');
     }
 
@@ -79,23 +83,22 @@ class AdminController extends Controller
 
     }
 
-    public function openAdminView() {
-        return view('admin.administratoret', ['admins' => Admin::all()]);
-    }
+    /* -------------------------------ADMINS CRUD OPERATIONS------------------------------- */
+    public function displayAdmins() { return view('admin.administratoret', ['admins' => Admin::all()]); }
 
     public function openCreateAdminView() { return view('admin.shto-admin'); }
 
     public function createAdmin(Request $request)
     {
         $validated = $request->validate([
-            'personal_id' => 'required|integer',
-            'name' => 'required|string',
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
             'email' => 'required|email:filter|unique:admins,email'
         ]);
 
         Admin::create([
-            'personal_id' => $validated['personal_id'],
-            'name' => $validated['name'],
+            'personal_id' => $validated['numri_personal'],
+            'name' => $validated['emri'],
             'email' => $validated['email']
         ]);
 
@@ -121,6 +124,7 @@ class AdminController extends Controller
     public function editAdmin(Request $request)
     {
         $validated = $request->validate([
+            'id' => 'required|exists:admins,id',
             'numri_personal' => 'required|integer',
             'emri' => 'required|string',
             'email' => 'required|email:filter'
@@ -131,7 +135,11 @@ class AdminController extends Controller
             return redirect()->route('open-admin-view')->with('error', 'Nuk mund te perditesohet administratori me ID '.$validated['id']);
         }
 
-        $admin->update($validated);
+        $admin->update([
+            'personal_id' => $validated['numri_personal'],
+            'name' => $validated['emri'],
+            'email' => $validated['email']
+        ]);
         return redirect()->route('open-admin-view')->with('message', 'Administratori eshte perditesuar me sukses');
     }
 
@@ -161,40 +169,43 @@ class AdminController extends Controller
         return redirect()->route('open-admin-view')->with('message', 'Administratori me ID '.$validated['id'].' eshte punesuar me sukses.');
     }
 
-    public function openDoctorView() { return view('admin.doktoret', ['admins' => Admin::all()]); }
-    public function openCreateDoctorView() { return view('admin.user.createDoctor', ['departaments' => Departament::all()]); }
+    /* -------------------------------DOCTORS CRUD OPERATIONS------------------------------- */
+    public function displayDoctors() { return view('admin.doktoret', ['doctors' => Doctor::all()]); }
+
+    public function openCreateDoctorView() { return view('admin.shto-doktor', ['departaments' => Departament::all()]); }
 
     public function createDoctor(Request $request)
     {
         $validated = $request->validate([
-            'personal_id' => 'required|integer',
-            'departament_id' => 'required|integer|exists:departaments,id',
-            'name' => 'required|string',
-            'surname' => 'required|string',
-            'phoneNumber' => 'required|numeric|max_digits:15|min_digits:7',
+            'numri_personal' => 'required|integer',
+            'departamenti' => 'required|integer|exists:departaments,id',
+            'emri' => 'required|string',
+            'mbiemri' => 'required|string',
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
             'email' => 'required|email:filter|unique:doctors,email'
         ]);
 
         Doctor::create([
-            'personal_id' => $validated['personal_id'],
-            'departament_id' => $validated['departament_id'],
-            'first_name' => $validated['name'],
-            'last_name' => $validated['surname'],
-            'phone_number' => $validated['phoneNumber'],
+            'personal_id' => $validated['numri_personal'],
+            'departament_id' => $validated['departamenti'],
+            'first_name' => $validated['emri'],
+            'last_name' => $validated['mbiemri'],
+            'phone_number' => $validated['numri_kontaktues'],
             'email' => $validated['email']
         ]);
-        return redirect()->route('show-users')->with('message', 'Doktor eshte krijuar me sukses');
+        return redirect()->route('open-doctor-view')->with('message', 'Doktor eshte krijuar me sukses');
     }
 
     public function openEditDoctorView($id)
     {
         try { $doctor = Doctor::findOrFail($id); }
-        catch(ModelNotFoundException $e){
-            return redirect()->route('show-users')->with('message', 'Nuk ekziston doktori me ID '.$id.' ne databaze.');
+        catch(ModelNotFoundException $e) {
+            return redirect()->route('open-doctor-view')->with('message', 'Nuk ekziston doktori me ID '.$id.' ne databaze.');
         }
 
-        return view('admin.user.editDoctor', [
+        return view('admin.modifiko-doktor', [
             'id' => $doctor->id,
+            'id_number' => $doctor->id_number,
             'personal_id' => $doctor->personal_id,
             'departament_id' => $doctor->departament_id,
             'doctorName' => $doctor->first_name,
@@ -209,21 +220,28 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'id' => 'required|integer',
-            'personal_id' => 'required|integer',
-            'name' => 'required|string',
-            'last_name' => 'required|string',
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
+            'mbiemri' => 'required|string',
             'email' => 'required|email:filter',
-            'phone_number' => 'required|numeric|max_digits:15|min_digits:7',
-            'departament_id' => 'required|exists:departaments,id'
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
+            'departamenti' => 'required|exists:departaments,id'
         ]);
 
         try { $doctor = Doctor::findOrFail($validated['id']); }
         catch(ModelNotFoundException $e){
-            return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet doktori me ID '.$validated['id']);
+            return redirect()->route('open-doctor-view')->with('message', 'Nuk mund te perditesohet doktori me ID '.$validated['id']);
         }
 
-        $doctor->update($validated);
-        return redirect()->route('show-users')->with('message', 'Doktori eshte perditesuar me sukses');
+        $doctor->update([
+            'personal_id' => $validated['numri_personal'],
+            'first_name' => $validated['emri'],
+            'last_name' => $validated['mbiemri'],
+            'phone_number' => $validated["numri_kontaktues"],
+            'email' => $validated["email"],
+            'departament_id' => $validated['departamenti']
+        ]);
+        return redirect()->route('open-doctor-view')->with('message', 'Doktori eshte perditesuar me sukses');
     }
 
     public function fireDoctor(Request $request)
@@ -233,10 +251,10 @@ class AdminController extends Controller
             $doctor = Doctor::findOrFail($validated['id']);
         }
         catch(Exception $e) {
-            return redirect()->route('show-users')->with('message', 'Doktori nuk mund te pushohet nga puna se nuk ekziston doktori me ID '.$request['id'].' ne databaze');
+            return redirect()->route('open-doctor-view')->with('message', 'Doktori nuk mund te pushohet nga puna se nuk ekziston doktori me ID '.$request['id'].' ne databaze');
         }
         $doctor->update(['is_employed' => false]);
-        return redirect()->route('show-users')->with('message', 'Doktori me ID '.$validated['id'].' eshte pushuar nga puna me sukses.');
+        return redirect()->route('open-doctor-view')->with('message', 'Doktori '.$doctor->first_name.' eshte pushuar nga puna me sukses.');
     }
 
     public function hireDoctor(Request $request)
@@ -246,39 +264,46 @@ class AdminController extends Controller
             $doctor = Doctor::findOrFail($validated['id']);
         }
         catch(Exception $e) {
-            return redirect()->route('show-users')->with('message', 'Doktori nuk mund te punesohet se nuk ekziston doktori me ID '.$request['id'].' ne databaze.');
+            return redirect()->route('open-doctor-view')->with('message', 'Doktori nuk mund te punesohet se nuk ekziston doktori me ID '.$request['id'].' ne databaze.');
         }
         $doctor->update(['is_employed' => true]);
-        return redirect()->route('show-users')->with('message', 'Doktori me ID '.$validated['id'].' eshte punesuar me sukses.');
+        return redirect()->route('open-doctor-view')->with('message', 'Doktori '.$doctor->first_name.' eshte punesuar me sukses.');
     }
+
+    /* -------------------------------NURSES CRUD OPERATIONS------------------------------- */
+    public function displayNurses() { return view('admin.infermieret', ['nurses' => Nurse::all()]); }
 
     public function createNurse(Request $request)
     {
         $validated = $request->validate([
-            'personal_id' => 'required|integer',
-            'name' => 'required|string',
-            'surname' => 'required|string',
-            'phoneNumber' => 'required|numeric|max_digits:15|min_digits:7',
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
+            'mbiemri' => 'required|string',
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
             'email' => 'required|email:filter|unique:nurses,email'
         ]);
 
-        Nurse::create([
-            'personal_id' => $validated['personal_id'],
-            'first_name' => $validated['name'],
-            'last_name' => $validated['surname'],
-            'phone_number' => $validated['phoneNumber'],
+        $nurse = Nurse::create([
+            'personal_id' => $validated['numri_personal'],
+            'first_name' => $validated['emri'],
+            'last_name' => $validated['mbiemri'],
+            'phone_number' => $validated['numri_kontaktues'],
             'email' => $validated['email']
         ]);
+        Log::info($nurse);
 
-        return redirect()->route('show-users')->with('message', 'Infermieri/ja eshte krijuar me sukses');
+        return redirect()->route('open-nurse-view')->with('message', 'Infermieri/ja eshte krijuar me sukses');
     }
+
+    public function openCreateNurseView() { return view('admin.shto-infermiere'); }
 
     public function openEditNurseView($id)
     {
         try {
             $nurse = Nurse::findOrFail($id);
-            return view('admin.user.editNurse', [
+            return view('admin.modifiko-infermiere', [
                 'id' => $nurse->id,
+                'id_number' => $nurse->id_number,
                 'personal_id' => $nurse->personal_id,
                 'nurseName' => $nurse->first_name,
                 'nurseLastName' => $nurse->last_name,
@@ -287,7 +312,7 @@ class AdminController extends Controller
             ]);
         }
         catch(ModelNotFoundException $e){
-            return redirect()->route('show-users')->with('message', 'Nuk ekziston infermieri/ja me ID '.$id.' ne databaze.');
+            return redirect()->route('open-nurse-view')->with('message', 'Nuk ekziston infermieri/ja me ID '.$id.' ne databaze.');
         }
     }
 
@@ -295,20 +320,26 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'id' => 'required|integer',
-            'personal_id' => 'required|integer',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
+            'mbiemri' => 'required|string',
             'email' => 'required|email:filter',
-            'phone_number' => 'required|numeric|max_digits:15|min_digits:7'
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7'
         ]);
 
         try { $nurse = Nurse::findOrFail($validated['id']); }
         catch(ModelNotFoundException $e){
-            return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet infermieri/ja me ID '.$validated['id']);
+            return redirect()->route('open-nurse-view')->with('message', 'Nuk mund te perditesohet infermieri/ja me ID '.$validated['id']);
         }
 
-        $nurse->update($validated);
-        return redirect()->route('show-users');
+        $nurse->update([
+            'personal_id' => $validated["numri_personal"],
+            'first_name' => $validated["emri"],
+            'last_name' => $validated["mbiemri"],
+            'email' => $validated["email"],
+            'phone_number' => $validated["numri_kontaktues"]
+        ]);
+        return redirect()->route('open-nurse-view')->with('message', 'Infermieri/ja eshte perditesuar me sukses');
     }
 
     public function fireNurse(Request $request)
@@ -318,10 +349,10 @@ class AdminController extends Controller
             $nurse = Nurse::findOrFail($validated['id']);
         }
         catch(Exception $e) {
-            return redirect()->route('show-users')->with('message', 'Infermieri/ja nuk mund te pushohet nga puna se nuk ekziston ID '.$request['id'].' ne databaze');
+            return redirect()->route('open-nurse-view')->with('message', 'Infermieri/ja nuk mund te pushohet nga puna se nuk ekziston ID '.$request['id'].' ne databaze');
         }
         $nurse->update(['is_employed' => false]);
-        return redirect()->route('show-users')->with('message', 'Infermieri/ja me ID '.$validated['id'].' eshte pushuar nga puna me sukses.');
+        return redirect()->route('open-nurse-view')->with('message', 'Infermieri/ja me '.$nurse->first_name.' eshte pushuar nga puna me sukses.');
     }
 
     public function hireNurse(Request $request)
@@ -331,38 +362,44 @@ class AdminController extends Controller
             $nurse = Nurse::findOrFail($validated['id']);
         }
         catch(Exception $e) {
-            return redirect()->route('show-users')->with('message', 'Infermieri/ja nuk mund te punesohet se nuk ekziston ID '.$request['id'].' ne databaze.');
+            return redirect()->route('open-nurse-view')->with('message', 'Infermieri/ja nuk mund te punesohet se nuk ekziston ID '.$request['id'].' ne databaze.');
         }
         $nurse->update(['is_employed' => true]);
-        return redirect()->route('show-users')->with('message', 'Infermieri/ja me ID '.$validated['id'].' eshte punesuar me sukses.');
+        return redirect()->route('open-nurse-view')->with('message', 'Infermieri/ja me '.$nurse->first_name.' eshte punesuar me sukses.');
     }
+
+    /* -------------------------------RECEPTIONISTS CRUD OPERATIONS------------------------------- */
+    public function displayReceptionist() { return view('admin.recepcionistet', ['receptionists' => Receptionist::all()]); }
+
+    public function openCreateReceptionistView() { return view('admin.shto-recepcionist'); }
 
     public function createReceptionist(Request $request)
     {
         $validated = $request->validate([
-            'personal_id' => 'required|integer',
-            'name' => 'required|string',
-            'surname' => 'required|string',
-            'phoneNumber' => 'required|numeric|max_digits:15|min_digits:7',
-            'email' => 'required|email:filter|unique:receptionists,email'
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
+            'mbiemri' => 'required|string',
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
+            'email' => 'required|email:filter|unique:nurses,email'
         ]);
 
         Receptionist::create([
-            'personal_id' => $validated['personal_id'],
-            'first_name' => $validated['name'],
-            'last_name' => $validated['surname'],
-            'phone_number' => $validated['phoneNumber'],
+            'personal_id' => $validated['numri_personal'],
+            'first_name' => $validated['emri'],
+            'last_name' => $validated['mbiemri'],
+            'phone_number' => $validated['numri_kontaktues'],
             'email' => $validated['email']
         ]);
-        return redirect()->route('show-users')->with('message', 'Recepsionisti eshte krijuar me sukses');
+        return redirect()->route('open-receptionist-view')->with('message', 'Recepsionisti eshte krijuar me sukses');
     }
 
     public function openEditReceptionistView($id)
     {
         try {
             $receptionist = Receptionist::findOrFail($id);
-            return view('admin.user.editReceptionist', [
+            return view('admin.modifiko-recepcionist', [
                 'id' => $receptionist->id,
+                'id_number' => $receptionist->id_number,
                 'personal_id' => $receptionist->personal_id,
                 'receptionistName' => $receptionist->first_name,
                 'receptionistLastName' => $receptionist->last_name,
@@ -371,7 +408,7 @@ class AdminController extends Controller
             ]);
         }
         catch(ModelNotFoundException $e){
-            return redirect()->route('show-users')->with('message', 'Nuk ekziston recepsionist me ID '.$id.' ne databaze.');
+            return redirect()->route('open-receptionist-view')->with('message', 'Nuk ekziston recepsionist me ID '.$id.' ne databaze.');
         }
     }
 
@@ -379,21 +416,26 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'id' => 'required|integer',
-            'personal_id' => 'required|integer',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
+            'mbiemri' => 'required|string',
             'email' => 'required|email:filter',
-            'phone_number' => 'required|numeric|max_digits:15|min_digits:7'
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7'
         ]);
 
         try { $receptionist = Receptionist::findOrFail($validated['id']); }
         catch(ModelNotFoundException $e){
-            return 'test';
-            return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet recepsionisti me ID '.$validated['id']);
+            return redirect()->route('open-receptionist-view')->with('message', 'Nuk mund te perditesohet recepsionisti me ID '.$validated['id']);
         }
 
-        $receptionist->update($validated);
-        return redirect()->route('show-users');
+        $receptionist->update([
+            'personal_id' => $validated["numri_personal"],
+            'first_name' => $validated["emri"],
+            'last_name' => $validated["mbiemri"],
+            'email' => $validated["email"],
+            'phone_number' => $validated["numri_kontaktues"]
+        ]);
+        return redirect()->route('open-receptionist-view');
     }
 
     public function fireReceptionist(Request $request)
@@ -403,10 +445,10 @@ class AdminController extends Controller
             $receptionist = Receptionist::findOrFail($validated['id']);
         }
         catch(Exception $e) {
-            return redirect()->route('show-users')->with('message', 'Recepcionisti nuk mund te pushohet nga puna se nuk ekziston ID '.$request['id'].' ne databaze');
+            return redirect()->route('open-receptionist-view')->with('message', 'Recepcionisti nuk mund te pushohet nga puna se nuk ekziston ID '.$request['id'].' ne databaze');
         }
         $receptionist->update(['is_employed' => false]);
-        return redirect()->route('show-users')->with('message', 'Recepcionisti me ID '.$validated['id'].' eshte pushuar nga puna me sukses.');
+        return redirect()->route('open-receptionist-view')->with('message', 'Recepcionisti me '.$receptionist->first_name.' eshte pushuar nga puna me sukses.');
     }
 
     public function hireReceptionist(Request $request)
@@ -416,39 +458,45 @@ class AdminController extends Controller
             $receptionist = Receptionist::findOrFail($validated['id']);
         }
         catch(Exception $e) {
-            return redirect()->route('show-users')->with('message', 'Recepcionisti nuk mund te punesohet se nuk ekziston ID '.$request['id'].' ne databaze.');
+            return redirect()->route('open-receptionist-view')->with('message', 'Recepcionisti nuk mund te punesohet se nuk ekziston ID '.$request['id'].' ne databaze.');
         }
         $receptionist->update(['is_employed' => true]);
-        return redirect()->route('show-users')->with('message', 'Recepcionisti me ID '.$validated['id'].' eshte punesuar me sukses.');
+        return redirect()->route('open-receptionist-view')->with('message', 'Recepcionisti me '.$receptionist->first_name.' eshte punesuar me sukses.');
     }
+
+    /* -------------------------------TECHNOLOGISTS CRUD OPERATIONS------------------------------- */
+    public function displayTechnologist() { return view('admin.laborantet', ['technologists' => Technologist::all()]); }
+
+    public function openCreateTechnologistView() { return view('admin.shto-laborant'); }
 
     public function createTechnologist(Request $request)
     {
         $validated = $request->validate([
-            'personal_id' => 'required|integer',
-            'name' => 'required|string',
-            'surname' => 'required|string',
-            'phoneNumber' => 'required|numeric|max_digits:15|min_digits:7',
-            'email' => 'required|email:filter|unique:technologists,email'
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
+            'mbiemri' => 'required|string',
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
+            'email' => 'required|email:filter|unique:nurses,email'
         ]);
 
         Technologist::create([
-            'personal_id' => $validated['personal_id'],
-            'first_name' => $validated['name'],
-            'last_name' => $validated['surname'],
-            'phone_number' => $validated['phoneNumber'],
+            'personal_id' => $validated['numri_personal'],
+            'first_name' => $validated['emri'],
+            'last_name' => $validated['mbiemri'],
+            'phone_number' => $validated['numri_kontaktues'],
             'email' => $validated['email']
         ]);
 
-        return redirect()->route('show-users')->with('message', 'Teknologu eshte krijuar me sukses');
+        return redirect()->route('open-technologist-view')->with('message', 'Teknologu eshte krijuar me sukses');
     }
 
     public function openEditTechnologistView($id)
     {
         try {
             $technologist = Technologist::findOrFail($id);
-            return view('admin.user.editTechnologist', [
+            return view('admin.modifiko-laborant', [
                 'id' => $technologist->id,
+                'id_number' => $technologist->id_number,
                 'personal_id' => $technologist->personal_id,
                 'technologistName' => $technologist->first_name,
                 'technologistLastName' => $technologist->last_name,
@@ -457,7 +505,7 @@ class AdminController extends Controller
             ]);
         }
         catch(ModelNotFoundException $e){
-            return redirect()->route('show-users')->with('message', 'Nuk ekziston teknologu me ID '.$id.' ne databaze.');
+            return redirect()->route('open-technologist-view')->with('message', 'Nuk ekziston teknologu me ID '.$id.' ne databaze.');
         }
     }
 
@@ -465,20 +513,26 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'id' => 'required|integer',
-            'personal_id' => 'required|integer',
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
+            'mbiemri' => 'required|string',
             'email' => 'required|email:filter',
-            'phone_number' => 'required|numeric|max_digits:15|min_digits:7'
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7'
         ]);
 
         try { $technologists = Technologist::findOrFail($validated['id']); }
         catch(ModelNotFoundException $e){
-            return redirect()->route('show-users')->with('message', 'Nuk mund te perditesohet teknologu me ID '.$validated['id']);
+            return redirect()->route('open-technologist-view')->with('message', 'Nuk mund te perditesohet teknologu me ID '.$validated['id']);
         }
 
-        $technologists->update($validated);
-        return redirect()->route('show-users');
+        $technologists->update([
+            'personal_id' => $validated["numri_personal"],
+            'first_name' => $validated["emri"],
+            'last_name' => $validated["mbiemri"],
+            'email' => $validated["email"],
+            'phone_number' => $validated["numri_kontaktues"]
+        ]);
+        return redirect()->route('open-technologist-view');
     }
 
     public function fireTechnologist(Request $request)
@@ -488,10 +542,10 @@ class AdminController extends Controller
             $technologist = Technologist::findOrFail($validated['id']);
         }
         catch(Exception $e) {
-            return redirect()->route('show-users')->with('message', 'Teknologu nuk mund te pushohet nga puna se nuk ekziston ID '.$request['id'].' ne databaze');
+            return redirect()->route('open-technologist-view')->with('message', 'Teknologu nuk mund te pushohet nga puna se nuk ekziston ID '.$request['id'].' ne databaze');
         }
         $technologist->update(['is_employed' => false]);
-        return redirect()->route('show-users')->with('message', 'Teknologu me ID '.$validated['id'].' eshte pushuar nga puna me sukses.');
+        return redirect()->route('open-technologist-view')->with('message', 'Teknologu me '.$technologist->first_name.' eshte pushuar nga puna me sukses.');
     }
 
     public function hireTechnologist(Request $request)
@@ -501,9 +555,9 @@ class AdminController extends Controller
             $technologist = Technologist::findOrFail($validated['id']);
         }
         catch(Exception $e) {
-            return redirect()->route('show-users')->with('message', 'Teknologu nuk mund te punesohet se nuk ekziston ID '.$request['id'].' ne databaze.');
+            return redirect()->route('open-technologist-view')->with('message', 'Teknologu nuk mund te punesohet se nuk ekziston ID '.$request['id'].' ne databaze.');
         }
         $technologist->update(['is_employed' => true]);
-        return redirect()->route('show-users')->with('message', 'Teknologu me ID '.$validated['id'].' eshte punesuar me sukses.');
+        return redirect()->route('open-technologist-view')->with('message', 'Teknologu me '.$technologist->first_name.' eshte punesuar me sukses.');
     }
 }
