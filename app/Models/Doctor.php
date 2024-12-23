@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\GeneratesCustomId;
+use App\Models\Departament;
 
 class Doctor extends Model implements AuthenticatableContract
 {
@@ -22,4 +23,6 @@ class Doctor extends Model implements AuthenticatableContract
     ];
 
     public static $customIdColumn = 'id_number';
+
+    public function departament() { return $this->belongsTo(Departament::class, 'departament_id'); }
 }
