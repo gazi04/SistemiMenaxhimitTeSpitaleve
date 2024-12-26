@@ -15,8 +15,9 @@ class EmailController extends Controller
     public function verifyEmail(EmailVerificationRequest $request)
     {
         $request->fulfill();
-        $patient_id = Auth::guard('patient')->user()->id_number;
-        Mail::to(Auth::guard('patient')->user()->email)->send(new SendPatinetId($patient_id));
+
+        $patient = Auth::guard('patient')->user();
+        Mail::to(Auth::guard('patient')->user()->email)->send(new SendPatinetId($patient->id_number, $patient->first_name, $patient->last_name));
         return redirect('/patient/dashboard');
     }
 

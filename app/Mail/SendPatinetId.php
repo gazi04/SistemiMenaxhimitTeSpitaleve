@@ -17,9 +17,11 @@ class SendPatinetId extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($patient_id)
+    public function __construct($patient_id, $firstName,  $lastName)
     {
         $this->patient_id = $patient_id;
+        $this->first_name = $firstName;
+        $this->last_name = $lastName;
     }
 
     /**
@@ -29,7 +31,7 @@ class SendPatinetId extends Mailable
     {
         return new Envelope(
             from: new Address('gaziSEW@gmail.com', 'Admin Gazi'),
-            subject: 'Send Patinet Id',
+            subject: 'ID-ja jote per llogarine e pacientit',
         );
     }
 
@@ -42,6 +44,8 @@ class SendPatinetId extends Mailable
             view: 'email.send-patient-id',
             with: [
                 'patientId' => $this->patient_id,
+                'firstName' => $this->first_name,
+                'lastName' => $this->last_name
             ]
         );
     }
