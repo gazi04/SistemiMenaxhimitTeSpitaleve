@@ -13,7 +13,7 @@ use App\Http\Middleware\TechnologistMiddleware;
 use App\Http\Middleware\ReceptionistMiddleware;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
