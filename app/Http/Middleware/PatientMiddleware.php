@@ -18,10 +18,11 @@ class PatientMiddleware
     {
         $user = Auth::guard('patient')->user();
 
-        if ($user && $user->id_number[0] === 'P') {
+        if ($user && $user->id_number[0] === 'P' &&  $user->hasVerifiedEmail()) {
             return $next($request);
         }
 
+        return redirect()->route('verification.notice');
         return redirect('/login');
     }
 }
