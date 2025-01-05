@@ -171,12 +171,13 @@ class LoginController extends Controller
             'email' => $validated['email']
         ]);
 
+        $patient->sendEmailVerificationNotification();
+
         try {Auth::guard('patient')->login($patient);}
         catch(Exception $e) {
             return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
         }
 
         return redirect()->route('patient-dashboard');
-        return $patient;
     }
 }

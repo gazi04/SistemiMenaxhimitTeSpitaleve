@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PatientController;
 use App\Http\Middleware\AdminMiddleware;
@@ -12,7 +13,7 @@ use App\Http\Middleware\TechnologistMiddleware;
 use App\Http\Middleware\ReceptionistMiddleware;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -20,6 +21,10 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [LoginController::class, 'openCreatePatientview'])->name('create-patient-view');
 Route::post('/register', [LoginController::class, 'createPatient'])->name('create-patient');
+
+Route::get('/email/verify', [EmailController::class, 'openVerifyEmailView'])->middleware('auth:patient')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->middleware(['auth:patient', 'signed'])->name('verification.verify');
+Route::post('/email/verification-notification', [EmailController::class, 'ResendVerificationLink'])->middleware(['auth:patient', 'throttle:6,1'])->name('verification.send');
 
 /* -------------------------------ADMIN DASHBOARD------------------------------- */
 Route::middleware(AdminMiddleware::class)->group(function () {
