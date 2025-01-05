@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Patient;
 
 class DoctorController extends Controller
 {
@@ -15,4 +16,6 @@ class DoctorController extends Controller
         }
         return view('doctor.index', ['username'=>$username]);
     }
+
+    public function openManagePatientView() { return view('doctor.manage-patient', ['patients' => Patient::all()]); }
 }

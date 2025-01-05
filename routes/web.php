@@ -91,6 +91,8 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 /* -------------------------------DOCTOR DASHBOARD------------------------------- */
 Route::middleware(DoctorMiddleware::class)->group(function () {
     Route::get('/doctor/dashboard', [DoctorController::class, 'index'])->name('doctor-dashboard');
+
+    Route::get('/patients', [DoctorController::class, 'openManagePatientView'])->name('manage-patients');
 });
 
 /* -------------------------------PATIENT DASHBOARD------------------------------- */
