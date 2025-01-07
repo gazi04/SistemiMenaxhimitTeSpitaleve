@@ -93,6 +93,7 @@ Route::middleware(DoctorMiddleware::class)->group(function () {
     Route::get('/doctor/dashboard', [DoctorController::class, 'index'])->name('doctor-dashboard');
 
     Route::get('/patients', [DoctorController::class, 'openManagePatientView'])->name('manage-patients');
+    Route::get('/patient', [PatientController::class, 'showPatient'])->name('show-patient');
     Route::get('/search/patient', [PatientController::class, 'searchPatient'])->name('search-patient');
 });
 
