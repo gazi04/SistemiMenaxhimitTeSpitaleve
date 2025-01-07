@@ -76,9 +76,7 @@
               </div>
 
               <div class="form-group text-right">
-                <a href=""
-                  >Forgot your password?</a
-                >
+                <a href="{{ route('create-patient-view') }}">Krijo nje llogari te pacientit</a>
               </div>
 
               <div class="form-group text-center">

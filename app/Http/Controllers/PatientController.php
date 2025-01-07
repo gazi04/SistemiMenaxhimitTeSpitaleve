@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PatientController extends Controller
 {
     public function index()
     {
-        return 'patient dashboard';
+        $user = Auth::guard('patient')->user();
+        return view('patient.index', ['patient' => $user]);
     }
 }

@@ -12,6 +12,7 @@ use App\Models\Patient;
 use App\Models\Technologist;
 use App\Models\Nurse;
 use App\Models\Receptionist;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -142,5 +143,41 @@ class LoginController extends Controller
     {
         if (!$model->is_employed) { return 'nuk mund te kyqesh je pushuar nga puna'; }
         return true;
+    }
+
+    public function openCreatePatientview()
+    {
+        return view('auth.register');
+    }
+
+    public function createPatient(Request $request)
+    {
+        Log::info($request);
+        $validated = $request->validate([
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
+            'mbiemri' => 'required|string',
+            'gjinia' => 'required|integer|in:0,1',
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
+            'email' => 'required|email:filter'
+        ]);
+
+        $patient = Patient::create([
+            'personal_id' => $validated['numri_personal'],
+            'first_name' => $validated['emri'],
+            'last_name' => $validated['mbiemri'],
+            'gender' => $validated['gjinia'],
+            'phone_number' => $validated['numri_kontaktues'],
+            'email' => $validated['email']
+        ]);
+
+        $patient->sendEmailVerificationNotification();
+
+        try {Auth::guard('patient')->login($patient);}
+        catch(Exception $e) {
+            return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+        }
+
+        return redirect()->route('patient-dashboard');
     }
 }
