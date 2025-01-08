@@ -49,6 +49,26 @@
                     </div>
                 </div>
                 <div class="row">
+                    <form method="POST" action="{{ route('create-diagnosis-view') }}">
+                        <div class="action-buttons">
+                            @csrf
+                            <input type="hidden" name="patientId" value="{{ $patient->id }}" />
+                            <input type="submit" class="btn btn-primary" value="Jepini pacientit diagnozën" />
+                        </div>
+                    </form>
+                </div>
+                <br>
+                <div class="row">
+                    <form method="POST" action="{{ route('create-therapy-view') }}">
+                        <div class="action-buttons">
+                            @csrf
+                            <input type="hidden" name="patientId" value="{{ $patient->id }}" />
+                            <input type="submit" class="btn btn-primary" value="Jepini pacientit terapi" />
+                        </div>
+                    </form>
+                </div>
+                <br>
+                <div class="row">
                     <div class="col-sm-4 col-3">
                         <h4 class="page-title">Historia Pacientit</h4>
                     </div>

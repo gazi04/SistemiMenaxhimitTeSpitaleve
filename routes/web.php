@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DiagnoseController;
+use App\Http\Controllers\TherapyController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Middleware\AdminMiddleware;
@@ -94,6 +96,9 @@ Route::middleware(DoctorMiddleware::class)->group(function () {
 
     Route::get('/patients', [DoctorController::class, 'openManagePatientView'])->name('manage-patients');
     Route::get('/patient', [PatientController::class, 'showPatient'])->name('show-patient');
+
+    Route::post('/diagnose/patient', [DiagnoseController::class, 'index'])->name('create-diagnosis-view');
+    Route::get('/therapy/patient', [TherapyController::class, 'index'])->name('create-therapy-view');
     Route::get('/search/patient', [PatientController::class, 'searchPatient'])->name('search-patient');
 });
 
