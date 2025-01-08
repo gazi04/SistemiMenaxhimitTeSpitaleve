@@ -22,31 +22,35 @@
                             <div class="form-group">
                                 <label for="start_date">Data Fillimit</label>
                                 <input type="date" id="start_date" name="start_date" class="form-control" required>
+                                @error('start_date')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="end_date">Data Mbarimit</label>
                                 <input type="date" id="end_date" name="end_date" class="form-control" required>
+                                @error('end_date')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="department">Departamenti</label>
-                                <select id="department" name="department" class="form-control" required>
+                                <select id="department" name="department" class="form-control">
                                     <option value="">Zgjidh departamentin</option>
                                     @foreach ($departaments as $dep)
                                         <option value="{{ $dep->id }}">{{ $dep->name }}</option>
                                     @endforeach
                                 </select>
+                                @error('department')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="doctor">Doktori</label>
-                                <select id="doctor" name="doctor" class="form-control" required>
+                                <select id="doctor" name="doctorId" class="form-control" required>
                                     <option value="">Zgjidh doktorin</option>
                                     @foreach ($doctors as $doctor)
                                         <option value="{{ $doctor->id }}">{{ $doctor->first_name }}</option>
                                     @endforeach
                                 </select>
+                                @error('doctorId')<span class="text-danger">{{ $message }}</span>@enderror
                             </div>
 
                             <div class="form-group">
