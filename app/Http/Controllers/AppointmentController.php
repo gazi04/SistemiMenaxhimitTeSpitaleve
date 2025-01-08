@@ -51,6 +51,7 @@ class AppointmentController extends Controller
 
                 if (!$isTaken) {
                     $availableAppointments[] = [
+                        'doctorId' => $doctorId,
                         'date' => $startDate->toDateString(),
                         'start_time' => $appointmentStart->toTimeString(),
                         'end_time' => $appointmentEnd->toTimeString(),
@@ -64,6 +65,26 @@ class AppointmentController extends Controller
         }
 
         return view('patient.appointment.available', ['availableAppointments' => $availableAppointments]);
+    }
+
+    public function setAppointment(Request $request)
+    {
+        $validated = $request->validate([
+            'doctor_id' => 'required|exists:doctors,id',
+            'date' => 'required|date',
+            'start_time' => 'required',
+            'end_time' => 'required',
+        ]);
+
+        Appointment::create([
+            'doctor_id' => $validated['doctor_id'],
+            'patient_id' => Auth::guard('patient')->id(),
+            'start_time' => $validated['date'] . ' ' . $validated['start_time'],
+            'end_time' => $validated['date'] . ' ' . $validated['end_time'],
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('patient-dashboard');
     }
 
     public function getDoctorsByDepartment($departamentId)

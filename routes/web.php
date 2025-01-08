@@ -99,6 +99,7 @@ Route::middleware(PatientMiddleware::class)->group(function () {
     Route::get('/patient/dashboard', [PatientController::class, 'index'])->name('patient-dashboard');
     Route::get('/make/appointment', [AppointmentController::class, 'index'])->name('make-appointment');
     Route::get('/get/avaible/appointments', [AppointmentController::class, 'getFreeAppointment'])->name('get-free-appointments');
+    Route::post('/set/appointment', [AppointmentController::class, 'setAppointment'])->name('set-appointment');
 
     Route::get('/get/doctors/{departmentId}', [AppointmentController::class, 'getDoctorsByDepartment']);
     Route::get('/get/department/{doctorId}', [AppointmentController::class, 'getDepartmentByDoctor']);
