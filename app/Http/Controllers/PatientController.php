@@ -35,7 +35,6 @@ class PatientController extends Controller
             $patient = Patient::findOrFail($request->id);
         }
         catch(ModelNotFoundException $ex) {
-            Log::info('patient not found');
             return redirect()->route('manage-patients')->with('error', 'Ka ndodhur nje gabim, nuk mund te gjindet pacienti ne databaze.');
         }
 

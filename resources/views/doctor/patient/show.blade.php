@@ -4,9 +4,9 @@
     <div class="main-wrapper">
         @include('doctor.includes.header')
         @include('doctor.includes.sidebar')
-        @if (session('message'))
+        @if (session('message') || isset($message))
             <div class="alert alert-success">
-                {{ session('message') }}
+                {{ session('message') ?? $message }}
             </div>
         @elseif (session('error'))
             <div class="alert alert-danger">

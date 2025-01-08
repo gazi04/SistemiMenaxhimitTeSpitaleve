@@ -96,10 +96,13 @@ Route::middleware(DoctorMiddleware::class)->group(function () {
 
     Route::get('/patients', [DoctorController::class, 'openManagePatientView'])->name('manage-patients');
     Route::get('/patient', [PatientController::class, 'showPatient'])->name('show-patient');
+    Route::get('/search/patient', [PatientController::class, 'searchPatient'])->name('search-patient');
 
     Route::post('/diagnose/patient', [DiagnoseController::class, 'index'])->name('create-diagnosis-view');
-    Route::get('/therapy/patient', [TherapyController::class, 'index'])->name('create-therapy-view');
-    Route::get('/search/patient', [PatientController::class, 'searchPatient'])->name('search-patient');
+    Route::post('/create/diagnose', [DiagnoseController::class, 'createDiagnoses'])->name('create-diagnose');
+    Route::post('/therapy/patient', [TherapyController::class, 'index'])->name('create-therapy-view');
+    Route::post('/create/therapy', [TherapyController::class, 'createTherapy'])->name('create-therapy');
+
 });
 
 /* -------------------------------PATIENT DASHBOARD------------------------------- */
