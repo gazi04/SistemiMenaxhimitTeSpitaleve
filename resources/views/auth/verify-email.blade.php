@@ -33,7 +33,7 @@
                         </form>
 
                         <div class="text-center mt-3">
-                            <form method="POST" action="{{ route('logout') }}">
+                            <form method="GET" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="btn btn-link">Log Out</button>
                             </form>
