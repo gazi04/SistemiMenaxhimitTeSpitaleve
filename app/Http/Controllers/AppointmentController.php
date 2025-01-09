@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class AppointmentController extends Controller
 {
+    /* ------------------------- THE METHODS DOWN ARE USED FOR THE PATIENT MODULE ------------------------- */
     public function index()
     {
         return view('patient.appointment.index', [
@@ -25,7 +26,7 @@ class AppointmentController extends Controller
     {
         $validated = $request->validate([
             "start_date" => "required|date|after:yesterday",
-            "end_date" => "required|date|after:start_date",
+            "end_date" => "required|date|after_or_equal:start_date",
             "doctorId" => "required|integer|exists:doctors,id"
         ]);
 
@@ -76,6 +77,7 @@ class AppointmentController extends Controller
             'end_time' => 'required',
         ]);
 
+        /* TODO- NEED TO CHECK IF THAT THE PATIENT DOESN'T HAVE ANY OTHER APPOINMENTS BY OTHER DOCTORS */
         Appointment::create([
             'doctor_id' => $validated['doctor_id'],
             'patient_id' => Auth::guard('patient')->id(),
@@ -99,4 +101,18 @@ class AppointmentController extends Controller
         return response()->json(['department_id' => $doctor ? $doctor->department_id : null]);
     }
 
+    /* ------------------------- THE METHODS DOWN ARE USED FOR THE DOCTOR MODULE ------------------------- */
+    public function manageAppointmentsView()
+    {
+        $doctorId = Auth::guard('doctor')->id();
+
+        $upcomingAppointments = Appointment::where('doctor_id', $doctorId)
+            ->where('start_time', '>', now())
+            ->join('patients', 'appointments.patient_id', '=', 'patients.id')
+            ->select('appointments.*', 'patients.first_name', 'patients.last_name')
+            ->orderBy('start_time', 'asc')
+            ->get();
+
+        return view('doctor.appointments.index', compact('upcomingAppointments'));
+    }
 }

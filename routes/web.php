@@ -105,6 +105,7 @@ Route::middleware(DoctorMiddleware::class)->group(function () {
     Route::post('/therapy/patient', [TherapyController::class, 'index'])->name('create-therapy-view');
     Route::post('/create/therapy', [TherapyController::class, 'createTherapy'])->name('create-therapy');
 
+    Route::get('/manage/appointments', [AppointmentController::class, 'manageAppointmentsView'])->name('manage-appointments-view');
 });
 
 /* -------------------------------PATIENT DASHBOARD------------------------------- */

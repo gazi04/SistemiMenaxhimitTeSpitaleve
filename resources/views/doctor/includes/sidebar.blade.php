@@ -4,11 +4,10 @@
             <ul>
                 <li class="menu-title">Main</li>
                 <li>
-                    <a href="{{ route('doctor-dashboard') }}"><i class="fa fa-dashboard"></i>
-                        <span>Paneli i Doktorit</span></a>
+                    <a href="{{ route('doctor-dashboard') }}"><i class="fa fa-dashboard"></i><span>Paneli i Doktorit</span></a>
                 </li>
                 <li>
-                    <a href="{{ route('manage-patients') }}"><i class="fa fa-wheelchair"></i> <span>Menaxho Pacientet</span></a>
+                    <a href="{{ route('manage-patients') }}"><i class="fa fa-wheelchair"></i><span>Menaxho Pacientet</span></a>
                 </li>
                 <li>
                     <a href="{{ route('show-departaments') }}">
@@ -17,7 +16,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('appointments') }}"><i class="fa fa-calendar"></i> <span>Terminet</span></a>
+                    <a href="{{ route('manage-appointments-view') }}"><i class="fa fa-calendar"></i><span>Menaxho Terminet</span></a>
                 </li>
                 <li class="submenu">
                     <a href="#"><i class="fa fa-money"></i> <span> Accounts </span>
