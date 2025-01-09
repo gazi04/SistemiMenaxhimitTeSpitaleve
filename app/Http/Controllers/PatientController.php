@@ -8,6 +8,9 @@ use App\Models\Appointment;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use App\Models\Patient;
+use App\Models\Diagnosis;
+use App\Models\Therapy;
+use App\Models\Test;
 
 class PatientController extends Controller
 {
@@ -41,12 +44,15 @@ class PatientController extends Controller
     public function showPatient(Request $request)
     {
         try {
-            $patient = Patient::findOrFail($request->id);
+            $patient = Patient::with(['appointments.doctor', 'diagnoses', 'therapies', 'tests'])->findOrFail($request->id);
+            $diagnoses = Diagnosis::where('patient_id', $request->id)->with('doctor')->orderBy('created_at', 'desc')->get();
+            $therapies = Therapy::where('patient_id', $request->id)->with('doctor')->orderBy('created_at', 'desc')->get();
+            $tests = Test::where('patient_id', $request->id)->with('technologist')->orderBy('create_at', 'desc')->get();
         }
         catch(ModelNotFoundException $ex) {
             return redirect()->route('manage-patients')->with('error', 'Ka ndodhur nje gabim, nuk mund te gjindet pacienti ne databaze.');
         }
 
-        return view('doctor.patient.show', ['patient' => $patient]);
+        return view('doctor.patient.show', ['patient' => $patient, 'diagnoses' => $diagnoses, 'therapies' => $therapies, 'tests' => $tests]);
     }
 }

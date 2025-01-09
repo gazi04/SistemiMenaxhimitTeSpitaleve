@@ -11,4 +11,9 @@ class Therapy extends Model
         'doctor_id',
         'notes',
     ];
+
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class);
+    }
 }
