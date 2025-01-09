@@ -8,12 +8,14 @@ use App\Http\Controllers\DiagnoseController;
 use App\Http\Controllers\TherapyController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\AppointmentController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\DoctorMiddleware;
 use App\Http\Middleware\PatientMiddleware;
 use App\Http\Middleware\NurseMiddleware;
 use App\Http\Middleware\TechnologistMiddleware;
 use App\Http\Middleware\ReceptionistMiddleware;
+use Illuminate\Support\Facades\App;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -108,6 +110,12 @@ Route::middleware(DoctorMiddleware::class)->group(function () {
 /* -------------------------------PATIENT DASHBOARD------------------------------- */
 Route::middleware(PatientMiddleware::class)->group(function () {
     Route::get('/patient/dashboard', [PatientController::class, 'index'])->name('patient-dashboard');
+    Route::get('/make/appointment', [AppointmentController::class, 'index'])->name('make-appointment');
+    Route::get('/get/avaible/appointments', [AppointmentController::class, 'getFreeAppointment'])->name('get-free-appointments');
+    Route::post('/set/appointment', [AppointmentController::class, 'setAppointment'])->name('set-appointment');
+
+    Route::get('/get/doctors/{departmentId}', [AppointmentController::class, 'getDoctorsByDepartment']);
+    Route::get('/get/department/{doctorId}', [AppointmentController::class, 'getDepartmentByDoctor']);
 });
 
 /* -------------------------------NURSE DASHBOARD------------------------------- */

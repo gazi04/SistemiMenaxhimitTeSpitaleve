@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Appointment;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
 use App\Models\Patient;
@@ -13,7 +14,15 @@ class PatientController extends Controller
     public function index()
     {
         $user = Auth::guard('patient')->user();
-        return view('patient.index', ['patient' => $user]);
+        $upcomingAppointments = Appointment::where('patient_id', $user->id)
+            ->where('start_time', '>', now())
+            ->orderBy('start_time', 'asc')
+            ->get();
+
+        return view('patient.index', [
+            'patient' => $user,
+            'upcomingAppointments' => $upcomingAppointments,
+        ]);
     }
 
     public function searchPatient(Request $request)
