@@ -110,9 +110,16 @@ class AppointmentController extends Controller
             ->where('start_time', '>', now())
             ->join('patients', 'appointments.patient_id', '=', 'patients.id')
             ->select('appointments.*', 'patients.first_name', 'patients.last_name')
-            ->orderBy('start_time', 'asc')
+            ->orderBy('start_time', 'desc')
             ->get();
 
-        return view('doctor.appointments.index', compact('upcomingAppointments'));
+        $todaysAppointments = Appointment::where('doctor_id', $doctorId)
+            ->whereDate('start_time', now()->toDateString())
+            ->join('patients', 'appointments.patient_id', '=', 'patients.id')
+            ->select('appointments.*', 'patients.first_name', 'patients.last_name')
+            ->orderBy('start_time', 'desc')
+            ->get();
+
+        return view('doctor.appointments.index', compact('upcomingAppointments', 'todaysAppointments'));
     }
 }
