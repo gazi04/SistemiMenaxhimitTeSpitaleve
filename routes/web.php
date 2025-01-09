@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DiagnoseController;
+use App\Http\Controllers\TherapyController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Middleware\AdminMiddleware;
@@ -91,7 +94,17 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 
 /* -------------------------------DOCTOR DASHBOARD------------------------------- */
 Route::middleware(DoctorMiddleware::class)->group(function () {
-    Route::get('/doctor-dashboard',function(){ return 'doctor dashboar';})->name('doctor-dashboard');
+    Route::get('/doctor/dashboard', [DoctorController::class, 'index'])->name('doctor-dashboard');
+
+    Route::get('/patients', [DoctorController::class, 'openManagePatientView'])->name('manage-patients');
+    Route::get('/patient', [PatientController::class, 'showPatient'])->name('show-patient');
+    Route::get('/search/patient', [PatientController::class, 'searchPatient'])->name('search-patient');
+
+    Route::post('/diagnose/patient', [DiagnoseController::class, 'index'])->name('create-diagnosis-view');
+    Route::post('/create/diagnose', [DiagnoseController::class, 'createDiagnoses'])->name('create-diagnose');
+    Route::post('/therapy/patient', [TherapyController::class, 'index'])->name('create-therapy-view');
+    Route::post('/create/therapy', [TherapyController::class, 'createTherapy'])->name('create-therapy');
+
 });
 
 /* -------------------------------PATIENT DASHBOARD------------------------------- */

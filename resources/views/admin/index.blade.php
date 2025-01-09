@@ -9,9 +9,6 @@
             {{ session('message') }}
         </div>
     @endif
-        <div class="alert alert-success">
-            asdfasdf
-        </div>
     <div class="page-wrapper">
         <div class="content">
             <div class="row">

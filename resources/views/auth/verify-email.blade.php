@@ -33,10 +33,7 @@
                         </form>
 
                         <div class="text-center mt-3">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-link">Log Out</button>
-                            </form>
+                            <a href="{{ route('logout') }}" type="submit" class="btn btn-link">Log Out</a>
                         </div>
                     </div>
                 </div>
