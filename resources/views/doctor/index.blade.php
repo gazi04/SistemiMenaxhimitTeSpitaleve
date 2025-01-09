@@ -17,7 +17,7 @@
             <div class="content">
                 <div class="row">
                     <div class="col-sm-4 col-3">
-                        <h4 class="page-title">Faqja Doktorit</h4>
+                        <h4 class="page-title">Pershendetje {{ $username }}</h4>
                     </div>
                 </div>
                 <div class="row doctor-grid">
