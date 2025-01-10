@@ -5,16 +5,12 @@
     @include('admin.includes.header')
     @include('admin.includes.sidebar')
     <div class="page-wrapper">
-        @if (session('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @elseif (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
         <div class="content">
+            @if (session('error'))
+                <div id="notify" class="alert alert-success">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <h4 class="page-title">Modifiko Laborantin/en</h4>
