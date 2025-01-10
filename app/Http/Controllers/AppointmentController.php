@@ -46,8 +46,18 @@ class AppointmentController extends Controller
 
                 $isTaken = Appointment::where('doctor_id', $doctorId)
                     ->where(function ($query) use ($appointmentStart, $appointmentEnd) {
-                        $query->whereBetween('start_time', [$appointmentStart, $appointmentEnd])
-                            ->orWhereBetween('end_time', [$appointmentStart, $appointmentEnd]);
+                        $query->where(function ($q) use ($appointmentStart, $appointmentEnd) {
+                            $q->where('start_time', '<', $appointmentEnd)
+                                ->where('start_time', '>=', $appointmentStart);
+                        })
+                            ->orWhere(function ($q) use ($appointmentStart, $appointmentEnd) {
+                                $q->where('end_time', '>', $appointmentStart)
+                                    ->where('end_time', '<=', $appointmentEnd);
+                            })
+                            ->orWhere(function ($q) use ($appointmentStart, $appointmentEnd) {
+                                $q->where('start_time', '<=', $appointmentStart)
+                                    ->where('end_time', '>=', $appointmentEnd);
+                            });
                     })->exists();
 
                 if (!$isTaken) {
