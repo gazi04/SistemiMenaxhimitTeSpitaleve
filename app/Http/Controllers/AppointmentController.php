@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Departament;
 use App\Models\Doctor;
 use App\Models\Appointment;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Carbon;
@@ -131,5 +132,15 @@ class AppointmentController extends Controller
             ->get();
 
         return view('doctor.appointments.index', compact('upcomingAppointments', 'todaysAppointments'));
+    }
+
+    public function modifyAppointmentView(Request $request)
+    {
+        try { $appointment = Appointment::findOrFail($request->appointmentId); }
+        catch (ModelNotFoundException $ex)
+        {
+            return redirect()->route('manage-appointments-view')->with('error', 'Ka ndodhur nje gabim, nuk mund te gjindet termini ne databaze.');
+        }
+        return view('doctor.appointments.modify', ['appointment' => $appointment]);
     }
 }
