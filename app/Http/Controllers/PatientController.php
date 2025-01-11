@@ -45,6 +45,11 @@ class PatientController extends Controller
     {
         try {
             $patient = Patient::with(['appointments.doctor', 'diagnoses', 'therapies', 'tests'])->findOrFail($request->id);
+            $ongoingAppointment = Appointment::where('patient_id', $request->id)
+            ->where('status', 'arrived')
+            ->where('start_time', '<=', now())
+            ->where('end_time', '>=', now())
+            ->first();
             $diagnoses = Diagnosis::where('patient_id', $request->id)->with('doctor')->orderBy('created_at', 'desc')->get();
             $therapies = Therapy::where('patient_id', $request->id)->with('doctor')->orderBy('created_at', 'desc')->get();
             $tests = Test::where('patient_id', $request->id)->with('technologist')->orderBy('create_at', 'desc')->get();
@@ -53,6 +58,12 @@ class PatientController extends Controller
             return redirect()->route('manage-patients')->with('error', 'Ka ndodhur nje gabim, nuk mund te gjindet pacienti ne databaze.');
         }
 
-        return view('doctor.patient.show', ['patient' => $patient, 'diagnoses' => $diagnoses, 'therapies' => $therapies, 'tests' => $tests]);
+        return view('doctor.patient.show', [
+            'patient' => $patient,
+            'diagnoses' => $diagnoses,
+            'therapies' => $therapies,
+            'tests' => $tests,
+            'ongoingAppointment' => $ongoingAppointment
+        ]);
     }
 }

@@ -48,25 +48,28 @@
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <form method="POST" action="{{ route('create-diagnosis-view') }}">
-                        <div class="action-buttons">
-                            @csrf
-                            <input type="hidden" name="patientId" value="{{ $patient->id }}" />
-                            <input type="submit" class="btn btn-primary" value="Jepini pacientit diagnozën" />
-                        </div>
-                    </form>
-                </div>
-                <br>
-                <div class="row">
-                    <form method="POST" action="{{ route('create-therapy-view') }}">
-                        <div class="action-buttons">
-                            @csrf
-                            <input type="hidden" name="patientId" value="{{ $patient->id }}" />
-                            <input type="submit" class="btn btn-primary" value="Jepini pacientit terapi" />
-                        </div>
-                    </form>
-                </div>
+                {{--TODO-THE DOCTOR CAN WRITE A DIAGNOSE AND A THERAPY ONLY IF THE PATIENT HAS AN APPOINTMENT AND IF HE HAS ARRIVED --}}
+                @if ($ongoingAppointment)
+                    <div class="row">
+                        <form method="POST" action="{{ route('create-diagnosis-view') }}">
+                            <div class="action-buttons">
+                                @csrf
+                                <input type="hidden" name="patientId" value="{{ $patient->id }}" />
+                                <input type="submit" class="btn btn-primary" value="Jepini pacientit diagnozën" />
+                            </div>
+                        </form>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <form method="POST" action="{{ route('create-therapy-view') }}">
+                            <div class="action-buttons">
+                                @csrf
+                                <input type="hidden" name="patientId" value="{{ $patient->id }}" />
+                                <input type="submit" class="btn btn-primary" value="Jepini pacientit terapi" />
+                            </div>
+                        </form>
+                    </div>
+                @endif
                 <br>
                 <div class="row">
                     <div class="col-sm-4 col-3">

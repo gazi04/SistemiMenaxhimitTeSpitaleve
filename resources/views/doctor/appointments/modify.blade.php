@@ -12,9 +12,23 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-8 offset-lg-2">
-                        <form action="" method="POST">
-                            @csrf
+                    <div class="col-md-6">
+                        <h4>Kerko termine te lira</h4>
+                        <form method="GET" action="{{ route('get-free-appointments') }}">
+                            <div class="form-group">
+                                <label for="start_date">Data Fillimit</label>
+                                <input type="date" id="start_date" name="start_date" class="form-control" required>
+                                @error('start_date')<span class="text-danger">{{ $message }}</span>@enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="end_date">Data Mbarimit</label>
+                                <input type="date" id="end_date" name="end_date" class="form-control" required>
+                                @error('end_date')<span class="text-danger">{{ $message }}</span>@enderror
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Kerko Termin</button>
+                            </div>
                         </form>
                     </div>
                 </div>
