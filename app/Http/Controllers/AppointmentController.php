@@ -141,6 +141,78 @@ class AppointmentController extends Controller
         {
             return redirect()->route('manage-appointments-view')->with('error', 'Ka ndodhur nje gabim, nuk mund te gjindet termini ne databaze.');
         }
-        return view('doctor.appointments.modify', ['appointment' => $appointment]);
+        return view('doctor.appointments.modify', ['appointment_id' => $appointment->id, 'availableAppointments' => []]);
+    }
+
+    public function getFreeAppointmentForDoctor(Request $request)
+    {
+        $validated = $request->validate([
+            "start_date" => "required|date|after:yesterday",
+            "end_date" => "required|date|after_or_equal:start_date",
+        ]);
+
+        $startDate = Carbon::parse($validated['start_date']);
+        $endDate = Carbon::parse($validated['end_date']);
+
+        try {
+            $appointment = Appointment::findOrFail($request->appointment_id);
+        }
+        catch (ModelNotFoundException $ex) {
+            return redirect()->route('manage-appointments-view')->with('error', 'Ndodhi një gabim, i paaftë për të gjetur takimin në bazën e të dhënave.');
+        }
+
+        $doctorId = $appointment->doctor_id;
+
+        $availableAppointments = [];
+
+        while ($startDate->lte($endDate)) {
+            $startTime = $startDate->copy()->setTime(8, 0);
+            $endTime = $startDate->copy()->setTime(20, 0);
+
+            while ($startTime->lt($endTime)) {
+                $appointmentStart = $startTime->copy();
+                $appointmentEnd = $startTime->copy()->addHours(2);
+
+                $isTaken = Appointment::where('doctor_id', $doctorId)
+                    ->where(function ($query) use ($appointmentStart, $appointmentEnd) {
+                        $query->where(function ($q) use ($appointmentStart, $appointmentEnd) {
+                            $q->where('start_time', '<', $appointmentEnd)
+                                ->where('start_time', '>=', $appointmentStart);
+                        })
+                            ->orWhere(function ($q) use ($appointmentStart, $appointmentEnd) {
+                                $q->where('end_time', '>', $appointmentStart)
+                                    ->where('end_time', '<=', $appointmentEnd);
+                            })
+                            ->orWhere(function ($q) use ($appointmentStart, $appointmentEnd) {
+                                $q->where('start_time', '<=', $appointmentStart)
+                                    ->where('end_time', '>=', $appointmentEnd);
+                            });
+                    })->exists();
+
+                if (!$isTaken) {
+                    $availableAppointments[] = [
+                        'doctorId' => $doctorId,
+                        'date' => $startDate->toDateString(),
+                        'start_time' => $appointmentStart->toTimeString(),
+                        'end_time' => $appointmentEnd->toTimeString(),
+                    ];
+                }
+
+                $startTime->addHours(2);
+            }
+
+            $startDate->addDay();
+        }
+
+        return view('doctor.appointments.available', [
+            'availableAppointments' => $availableAppointments,
+            'appointment' => $appointment,
+        ]);
+    }
+
+    public function modifyAppointment(Request $request)
+    {
+
+        return $request;
     }
 }

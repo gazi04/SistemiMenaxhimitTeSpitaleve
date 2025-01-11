@@ -107,6 +107,8 @@ Route::middleware(DoctorMiddleware::class)->group(function () {
 
     Route::get('/manage/appointments', [AppointmentController::class, 'manageAppointmentsView'])->name('manage-appointments-view');
     Route::get('/modify/appointment', [AppointmentController::class, 'modifyAppointmentView'])->name('modify-appointment-view');
+    Route::post('/available/appointments', [AppointmentController::class, 'getFreeAppointmentForDoctor'])->name('get-free-appointments-for-doctor');
+    Route::post('/modify/appointment', [AppointmentController::class, 'modifyAppointment'])->name('modify-appointment');
 });
 
 /* -------------------------------PATIENT DASHBOARD------------------------------- */
