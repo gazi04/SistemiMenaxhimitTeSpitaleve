@@ -1,6 +1,3 @@
-@if (session('message'))
-    <div>{{ session('message') }}</div>
-@endif
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -34,72 +31,82 @@
 
   <body>
     <div class="main-wrapper account-wrapper">
-      <div class="account-page">
-        <div class="account-center">
-          <div class="account-box">
-            <form
-            {{--#TODO: need to fix the action attribute--}}
-              action="{{ route('login') }}"
-              method="POST"
-              class="form-signin"
-            >
-            @csrf
-              <div class="account-logo">
-                <img
-                  src="assets/img/logo-dark.png"
-                  alt="Hospital Logo"
-                  draggable="false"
-                />
-              </div>
+        @if (session('message'))
+            <div id="notify" class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+        <div class="account-page">
+            <div class="account-center">
+                <div class="account-box">
+                    <form
+                            {{--#TODO: need to fix the action attribute--}}
+                            action="{{ route('login') }}"
+                            method="POST"
+                            class="form-signin"
+                            >
+                            @csrf
+                            <div class="account-logo">
+                                <img
+                                        src="assets/img/logo-dark.png"
+                                        alt="Hospital Logo"
+                                        draggable="false"
+                                        />
+                            </div>
 
-              <div class="form-group">
-                <label for="id_number">ID Number:</label>
-                <input
-                  type="text"
-                  name="id_number"
-                  id="id_number"
-                  class="form-control"
-                  required
-                  autofocus
-                />
-              </div>
+                        <div class="form-group">
+                            <label for="id_number">ID Number:</label>
+                            <input
+                                    type="text"
+                                    name="id_number"
+                                    id="id_number"
+                                    class="form-control"
+                                    required
+                                    autofocus
+                                    />
+                        </div>
 
-              <div class="form-group">
-                <label for="personal_id">Personal ID</label>
-                <input
-                  type="password"
-                  name="personal_id"
-                  id="personal_id"
-                  class="form-control"
-                  required
-                />
-              </div>
+                        <div class="form-group">
+                            <label for="personal_id">Personal ID</label>
+                            <input
+                                    type="password"
+                                    name="personal_id"
+                                    id="personal_id"
+                                    class="form-control"
+                                    required
+                                    />
+                        </div>
 
-              <div class="form-group text-right">
-                <a href="{{ route('create-patient-view') }}">Krijo nje llogari te pacientit</a>
-              </div>
+                        <div class="form-group text-right">
+                            <a href="{{ route('create-patient-view') }}">Krijo nje llogari te pacientit</a>
+                        </div>
 
-              <div class="form-group text-center">
-                <input
-                  type="submit"
-                  value="Login"
-                  class="btn btn-primary account-btn"
-                />
-              </div>
-
-              <!-- Uncomment if you want a registration link -->
-              <!-- <div class="text-center register-link">
-                Dont have an account? <a href="{ route('register') }}">Register now</a>
-              </div> -->
-            </form>
-          </div>
+                        <div class="form-group text-center">
+                            <input
+                                    type="submit"
+                                    value="Login"
+                                    class="btn btn-primary account-btn"
+                                    />
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <script>
+        setTimeout(function() {
+            const notifier = document.getElementById('notify');
+            if (notifier) {
+                notifier.style.transition = "opacity 0.5s ease";
+                notifier.style.opacity = "0";
+                setTimeout(() => notifier.remove(), 500);
+            }
+        }, 5000);
+    </script>
   </body>
 </html>

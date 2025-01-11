@@ -30,7 +30,6 @@
     <script src="{{ asset('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     @yield('scripts')
-
     <script>
         setTimeout(function() {
             const notifier = document.getElementById('notify');
