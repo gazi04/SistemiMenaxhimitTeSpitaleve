@@ -55,13 +55,6 @@
                                                     <input type="submit" class="btn btn-primary" value="Shiko pacientin" />
                                                 </form>
                                                 <br>
-                                                @if (\Carbon\Carbon::now()->lessThan(\Carbon\Carbon::parse($appointment->start_time)))
-                                                    <form method="GET" action="{{ route('modify-appointment-view') }}">
-                                                        @csrf
-                                                        <input type="hidden" name="appointmentId" value="{{ $appointment->id }}" />
-                                                        <input type="submit" class="btn btn-primary" value="Ndrysho Terminin" />
-                                                    </form>
-                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
