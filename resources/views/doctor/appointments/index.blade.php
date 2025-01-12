@@ -87,7 +87,7 @@
                                 <tbody>
                                     @foreach ($upcomingAppointments as $appointment)
                                         <tr>
-                                            <td>{{ \Carbon\Carbon::parse($appointment->start_time)->toDateString() }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($appointment->start_time)->format('d-m-Y') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($appointment->start_time)->toTimeString() }}</td>
                                             <td>{{ \Carbon\Carbon::parse($appointment->end_time)->toTimeString() }}</td>
                                             <td>

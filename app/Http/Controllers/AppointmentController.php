@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Departament;
 use App\Models\Doctor;
 use App\Models\Appointment;
+use App\Mail\AppointmentChanged;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
@@ -36,6 +38,10 @@ class AppointmentController extends Controller
         $doctorId = $validated['doctorId'];
 
         $availableAppointments = [];
+
+        /* TODO- there is a bug in this section of the code that generates the free appointments */
+        /* for example the patient select the date today and the current time is 9pm in the free appointment view  */
+        /* the appointment of today are still visible, for example 10am-11am, 12am-1pm, 3pm-4pm     */
 
         while ($startDate->lte($endDate)) {
             $startTime = $startDate->copy()->setTime(8, 0);
@@ -141,7 +147,7 @@ class AppointmentController extends Controller
         {
             return redirect()->route('manage-appointments-view')->with('error', 'Ka ndodhur nje gabim, nuk mund te gjindet termini ne databaze.');
         }
-        return view('doctor.appointments.modify', ['appointment_id' => $appointment->id, 'availableAppointments' => []]);
+        return view('doctor.appointments.modify', ['appointment_id' => $appointment->id]);
     }
 
     public function getFreeAppointmentForDoctor(Request $request)
@@ -212,7 +218,45 @@ class AppointmentController extends Controller
 
     public function modifyAppointment(Request $request)
     {
+        $validated = $request->validate([
+            'appointment_id' => 'required|exists:appointments,id',
+            'new_start_time' => 'required|date',
+        ]);
 
-        return $request;
+        $validated['new_end_time'] = Carbon::parse($request->new_start_time)->addHours(2);
+        $validated['new_start_time'] = Carbon::parse($request->new_start_time);
+
+        try { $appointment = Appointment::findOrFail($request->appointment_id);}
+        catch(ModelNotFoundException $ex) {
+            return redirect()->route('manage-appointments-view')->with('error', 'Ndodhi një gabim gjatë procesit, konsullata nuk mund të gjendet në bazën e të dhënave, provoni përsëri.');
+        }
+
+        $appointment->update([
+            'start_time' => $validated['new_start_time'],
+            'end_time' => $validated['new_end_time']
+        ]);
+
+        try {
+            $doctor = Auth::guard('doctor')->user();
+            $doctor_full_name = $doctor->first_name.' '.$doctor->last_name;
+            Mail::to($appointment->patient->email)->send(new AppointmentChanged(
+                $validated['new_start_time'],
+                $doctor->email,
+                $doctor_full_name,
+                $appointment->patient->first_name
+            ));
+        }
+        catch (\Exception $ex) {
+            Log::error('Failed to send email to patient.', [
+                'exception_code' => $ex->getCode(),
+                'exception_message' => $ex->getMessage(),
+                'stack_trace' => $ex->getTraceAsString(),
+                'patient_email' => $appointment->patient->email ?? 'N/A',
+                'doctor_email' => Auth::guard('doctor')->user()->email ?? 'N/A',
+            ]);
+            return redirect()->route('manage-appointments-view')->with('error', 'Takimi është modifikuar me sukses por, ndodhi një gabim gjatë dërgimit të emailit ju sugjerojmë të njoftoni pacientin përmes një mesazhi email.');
+        }
+
+        return redirect()->route('manage-appointments-view')->with('message', 'Data e takimit u modifikua me sukses dhe pacienti u njoftua me një email për ndryshimin.');
     }
 }
