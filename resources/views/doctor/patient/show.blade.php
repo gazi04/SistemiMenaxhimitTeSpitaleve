@@ -76,82 +76,26 @@
                         <h2 class="page-title">Historia Pacientit</h2>
                     </div>
                 </div>
-                <br>
-                <div class="row"><h4>Diagnozat</h4></div>
                 <div class="row">
-                    @if($diagnoses->isEmpty())
-                        <p>Nuk u gjetën diagnoza.</p>
+                    @if($appointments->isEmpty())
+                        <p>Nuk u gjetën termine.</p>
                     @else
-                        <table class="table">
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Data dhe Ora</th>
                                     <th>Doktori</th>
                                     <th>Diagnoza</th>
-                                    <th>Data</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($diagnoses as $diagnosis)
-                                    <tr>
-                                        <td>{{ $diagnosis->doctor->first_name }} {{ $diagnosis->doctor->last_name }}</td>
-                                        <td>{{ $diagnosis->notes }}</td>
-                                        <td>{{ $diagnosis->created_at->format('m-d-Y') }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @endif
-                </div>
-                <br>
-                <div class="row"><h4>Terapite</h4></div>
-                <div class="row">
-                    @if($therapies->isEmpty())
-                        <p>Nuk ka terapi të përshkruara.</p>
-                    @else
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Doktori</th>
                                     <th>Terapia</th>
-                                    <th>Data</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($therapies as $therapy)
+                                @foreach ($appointments as $appointment)
                                     <tr>
-                                        <td>{{ $diagnosis->doctor->first_name }} {{ $diagnosis->doctor->last_name }}</td>
-                                        <td>{{ $therapy->notes }}</td>
-                                        <td>{{ $therapy->created_at->format('m-d-Y') }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    @endif
-                </div>
-                <br>
-                <div class="row"><h4>Testet</h4></div>
-                <div class="row">
-                    @if($tests->isEmpty())
-                        <p>Nuk u gjetën teste.</p>
-                    @else
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Teknologu</th>
-                                    <th>Lloji i testit</th>
-                                    <th>Rezultati</th>
-                                    <th>Status</th>
-                                    <th>Data</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($tests as $test)
-                                    <tr>
-                                        <td>{{ $test->technologist->first_name }}{{ $test->technologist->last_name }}</td>
-                                        <td>{{ $test->test_type }}</td>
-                                        <td>{{ $test->results }}</td>
-                                        <td>{{ ucfirst($test->status) }}</td>
-                                        <td>{{ $test->created_at->format('Y-m-d') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($appointment->start_time)->format('d-m-Y H:i') }}</td>
+                                        <td>{{ $appointment->doctor->first_name }} {{ $appointment->doctor->last_name }}</td>
+                                        <td>{{ $appointment->diagnosis ? $appointment->diagnosis->notes : 'Nuk ka diagnozë' }}</td>
+                                        <td>{{ $appointment->therapy ? $appointment->therapy->notes : 'Nuk ka terapi' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
