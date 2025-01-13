@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AppointmentCanceled;
 use App\Models\Departament;
 use App\Models\Doctor;
 use App\Models\Appointment;
@@ -258,5 +259,38 @@ class AppointmentController extends Controller
         }
 
         return redirect()->route('manage-appointments-view')->with('message', 'Data e takimit u modifikua me sukses dhe pacienti u njoftua me një email për ndryshimin.');
+    }
+
+    public function cancelAppointment(Request $request)
+    {
+        try { $appointment = Appointment::findOrFail($request->appointment_id);}
+        catch(ModelNotFoundException $ex) {
+            return redirect()->route('manage-appointments-view')->with('error', 'Ndodhi një gabim gjatë procesit, konsullata nuk mund të gjendet në bazën e të dhënave, provoni përsëri.');
+        }
+
+        /* TODO- PERKTHE VLEREN E STATUS KOLONES NE SHQIP */
+        $appointment->update(['status' => 'canceled']);
+
+        try {
+            $doctor = Auth::guard('doctor')->user();
+            $doctor_full_name = $doctor->first_name.' '.$doctor->last_name;
+            Mail::to($appointment->patient->email)->send(new AppointmentCanceled(
+                $appointment->start_time,
+                $doctor->email,
+                $doctor_full_name,
+                $appointment->patient->first_name
+            ));
+        }
+        catch (\Exception $ex) {
+            Log::error('Failed to send email to patient.', [
+                'exception_code' => $ex->getCode(),
+                'exception_message' => $ex->getMessage(),
+                'stack_trace' => $ex->getTraceAsString(),
+                'patient_email' => $appointment->patient->email ?? 'N/A',
+                'doctor_email' => Auth::guard('doctor')->user()->email ?? 'N/A',
+            ]);
+            return redirect()->route('manage-appointments-view')->with('error', 'Takimi është anuluar me sukses por, ndodhi një gabim gjatë dërgimit të emailit ju sugjerojmë të njoftoni pacientin përmes një mesazhi email.');
+        }
+        return $request;
     }
 }

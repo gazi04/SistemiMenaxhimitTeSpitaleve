@@ -103,14 +103,18 @@
                                                     <input type="submit" class="btn btn-primary" value="Shiko pacientin" />
                                                 </form>
                                                 <br>
-                                                @if (\Carbon\Carbon::now()->lessThan(\Carbon\Carbon::parse($appointment->start_time)))
-                                                    {{--TODO- FUNKSIONILIZIMI I BUTONIT ANULO TERMININ DUKE NDRRUAR STATUSIN E TERMINIT DHE DUKE LAJMERUAR PACIENTIN ME EMAIL--}}
-                                                    <form method="GET" action="{{ route('modify-appointment-view') }}">
-                                                        @csrf
-                                                        <input type="hidden" name="appointmentId" value="{{ $appointment->id }}" />
-                                                        <input type="submit" class="btn btn-primary" value="Ndrysho Terminin" />
-                                                    </form>
-                                                @endif
+                                                <form method="GET" action="{{ route('modify-appointment-view') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="appointmentId" value="{{ $appointment->id }}" />
+                                                    <input type="submit" class="btn btn-primary" value="Ndrysho Terminin" />
+                                                </form>
+                                                <br>
+                                                <form method="POST" action="{{ route('cancel-appointment') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="appointment_id" value="{{ $appointment->id }}" />
+                                                    {{--TODO- DIMALI LE TA VENDOSI NJE ALERT PER TE KONFIRMUAR ANULIMIN E TERMINIT--}}
+                                                    <input type="submit" class="btn btn-primary" value="Anulo Terminin" />
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

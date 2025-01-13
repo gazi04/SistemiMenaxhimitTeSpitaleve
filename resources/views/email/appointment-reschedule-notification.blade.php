@@ -10,6 +10,7 @@
     <p>Ju lutemi vini re orarin e përditësuar të takimit, për më shumë informacion mund të kyqeni në sistem për të pasur një pasqyrë më të mirë të takimeve.</p>
     <p><b>Me respekt,</b></p>
     <p>{{ $doctor_name }}.</p>
+    <p>Ju lutemi mos iu përgjigjni këtij emaili sepse ky është një email i automatizuar.</p>
 </body>
 </html>
 
