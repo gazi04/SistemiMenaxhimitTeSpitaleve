@@ -103,11 +103,6 @@ Route::middleware(DoctorMiddleware::class)->group(function () {
     Route::get('/treat/patient', [PatientController::class, 'treatPatientView'])->name('treat-patient-view');
     Route::post('/treat/patient', [PatientController::class, 'treatPatient'])->name('treat-patient');
 
-    Route::post('/diagnose/patient', [DiagnoseController::class, 'index'])->name('create-diagnosis-view');
-    Route::post('/create/diagnose', [DiagnoseController::class, 'createDiagnoses'])->name('create-diagnose');
-    Route::post('/therapy/patient', [TherapyController::class, 'index'])->name('create-therapy-view');
-    Route::post('/create/therapy', [TherapyController::class, 'createTherapy'])->name('create-therapy');
-
     Route::get('/manage/appointments', [AppointmentController::class, 'manageAppointmentsView'])->name('manage-appointments-view');
     Route::get('/modify/appointment', [AppointmentController::class, 'modifyAppointmentView'])->name('modify-appointment-view');
     Route::post('/available/appointments', [AppointmentController::class, 'getFreeAppointmentForDoctor'])->name('get-free-appointments-for-doctor');
