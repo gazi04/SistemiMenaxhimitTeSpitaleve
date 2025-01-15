@@ -23,6 +23,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
+                        {{--TODO- TODAYS APPOINTMENT ARE NOT DISPLAYED TO THE PATIENT--}}
                         @if ($upcomingAppointments->isEmpty())
                             <p>Nuk ka takime të ardhshme.</p>
                         @else

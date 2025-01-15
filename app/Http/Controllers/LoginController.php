@@ -173,6 +173,7 @@ class LoginController extends Controller
             'emri' => 'required|string',
             'mbiemri' => 'required|string',
             'gjinia' => 'required|integer|in:0,1',
+            /* TODO- ADD A VALIDATION RULE TO CHECK NUMBER IF EXISTS IN THE DATABASE */
             'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
             'email' => 'required|email:filter'
         ]);
