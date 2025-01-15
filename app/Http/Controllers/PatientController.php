@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Appointment;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
+use App\Models\Appointment;
 use App\Models\Patient;
 use App\Models\Diagnosis;
 use App\Models\Therapy;
 use App\Models\Test;
+use Exception;
 
 class PatientController extends Controller
 {
@@ -47,7 +49,8 @@ class PatientController extends Controller
             $patient = Patient::with(['appointments.doctor', 'appointments.diagnosis', 'appointments.therapy'])->findOrFail($request->id);
 
             $ongoingAppointment = Appointment::where('patient_id', $request->id)
-                ->where('status', 'arrived')
+                /* TODO- NEED ALSO TO CHANGE THE STATUS  */
+                /* ->where('status', 'arrived') */
                 ->where('start_time', '<=', now())
                 ->where('end_time', '>=', now())
                 ->first();
@@ -92,4 +95,61 @@ class PatientController extends Controller
     /*         'ongoingAppointment' => $ongoingAppointment */
     /*     ]); */
     /* } */
+
+    public function treatPatientView(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'patient_id' => 'required|integer|exists:patients,id',
+                'appointment_id' => 'required|integer|exists:appointments,id',
+            ]);
+        }
+        catch (ValidationException $e) {
+            return redirect()->back()->with('error', 'Ka ndodhur nje gabim ne sistem, ku id pacientit dhe takimit nuk gjenden ne databaze');
+        }
+        return view('doctor.patient.treat', [
+            'patient_id' => $validated['patient_id'],
+            'appointment_id' => $validated['appointment_id']
+        ]);
+    }
+
+    public function treatPatient(Request $request)
+    {
+        try {
+            $request->validate([
+                'patient_id' => 'required|exists:patients,id',
+                'appointment_id' => 'required|exists:appointments,id',
+                'diagnose' => 'required|string',
+                'therapy' => 'required|string',
+            ]);
+        }
+        catch (ValidationException $e) {
+            return redirect()->back()->with('error', 'Ka ndodhur nje gabim ne sistem, ku id pacientit dhe takimit nuk gjenden ne databaze');
+        }
+
+        $patient = Patient::findOrFail($request->patient_id);
+        $appointment = Appointment::findOrFail($request->appointment_id);
+
+        $doctor = Auth::guard('doctor')->user();
+
+        $diagnosis = Diagnosis::create([
+            'patient_id' => $patient->id,
+            'doctor_id' => $doctor->id,
+            'notes' => $request->diagnose,
+        ]);
+
+        $therapy = Therapy::create([
+            'patient_id' => $patient->id,
+            'doctor_id' => $doctor->id,
+            'notes' => $request->therapy,
+        ]);
+
+        $appointment->update([
+            'diagnoses_id' => $diagnosis->id,
+            'therapy_id' => $therapy->id,
+            'status' => 'completed',
+        ]);
+
+        return redirect()->route('manage-appointments-view')->with('success', 'Pacienti u trajtua me sukses');
+    }
 }

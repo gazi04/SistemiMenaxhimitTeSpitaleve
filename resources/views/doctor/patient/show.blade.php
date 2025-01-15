@@ -4,17 +4,17 @@
     <div class="main-wrapper">
         @include('doctor.includes.header')
         @include('doctor.includes.sidebar')
-        @if (session('message') || isset($message))
-            <div class="alert alert-success">
-                {{ session('message') ?? $message }}
-            </div>
-        @elseif (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
         <div class="page-wrapper">
             <div class="content">
+                @if (session('message'))
+                    <div id="notify" class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @elseif (session('error'))
+                    <div id="notify" class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-sm-4 col-3">
                         <h2 class="page-title">Pacienti</h2>
@@ -49,23 +49,34 @@
                     </div>
                 </div>
                 {{--TODO-THE DOCTOR CAN WRITE A DIAGNOSE AND A THERAPY ONLY IF THE PATIENT HAS AN APPOINTMENT AND IF HE HAS ARRIVED --}}
+
+                <div class="row">
+                    <form method="POST" action="{{ route('create-diagnosis-view') }}">
+                        <div class="action-buttons">
+                            @csrf
+                            <input type="hidden" name="patientId" value="{{ $patient->id }}" />
+                            <input type="submit" class="btn btn-primary" value="Jepini pacientit diagnozën" />
+                        </div>
+                    </form>
+                </div>
+                <br>
+                <div class="row">
+                    <form method="POST" action="{{ route('create-therapy-view') }}">
+                        <div class="action-buttons">
+                            @csrf
+                            <input type="hidden" name="patientId" value="{{ $patient->id }}" />
+                            <input type="submit" class="btn btn-primary" value="Jepini pacientit terapi" />
+                        </div>
+                    </form>
+                </div>
                 @if ($ongoingAppointment)
                     <div class="row">
-                        <form method="POST" action="{{ route('create-diagnosis-view') }}">
+                        <form method="GET" action="{{ route('treat-patient-view') }}">
+                            @csrf
                             <div class="action-buttons">
-                                @csrf
-                                <input type="hidden" name="patientId" value="{{ $patient->id }}" />
-                                <input type="submit" class="btn btn-primary" value="Jepini pacientit diagnozën" />
-                            </div>
-                        </form>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <form method="POST" action="{{ route('create-therapy-view') }}">
-                            <div class="action-buttons">
-                                @csrf
-                                <input type="hidden" name="patientId" value="{{ $patient->id }}" />
-                                <input type="submit" class="btn btn-primary" value="Jepini pacientit terapi" />
+                                <input type="hidden" name="patient_id" value="{{ $patient->id }}" />
+                                <input type="hidden" name="appointment_id" value="{{ $ongoingAppointment->id }}" />
+                                <input type="submit" class="btn btn-primary" value="Trajto Pacientin" />
                             </div>
                         </form>
                     </div>
