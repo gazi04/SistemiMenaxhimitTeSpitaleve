@@ -56,6 +56,7 @@ class PatientController extends Controller
                 ->first();
 
             $appointments = Appointment::where('patient_id', $request->id)
+                ->where('start_time', '<=', now())
                 ->with(['doctor', 'diagnosis', 'therapy'])
                 ->orderBy('start_time', 'desc')
                 ->get();
@@ -124,7 +125,7 @@ class PatientController extends Controller
             ]);
         }
         catch (ValidationException $e) {
-            return redirect()->back()->with('error', 'Ka ndodhur nje gabim ne sistem, ku id pacientit dhe takimit nuk gjenden ne databaze');
+            return redirect()->back()->with('error', 'Ka ndodhur një gabim sistemi, ku ID-të e pacientit dhe të takimit nuk gjenden në bazën e të dhënave.');
         }
 
         $patient = Patient::findOrFail($request->patient_id);

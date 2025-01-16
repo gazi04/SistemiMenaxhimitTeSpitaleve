@@ -43,9 +43,6 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::get('/departaments/update/{id}', [AdminController::class, 'openEditDepartamentView'])->name('edit-departament-view');
     Route::post('/departaments/update', [AdminController::class, 'updateDepartament'])->name('update-departament');
 
-    /* TODO- need to remove this endpoint below */
-    Route::delete('/patient/delete/{id}', [AdminController::class, 'deletePatient'])->name('delete-patient');
-
     /* -------------------------------USER MANAGEMENT------------------------------- */
     Route::get('/users/admin', [AdminController::class, 'displayAdmins'])->name('open-admin-view');
     Route::get('/users/create/admin', [AdminController::class, 'openCreateAdminView'])->name('create-admin-view');
@@ -114,7 +111,7 @@ Route::middleware(DoctorMiddleware::class)->group(function () {
 Route::middleware(PatientMiddleware::class)->group(function () {
     Route::get('/patient/dashboard', [PatientController::class, 'index'])->name('patient-dashboard');
     Route::get('/make/appointment', [AppointmentController::class, 'index'])->name('make-appointment');
-    Route::get('/get/avaible/appointments', [AppointmentController::class, 'getFreeAppointment'])->name('get-free-appointments');
+    Route::post('/get/avaible/appointments', [AppointmentController::class, 'getFreeAppointment'])->name('get-free-appointments');
     Route::post('/set/appointment', [AppointmentController::class, 'setAppointment'])->name('set-appointment');
 
     Route::get('/get/doctors/{departmentId}', [AppointmentController::class, 'getDoctorsByDepartment']);

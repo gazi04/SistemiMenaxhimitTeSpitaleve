@@ -31,9 +31,9 @@
 
   <body>
     <div class="main-wrapper account-wrapper">
-        @if (session('message'))
-            <div id="notify" class="alert alert-success">
-                {{ session('message') }}
+        @if (session('error'))
+            <div id="notify" class="alert alert-danger">
+                {{ session('error') }}
             </div>
         @endif
         <div class="account-page">

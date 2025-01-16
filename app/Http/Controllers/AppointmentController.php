@@ -9,6 +9,7 @@ use App\Models\Appointment;
 use App\Mail\AppointmentChanged;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Carbon;
@@ -37,12 +38,9 @@ class AppointmentController extends Controller
         $startDate = Carbon::parse($validated['start_date']);
         $endDate = Carbon::parse($validated['end_date']);
         $doctorId = $validated['doctorId'];
+        $currentTime = Carbon::now();
 
         $availableAppointments = [];
-
-        /* TODO- there is a bug in this section of the code that generates the free appointments */
-        /* for example the patient select the date today and the current time is 9pm in the free appointment view  */
-        /* the appointment of today are still visible, for example 10am-11am, 12am-1pm, 3pm-4pm     */
 
         while ($startDate->lte($endDate)) {
             $startTime = $startDate->copy()->setTime(8, 0);
@@ -52,19 +50,42 @@ class AppointmentController extends Controller
                 $appointmentStart = $startTime->copy();
                 $appointmentEnd = $startTime->copy()->addHours(2);
 
-                $isTaken = Appointment::where('doctor_id', $doctorId)
-                    ->where(function ($query) use ($appointmentStart, $appointmentEnd) {
-                        $query->where(function ($q) use ($appointmentStart, $appointmentEnd) {
-                            $q->where('start_time', '<', $appointmentEnd)
-                                ->where('start_time', '>=', $appointmentStart);
-                        })
-                            ->orWhere(function ($q) use ($appointmentStart, $appointmentEnd) {
-                                $q->where('end_time', '>', $appointmentStart)
-                                    ->where('end_time', '<=', $appointmentEnd);
+                if ($startDate->isSameDay($currentTime) && $appointmentStart->lt($currentTime)) {
+                    $startTime->addHours(2);
+                    continue;
+                }
+
+                $isTaken = Appointment::where(function ($query) use ($doctorId, $appointmentStart, $appointmentEnd) {
+                    $query->where('doctor_id', $doctorId)
+                        ->where(function ($q) use ($appointmentStart, $appointmentEnd) {
+                            $q->where(function ($q2) use ($appointmentStart, $appointmentEnd) {
+                                $q2->where('start_time', '<', $appointmentEnd)
+                                    ->where('start_time', '>=', $appointmentStart);
                             })
-                            ->orWhere(function ($q) use ($appointmentStart, $appointmentEnd) {
-                                $q->where('start_time', '<=', $appointmentStart)
-                                    ->where('end_time', '>=', $appointmentEnd);
+                                ->orWhere(function ($q2) use ($appointmentStart, $appointmentEnd) {
+                                    $q2->where('end_time', '>', $appointmentStart)
+                                        ->where('end_time', '<=', $appointmentEnd);
+                                })
+                                ->orWhere(function ($q2) use ($appointmentStart, $appointmentEnd) {
+                                    $q2->where('start_time', '<=', $appointmentStart)
+                                        ->where('end_time', '>=', $appointmentEnd);
+                                });
+                        });
+                })->orWhere(function ($query) use ($request, $appointmentStart, $appointmentEnd) {
+                        $query->where('patient_id', Auth::guard('patient')->user()->id)
+                            ->where(function ($q) use ($appointmentStart, $appointmentEnd) {
+                                $q->where(function ($q2) use ($appointmentStart, $appointmentEnd) {
+                                    $q2->where('start_time', '<', $appointmentEnd)
+                                        ->where('start_time', '>=', $appointmentStart);
+                                })
+                                    ->orWhere(function ($q2) use ($appointmentStart, $appointmentEnd) {
+                                        $q2->where('end_time', '>', $appointmentStart)
+                                            ->where('end_time', '<=', $appointmentEnd);
+                                    })
+                                    ->orWhere(function ($q2) use ($appointmentStart, $appointmentEnd) {
+                                        $q2->where('start_time', '<=', $appointmentStart)
+                                            ->where('end_time', '>=', $appointmentEnd);
+                                    });
                             });
                     })->exists();
 
@@ -86,25 +107,32 @@ class AppointmentController extends Controller
         return view('patient.appointment.available', ['availableAppointments' => $availableAppointments]);
     }
 
+
+
     public function setAppointment(Request $request)
     {
-        $validated = $request->validate([
-            'doctor_id' => 'required|exists:doctors,id',
-            'date' => 'required|date',
-            'start_time' => 'required',
-            'end_time' => 'required',
-        ]);
+        try {
+            $validated = $request->validate([
+                'doctor_id' => 'required|exists:doctors,id',
+                'date' => 'required|date',
+                'start_time' => 'required',
+                'end_time' => 'required',
+            ]);
+        }
+        catch (ValidationException $e) {
+            return redirect()->back()->with('error', 'Ka ndodhur një gabim i sistemit, ju lutemi provoni përsëri më vonë.');
+        }
 
-        /* TODO- NEED TO CHECK IF THAT THE PATIENT DOESN'T HAVE ANY OTHER APPOINMENTS BY OTHER DOCTORS */
         Appointment::create([
             'doctor_id' => $validated['doctor_id'],
             'patient_id' => Auth::guard('patient')->id(),
             'start_time' => $validated['date'] . ' ' . $validated['start_time'],
             'end_time' => $validated['date'] . ' ' . $validated['end_time'],
+            /* TODO- NEED TO CHANGE THE PENDING STATUS TO ALBANIAN */
             'status' => 'pending',
         ]);
 
-        return redirect()->route('patient-dashboard');
+        return redirect()->route('patient-dashboard')->with('message', 'Takimi juaj është regjistruar me sukses në bazën e të dhënave.');
     }
 
     public function getDoctorsByDepartment($departamentId)

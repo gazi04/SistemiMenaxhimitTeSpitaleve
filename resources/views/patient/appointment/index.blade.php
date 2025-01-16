@@ -22,7 +22,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <form method="GET" action="{{ route('get-free-appointments') }}">
+                        <form method="POST" action="{{ route('get-free-appointments') }}">
+                            @csrf
                             <div class="form-group">
                                 <label for="start_date">Data Fillimit</label>
                                 <input type="date" id="start_date" name="start_date" class="form-control" required>

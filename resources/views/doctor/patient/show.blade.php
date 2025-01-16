@@ -48,27 +48,6 @@
                         </table>
                     </div>
                 </div>
-                {{--TODO-THE DOCTOR CAN WRITE A DIAGNOSE AND A THERAPY ONLY IF THE PATIENT HAS AN APPOINTMENT AND IF HE HAS ARRIVED --}}
-
-                <div class="row">
-                    <form method="POST" action="{{ route('create-diagnosis-view') }}">
-                        <div class="action-buttons">
-                            @csrf
-                            <input type="hidden" name="patientId" value="{{ $patient->id }}" />
-                            <input type="submit" class="btn btn-primary" value="Jepini pacientit diagnozën" />
-                        </div>
-                    </form>
-                </div>
-                <br>
-                <div class="row">
-                    <form method="POST" action="{{ route('create-therapy-view') }}">
-                        <div class="action-buttons">
-                            @csrf
-                            <input type="hidden" name="patientId" value="{{ $patient->id }}" />
-                            <input type="submit" class="btn btn-primary" value="Jepini pacientit terapi" />
-                        </div>
-                    </form>
-                </div>
                 @if ($ongoingAppointment)
                     <div class="row">
                         <form method="GET" action="{{ route('treat-patient-view') }}">
@@ -112,6 +91,15 @@
                             </tbody>
                         </table>
                     @endif
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h2 class="page-title">Analizat e Pacientit</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    {{--TODO- THE TESTS RESULTS NEED TO BE DISPLAYE--}}
                 </div>
             </div>
         </div>

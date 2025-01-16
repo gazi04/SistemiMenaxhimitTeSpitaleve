@@ -4,13 +4,17 @@
     <div class="main-wrapper">
         @include('patient.includes.header')
         @include('patient.includes.sidebar')
-        @if (session('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
         <div class="page-wrapper">
             <div class="content">
+                @if (session('message'))
+                    <div id="notify" class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @elseif (session('error'))
+                    <div id="notify" class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-sm-4 col-3">
                         <h2 class="page-title">Pershendetje {{ $patient->first_name }}</h2>
@@ -23,7 +27,6 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        {{--TODO- TODAYS APPOINTMENT ARE NOT DISPLAYED TO THE PATIENT--}}
                         @if ($upcomingAppointments->isEmpty())
                             <p>Nuk ka takime të ardhshme.</p>
                         @else

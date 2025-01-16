@@ -123,11 +123,7 @@ class LoginController extends Controller
             return redirect()->route('receptionist-dashboard');
         }
 
-        /* TODO- NEED TO DISPLAY THIS ERROR TO THE END-USER */
-        return redirect()->route('login')->with('message', 'Kredencialet e pavlefshme');
-        /* return back()->withErrors([ */
-        /*     'credentials' => 'Invalid ID Number or Personal ID.', */
-        /* ]); */
+        return redirect()->route('login')->with('error', 'Kredencialet e pavlefshme');
     }
 
     public function logout(Request $request)
@@ -167,15 +163,13 @@ class LoginController extends Controller
 
     public function createPatient(Request $request)
     {
-        Log::info($request);
         $validated = $request->validate([
-            'numri_personal' => 'required|integer',
+            'numri_personal' => 'required|integer|unique:patients,personal_id',
             'emri' => 'required|string',
             'mbiemri' => 'required|string',
             'gjinia' => 'required|integer|in:0,1',
-            /* TODO- ADD A VALIDATION RULE TO CHECK NUMBER IF EXISTS IN THE DATABASE */
-            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
-            'email' => 'required|email:filter'
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7|unique:patients,phone_number',
+            'email' => 'required|email:filter|unique:patients,email'
         ]);
 
         $patient = Patient::create([

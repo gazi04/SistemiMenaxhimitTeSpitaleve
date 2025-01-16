@@ -58,7 +58,6 @@
                                         <td>{{ $free['start_time'] }}</td>
                                         <td>{{ $free['end_time'] }}</td>
                                         <td>
-                                            {{--TODO-MAKE IT FUNCTIONAL TO CHANGE THE APPOINTMENT DATE--}}
                                             <form method="POST" action="{{ route('modify-appointment') }}">
                                                 @csrf
                                                 <input type="hidden" name="appointment_id" value="{{ $appointment->id }}">
