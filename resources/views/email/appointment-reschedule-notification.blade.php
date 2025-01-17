@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ID e pacientit</title>
+    <title>Njoftimi për ricaktim të takimit</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Rubik, sans-serif;
             color: #333;
             margin: 0;
             padding: 0;
@@ -41,10 +41,12 @@
 </head>
 <body>
     <div class="email-container">
-        <h1>Pershendetje {{ $firstName }},</h1>
-        <p>Kjo është ID-ja yte për llogarinë e pacientit: <strong>{{ $patientId }}</strong></p>
-        <p>Kështu që ruaje atë në një vend të sigurtë.</p>
-        <br>
+        <h1>Përshendetje {{ $patient_name }},</h1>
+        <p>Ky email është për t'ju informuar për një ndryshim në takimin tuaj të ardhshëm.</p>
+        <p>Takimi juaj është riplanifikuar me {{ \Carbon\Carbon::parse($new_start_date)->format('d-m-Y H:i') }}</p>
+        <p>Ju lutemi vini re orarin e përditësuar të takimit, për më shumë informacion mund të kyqeni në sistem për të pasur një pasqyrë më të mirë të takimeve.</p>
+        <p><b>Me respekt,</b></p>
+        <p>{{ $doctor_name }}.</p>
         <p class="footer">Ju lutemi të mos iu përgjigjeni këtij emaili, sepse ky është një email i autorizuar.</p>
     </div>
 </body>

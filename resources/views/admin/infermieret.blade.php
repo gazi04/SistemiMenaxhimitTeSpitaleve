@@ -5,23 +5,23 @@
     @include('admin.includes.header')
     @include('admin.includes.sidebar')
     <div class="page-wrapper">
-        @if (session('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @elseif (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
         <div class="content">
+            @if (session('message'))
+                <div id="notify" class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @elseif (session('error'))
+                <div id="notify" class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-sm-4 col-3">
                     <h4 class="page-title">Infermieret</h4>
                 </div>
                 <div class="col-sm-8 col-9 text-right m-b-20">
                     <a href="{{ route('create-nurse-view') }}" class="btn btn-primary btn-rounded float-right"><i
-                            class="fa fa-plus"></i> Shto një infermier/e</a>
+                                                               class="fa fa-plus"></i> Shto një infermier/e</a>
                 </div>
             </div>
             <div class="row doctor-grid">

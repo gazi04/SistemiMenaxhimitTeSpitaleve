@@ -2,27 +2,22 @@
 
 @section('content')
     <div class="main-wrapper">
-        @include('admin.includes.header')
-        @include('admin.includes.sidebar')
+        @include('doctor.includes.header')
+        @include('doctor.includes.sidebar')
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @elseif (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="page-wrapper">
             <div class="content">
-                @if (session('message'))
-                    <div id="notify" class="alert alert-success">
-                        {{ session('message') }}
-                    </div>
-                @elseif (session('error'))
-                    <div id="notify" class="alert alert-danger">
-                        {{ session('error') }}
-                    </div>
-                @endif
                 <div class="row">
                     <div class="col-sm-4 col-3">
-                        <h4 class="page-title">Administratoret</h4>
-                    </div>
-                    <div class="col-sm-8 col-9 text-right m-b-20">
-                        <a href="{{ url('shto-admin')}}" class="btn btn-primary btn-rounded float-right"><i
-                                                         class="fa fa-plus"></i>
-                            Shto një Admin</a>
+                        <h4 class="page-title">Pershendetje {{ $username }}</h4>
                     </div>
                 </div>
                 <div class="row doctor-grid">

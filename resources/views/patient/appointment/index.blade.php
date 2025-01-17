@@ -4,13 +4,17 @@
     <div class="main-wrapper">
         @include('patient.includes.header')
         @include('patient.includes.sidebar')
-        @if (session('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
-            </div>
-        @endif
         <div class="page-wrapper">
             <div class="content">
+                @if (session('message'))
+                    <div id="notify" class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                @elseif (session('error'))
+                    <div id="notify" class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-sm-4 col-3">
                         <h4 class="page-title">Pershendetje {{ $patient->first_name }}, ketu mund te caktosh termini</h4>
@@ -18,7 +22,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <form method="GET" action="{{ route('get-free-appointments') }}">
+                        <form method="POST" action="{{ route('get-free-appointments') }}">
+                            @csrf
                             <div class="form-group">
                                 <label for="start_date">Data Fillimit</label>
                                 <input type="date" id="start_date" name="start_date" class="form-control" required>

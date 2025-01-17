@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DiagnoseController;
+use App\Http\Controllers\TherapyController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Middleware\AdminMiddleware;
@@ -39,9 +42,6 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::post('/departaments/save', [AdminController::class, 'saveDepartament'])->name('save-departament');
     Route::get('/departaments/update/{id}', [AdminController::class, 'openEditDepartamentView'])->name('edit-departament-view');
     Route::post('/departaments/update', [AdminController::class, 'updateDepartament'])->name('update-departament');
-
-    /* TODO- need to remove this endpoint below */
-    Route::delete('/patient/delete/{id}', [AdminController::class, 'deletePatient'])->name('delete-patient');
 
     /* -------------------------------USER MANAGEMENT------------------------------- */
     Route::get('/users/admin', [AdminController::class, 'displayAdmins'])->name('open-admin-view');
@@ -91,14 +91,27 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 
 /* -------------------------------DOCTOR DASHBOARD------------------------------- */
 Route::middleware(DoctorMiddleware::class)->group(function () {
-    Route::get('/doctor-dashboard',function(){ return 'doctor dashboar';})->name('doctor-dashboard');
+    Route::get('/doctor/dashboard', [DoctorController::class, 'index'])->name('doctor-dashboard');
+
+    Route::get('/patients', [DoctorController::class, 'openManagePatientView'])->name('manage-patients');
+    Route::get('/patient', [PatientController::class, 'showPatient'])->name('show-patient');
+    Route::get('/search/patient', [PatientController::class, 'searchPatient'])->name('search-patient');
+
+    Route::get('/treat/patient', [PatientController::class, 'treatPatientView'])->name('treat-patient-view');
+    Route::post('/treat/patient', [PatientController::class, 'treatPatient'])->name('treat-patient');
+
+    Route::get('/manage/appointments', [AppointmentController::class, 'manageAppointmentsView'])->name('manage-appointments-view');
+    Route::get('/modify/appointment', [AppointmentController::class, 'modifyAppointmentView'])->name('modify-appointment-view');
+    Route::post('/available/appointments', [AppointmentController::class, 'getFreeAppointmentForDoctor'])->name('get-free-appointments-for-doctor');
+    Route::post('/modify/appointment', [AppointmentController::class, 'modifyAppointment'])->name('modify-appointment');
+    Route::post('/cancel/appointment', [AppointmentController::class, 'cancelAppointment'])->name('cancel-appointment');
 });
 
 /* -------------------------------PATIENT DASHBOARD------------------------------- */
 Route::middleware(PatientMiddleware::class)->group(function () {
     Route::get('/patient/dashboard', [PatientController::class, 'index'])->name('patient-dashboard');
     Route::get('/make/appointment', [AppointmentController::class, 'index'])->name('make-appointment');
-    Route::get('/get/avaible/appointments', [AppointmentController::class, 'getFreeAppointment'])->name('get-free-appointments');
+    Route::post('/get/avaible/appointments', [AppointmentController::class, 'getFreeAppointment'])->name('get-free-appointments');
     Route::post('/set/appointment', [AppointmentController::class, 'setAppointment'])->name('set-appointment');
 
     Route::get('/get/doctors/{departmentId}', [AppointmentController::class, 'getDoctorsByDepartment']);

@@ -42,10 +42,11 @@
                                         Ruaj të dhënat
                                     </button>
                                 </div>
-                        </form>
                             </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection

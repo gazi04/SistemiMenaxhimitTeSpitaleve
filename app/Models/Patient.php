@@ -24,21 +24,31 @@ class Patient extends Model implements AuthenticatableContract, MustVerifyEmail
 
     public static $customIdColumn = 'id_number';
 
-    /**
-     * Check if the email has been verified.
-     *
-     * @return bool
-     */
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    public function diagnoses()
+    {
+        return $this->hasMany(Diagnosis::class);
+    }
+
+    public function therapies()
+    {
+        return $this->hasMany(Therapy::class);
+    }
+
+    public function tests()
+    {
+        return $this->hasMany(Test::class);
+    }
+
     public function hasVerifiedEmail()
     {
         return !is_null($this->email_verified_at);
     }
 
-    /**
-     * Mark the email as verified.
-     *
-     * @return bool
-     */
     public function markEmailAsVerified()
     {
         return $this->forceFill([
@@ -46,21 +56,11 @@ class Patient extends Model implements AuthenticatableContract, MustVerifyEmail
         ])->save();
     }
 
-    /**
-     * Send the email verification notification.
-     *
-     * @return void
-     */
     public function sendEmailVerificationNotification()
     {
         $this->notify(new \Illuminate\Auth\Notifications\VerifyEmail);
     }
 
-    /**
-     * Get the email address that should be used for verification.
-     *
-     * @return string
-     */
     public function getEmailForVerification()
     {
         return $this->email;

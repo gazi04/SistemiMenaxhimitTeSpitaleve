@@ -6,6 +6,11 @@
     @include('admin.includes.sidebar')
     <div class="page-wrapper">
         <div class="content">
+            @if (session('error'))
+                <div id="notify" class="alert alert-success">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
                     <h4 class="page-title">Modifiko te dhenat e Departmentit</h4>

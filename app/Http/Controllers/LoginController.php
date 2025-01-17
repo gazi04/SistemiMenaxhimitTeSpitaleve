@@ -51,7 +51,10 @@ class LoginController extends Controller
         $admin = Admin::where($credentials)->first();
 
         if ($admin) {
-            $this->isEmployed($admin);
+            if($this->isEmployed($admin) == 0) {
+                return redirect()->route('login')->with('message', 'Ti nuk mund te kyqesh, je pushuar nga puna.');
+            }
+
             try {Auth::guard('admin')->login($admin);}
             catch(Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
@@ -61,11 +64,14 @@ class LoginController extends Controller
 
         $doctor = Doctor::where($credentials)->first();
         if ($doctor) {
-            try {$this->isEmployed($doctor);}
+            if($this->isEmployed($doctor) == 0) {
+                return redirect()->route('login')->with('message', 'Ti nuk mund te kyqesh, je pushuar nga puna.');
+            }
+
+            try {Auth::guard('doctor')->login($doctor);}
             catch(Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
             }
-            Auth::guard('doctor')->login($doctor);
             return redirect()->route('doctor-dashboard');
         }
 
@@ -80,7 +86,10 @@ class LoginController extends Controller
 
         $nurse = Nurse::where($credentials)->first();
         if ($nurse) {
-            $this->isEmployed($nurse);
+            if($this->isEmployed($nurse) == 0) {
+                return redirect()->route('login')->with('message', 'Ti nuk mund te kyqesh, je pushuar nga puna.');
+            }
+
             try {Auth::guard('nurse')->login($nurse);}
             catch(Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
@@ -90,7 +99,10 @@ class LoginController extends Controller
 
         $technologist = Technologist::where($credentials)->first();
         if ($technologist) {
-            $this->isEmployed($technologist);
+            if($this->isEmployed($technologist) == 0) {
+                return redirect()->route('login')->with('message', 'Ti nuk mund te kyqesh, je pushuar nga puna.');
+            }
+
             try {Auth::guard('technologist')->login($technologist);}
             catch(Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
@@ -100,7 +112,10 @@ class LoginController extends Controller
 
         $receptionist = Receptionist::where($credentials)->first();
         if ($receptionist) {
-            $this->isEmployed($receptionist);
+            if($this->isEmployed($receptionist) == 0) {
+                return redirect()->route('login')->with('message', 'Ti nuk mund te kyqesh, je pushuar nga puna.');
+            }
+
             try {Auth::guard('receptionist')->login($receptionist);}
             catch(Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
@@ -108,11 +123,7 @@ class LoginController extends Controller
             return redirect()->route('receptionist-dashboard');
         }
 
-        /* TODO- NEED TO DISPLAY THIS ERROR TO THE END-USER */
-        return redirect()->route('login')->with('message', 'Kredencialet e pavlefshme');
-        /* return back()->withErrors([ */
-        /*     'credentials' => 'Invalid ID Number or Personal ID.', */
-        /* ]); */
+        return redirect()->route('login')->with('error', 'Kredencialet e pavlefshme');
     }
 
     public function logout(Request $request)
@@ -141,8 +152,8 @@ class LoginController extends Controller
 
     private function isEmployed(Model $model)
     {
-        if (!$model->is_employed) { return 'nuk mund te kyqesh je pushuar nga puna'; }
-        return true;
+        Log::info(!$model->is_employed);
+        return $model->is_employed;
     }
 
     public function openCreatePatientview()
@@ -152,14 +163,13 @@ class LoginController extends Controller
 
     public function createPatient(Request $request)
     {
-        Log::info($request);
         $validated = $request->validate([
-            'numri_personal' => 'required|integer',
+            'numri_personal' => 'required|integer|unique:patients,personal_id',
             'emri' => 'required|string',
             'mbiemri' => 'required|string',
             'gjinia' => 'required|integer|in:0,1',
-            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
-            'email' => 'required|email:filter'
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7|unique:patients,phone_number',
+            'email' => 'required|email:filter|unique:patients,email'
         ]);
 
         $patient = Patient::create([
