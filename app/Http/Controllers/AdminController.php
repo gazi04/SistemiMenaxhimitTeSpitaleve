@@ -20,7 +20,7 @@ use function Laravel\Prompts\error;
 
 class AdminController extends Controller
 {
-    public function index() { return view('admin.index'); }
+    public function index() { return redirect()->route('open-admin-view'); }
 
     /* -------------------------------DEPARTAMENTS CRUD OPERATIONS------------------------------- */
     public function displayDepartaments() { return view('admin.departamentet', ['departaments' => Departament::all()]); }

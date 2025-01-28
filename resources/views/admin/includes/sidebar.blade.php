@@ -15,13 +15,11 @@
                         <li><a href="{{ route('open-doctor-view') }}">Doktoret</a></li>
                         <li><a href="{{ route('open-nurse-view') }}">Infermieret</a></li>
                         <li><a href="{{ route('open-receptionist-view') }}">Recepcionistet</a></li>
-                        <li class="active">
-                            <a href="{{ route('open-technologist-view') }}">Laborantet</a>
-                        </li>
+                        <li><a href="{{ route('open-technologist-view') }}">Laborantet</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="{{ url('patients') }}"><i class="fa fa-wheelchair"></i> <span>Pacientet</span></a>
+                    <a href="{{ route('open-patient-view') }}"><i class="fa fa-wheelchair"></i> <span>Pacientet</span></a>
                 </li>
                 <li>
                     <a href="{{ route('show-departaments') }}">

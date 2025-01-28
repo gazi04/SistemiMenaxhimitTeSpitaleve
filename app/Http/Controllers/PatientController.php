@@ -16,8 +16,15 @@ use Exception;
 
 class PatientController extends Controller
 {
+
+    public function indexForAdmin()
+    {
+        return view('admin.pacienti', ['patients' => Patient::lazy()]);
+    }
+
     public function index()
     {
+
         $user = Auth::guard('patient')->user();
         $upcomingAppointments = Appointment::where('patient_id', $user->id)
             ->where('start_time', '>', now())
@@ -40,7 +47,7 @@ class PatientController extends Controller
             ->orWhere('phone_number', 'LIKE', "%{$query}%")
             ->get();
 
-        return view('doctor.manage-patient', ['patients' => $results]);
+        return view('doctor.patient.manage', ['patients' => $results]);
     }
 
     public function showPatient(Request $request)

@@ -34,6 +34,7 @@ Route::post('/email/verification-notification', [EmailController::class, 'Resend
 /* -------------------------------ADMIN DASHBOARD------------------------------- */
 Route::middleware(AdminMiddleware::class)->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
+    Route::get('/test', [PatientController::class, 'indexForAdmin'])->name('open-patient-view');
 
     /* -------------------------------DEPARTAMENT MANAGEMENT------------------------------- */
     Route::get('/departaments', [AdminController::class, 'displayDepartaments'])->name('show-departaments');
@@ -87,6 +88,7 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::post('/users/edit/technologist', [AdminController::class, 'editTechnologist'])->name('edit-technologist');
     Route::post('/users/fire/technologist', [AdminController::class, 'fireTechnologist'])->name('fire-technologist');
     Route::post('/users/hire/technologist', [AdminController::class, 'hireTechnologist'])->name('hire-technologist');
+
 });
 
 /* -------------------------------DOCTOR DASHBOARD------------------------------- */
