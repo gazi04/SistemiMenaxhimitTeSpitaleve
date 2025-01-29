@@ -69,6 +69,8 @@
                             <button class="btn btn-primary submit-btn">
                                 Regjistrohu
                             </button>
+                            <br>
+                            <a href="{{ route('login') }}">Kthehu prapa</a>
                         </div>
                     </form>
                 </div>
