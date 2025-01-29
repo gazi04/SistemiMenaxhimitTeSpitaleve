@@ -34,7 +34,10 @@ Route::post('/email/verification-notification', [EmailController::class, 'Resend
 /* -------------------------------ADMIN DASHBOARD------------------------------- */
 Route::middleware(AdminMiddleware::class)->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
-    Route::get('/test', [PatientController::class, 'indexForAdmin'])->name('open-patient-view');
+    Route::get('/show/patients', [PatientController::class, 'indexForAdmin'])->name('open-patient-view');
+    Route::post('/show/patients', [PatientController::class, 'searchPatient'])->name('search-patients');
+    Route::get('/modify/patient/{id}', [PatientController::class, 'modifyPatientView'])->name('modify-patient-view');
+    Route::post('/modify/patient', [PatientController::class, 'modifyPatient'])->name('modify-patient');
 
     /* -------------------------------DEPARTAMENT MANAGEMENT------------------------------- */
     Route::get('/departaments', [AdminController::class, 'displayDepartaments'])->name('show-departaments');

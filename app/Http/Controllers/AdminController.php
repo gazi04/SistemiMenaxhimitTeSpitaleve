@@ -20,6 +20,8 @@ use function Laravel\Prompts\error;
 
 class AdminController extends Controller
 {
+    /* TODO- IN THE DASHBOARD ARE DISPLAYED ALL THE ADMINISTRATORS EVEN THE LOGGED ONE  */
+    /* HE CAN ACCIDENTALLY FIRE HIMESELF FROM THE WORK SO THAT NEEDS TO BE FIXED */
     public function index() { return redirect()->route('open-admin-view'); }
 
     /* -------------------------------DEPARTAMENTS CRUD OPERATIONS------------------------------- */

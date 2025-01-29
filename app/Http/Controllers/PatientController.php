@@ -22,9 +22,41 @@ class PatientController extends Controller
         return view('admin.pacienti', ['patients' => Patient::lazy()]);
     }
 
+    public function modifyPatientView($id)
+    {
+        /* TODO- NEED TO CHECK IF PATIENT WITH THAT $ID EXISTS OR NOT */
+        return view('admin.modifiko-pacientin', ['patient' => Patient::find($id)]);
+    }
+
+    public function modifyPatient(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|integer',
+            'numri_personal' => 'required|integer',
+            'emri' => 'required|string',
+            'mbiemri' => 'required|string',
+            'email' => 'required|email:filter',
+            'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
+        ]);
+
+
+        try { $patient = Patient::findOrFail($validated['id']); }
+        catch(ModelNotFoundException $e){
+            return redirect()->route('open-patient-view')->with('error', 'Nuk mund te perditesohet pacienti me ID '.$validated['id']);
+        }
+
+        $patient->update([
+            'personal_id' => $validated['numri_personal'],
+            'first_name' => $validated['emri'],
+            'last_name' => $validated['mbiemri'],
+            'phone_number' => $validated["numri_kontaktues"],
+            'email' => $validated["email"],
+        ]);
+        return redirect()->route('open-patient-view')->with('message', 'Pacienti eshte perditesuar me sukses');
+    }
+
     public function index()
     {
-
         $user = Auth::guard('patient')->user();
         $upcomingAppointments = Appointment::where('patient_id', $user->id)
             ->where('start_time', '>', now())
@@ -47,7 +79,15 @@ class PatientController extends Controller
             ->orWhere('phone_number', 'LIKE', "%{$query}%")
             ->get();
 
-        return view('doctor.patient.manage', ['patients' => $results]);
+        if(Auth::guard('admin')->check()) {
+            return view('admin.pacienti', ['patients' => $results]);
+        }
+
+        if(Auth::guard('doctor')->check()) {
+            return view('doctor.patient.manage', ['patients' => $results]);
+        }
+
+        /* TODO- NEED TO ADD AN DEFAULT RETURN STATEMENT  */
     }
 
     public function showPatient(Request $request)

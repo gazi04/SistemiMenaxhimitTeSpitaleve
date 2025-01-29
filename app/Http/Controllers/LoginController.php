@@ -169,7 +169,8 @@ class LoginController extends Controller
             'mbiemri' => 'required|string',
             'gjinia' => 'required|integer|in:0,1',
             'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7|unique:patients,phone_number',
-            'email' => 'required|email:filter|unique:patients,email'
+            'email' => 'required|email:filter|unique:patients,email',
+            'gjinia' => 'required|integer|in:0,1',
         ]);
 
         $patient = Patient::create([
