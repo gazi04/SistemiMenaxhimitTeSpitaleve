@@ -9,6 +9,7 @@ use App\Http\Controllers\TherapyController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ReceptionistController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\DoctorMiddleware;
 use App\Http\Middleware\PatientMiddleware;
@@ -135,5 +136,6 @@ Route::middleware(TechnologistMiddleware::class)->group(function () {
 
 /* -------------------------------RECEPTIONIST DASHBOARD------------------------------- */
 Route::middleware(ReceptionistMiddleware::class)->group(function () {
-    Route::get('/receptionist-dashboard',function(){ return 'receptionist dashboar';})->name('receptionist-dashboard');
+    Route::get('/receptionist/dashboard', [ReceptionistController::class, 'index'])->name('receptionist-dashboard');
+    Route::post('/change-status', [ReceptionistController::class, 'changeStatus'])->name('change-status');
 });
