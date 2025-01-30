@@ -13,7 +13,7 @@
                 <span class="user-img"><img class="rounded-circle" src="{{ asset('assets/img/user.jpg') }}"
                                                                    width="40" alt="Admin" />
                     <span class="status online"></span></span>
-                <span>Doktori</span>
+                <span>Doktori/ja</span>
             </a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="{{ route('logout') }}">Çkyçu</a>

@@ -24,8 +24,7 @@ class ReceptionistController extends Controller
         $appointment = Appointment::find($appointmentId);
 
         if ($appointment) {
-            /* TODO- CHANGE THE STATUS  */
-            $appointment->status = 'Pacienti ka ardh';
+            $appointment->status = 'Mbërriti në spital';
             $appointment->save();
             return redirect()->route('receptionist-dashboard')->with('message', 'Statusi u ndryshua me sukses.');
         } else {

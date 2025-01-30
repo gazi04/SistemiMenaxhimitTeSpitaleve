@@ -40,7 +40,6 @@
             <div class="account-center">
                 <div class="account-box">
                     <form
-                            {{--#TODO: need to fix the action attribute--}}
                             action="{{ route('login') }}"
                             method="POST"
                             class="form-signin"

@@ -48,6 +48,10 @@
                         </table>
                     </div>
                 </div>
+                {{--TODO- TEST THE DOCTOR MODULE BY --}}
+                {{--1. LOGIN AS PATIENT AND GET AN APPOINTMENT--}}
+                {{--2. LOGIN AS RECEPTIONIST WILL CHANGE THE STATUS FOR THE APPOINTMENT TO PATIENT HAS ARRIVED --}}
+                {{--3. LOGIN AS DOCTOR AND TREAT THE PATIENT BY GIVING HIM A DIAGNOSE AND A THERAPY--}}
                 @if ($ongoingAppointment)
                     <div class="row">
                         <form method="GET" action="{{ route('treat-patient-view') }}">

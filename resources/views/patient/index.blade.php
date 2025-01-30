@@ -15,12 +15,9 @@
                         {{ session('error') }}
                     </div>
                 @endif
-                <div id="notify" class="alert alert-success">
-                    <h3>Mirësevini pacineti/ja {{ Auth::guard('patient')->user()->first_name }} {{ Auth::guard('patient')->user()->last_name }}!</h3>
-                </div>
                 <div class="row">
                     <div class="col-sm-4 col-3">
-                        <h2 class="page-title">Pershendetje {{ $patient->first_name }}</h2>
+                        <h2 class="page-title">Përshëndetje {{ Auth::guard('patient')->user()->first_name }} {{ Auth::guard('patient')->user()->last_name }}!</h2>
                     </div>
                 </div>
                 <div class="row">

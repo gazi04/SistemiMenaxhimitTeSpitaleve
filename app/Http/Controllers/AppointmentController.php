@@ -128,8 +128,7 @@ class AppointmentController extends Controller
             'patient_id' => Auth::guard('patient')->id(),
             'start_time' => $validated['date'] . ' ' . $validated['start_time'],
             'end_time' => $validated['date'] . ' ' . $validated['end_time'],
-            /* TODO- NEED TO CHANGE THE PENDING STATUS TO ALBANIAN */
-            'status' => 'pending',
+            'status' => 'Në pritje',
         ]);
 
         return redirect()->route('patient-dashboard')->with('message', 'Takimi juaj është regjistruar me sukses në bazën e të dhënave.');
@@ -296,8 +295,7 @@ class AppointmentController extends Controller
             return redirect()->route('manage-appointments-view')->with('error', 'Ndodhi një gabim gjatë procesit, konsullata nuk mund të gjendet në bazën e të dhënave, provoni përsëri.');
         }
 
-        /* TODO- PERKTHE VLEREN E STATUS KOLONES NE SHQIP */
-        $appointment->update(['status' => 'canceled']);
+        $appointment->update(['status' => 'Anuluar']);
 
         try {
             $doctor = Auth::guard('doctor')->user();
@@ -319,6 +317,5 @@ class AppointmentController extends Controller
             ]);
             return redirect()->route('manage-appointments-view')->with('error', 'Takimi është anuluar me sukses por, ndodhi një gabim gjatë dërgimit të emailit ju sugjerojmë të njoftoni pacientin përmes një mesazhi email.');
         }
-        return $request;
     }
 }

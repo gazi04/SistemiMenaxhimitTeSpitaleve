@@ -24,8 +24,13 @@ class PatientController extends Controller
 
     public function modifyPatientView($id)
     {
-        /* TODO- NEED TO CHECK IF PATIENT WITH THAT $ID EXISTS OR NOT */
-        return view('admin.modifiko-pacientin', ['patient' => Patient::find($id)]);
+        $patient = Patient::find($id);
+
+        if (!$patient) {
+            return redirect()->route('open-patient-view')->with('error', 'Ka një gabim në sistem, pacienti nuk u gjet.');
+        }
+
+        return view('admin.modifiko-pacientin', ['patient' => $patient]);
     }
 
     public function modifyPatient(Request $request)
@@ -86,8 +91,6 @@ class PatientController extends Controller
         if(Auth::guard('doctor')->check()) {
             return view('doctor.patient.manage', ['patients' => $results]);
         }
-
-        /* TODO- NEED TO ADD AN DEFAULT RETURN STATEMENT  */
     }
 
     public function showPatient(Request $request)
@@ -96,8 +99,7 @@ class PatientController extends Controller
             $patient = Patient::with(['appointments.doctor', 'appointments.diagnosis', 'appointments.therapy'])->findOrFail($request->id);
 
             $ongoingAppointment = Appointment::where('patient_id', $request->id)
-                /* TODO- NEED ALSO TO CHANGE THE STATUS  */
-                /* ->where('status', 'arrived') */
+                ->where('status', 'Mbërriti në spital')
                 ->where('start_time', '<=', now())
                 ->where('end_time', '>=', now())
                 ->first();

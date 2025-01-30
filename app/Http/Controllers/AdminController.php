@@ -12,6 +12,7 @@ use App\Models\Receptionist;
 use App\Models\Technologist;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use PgSql\Lob;
@@ -20,8 +21,6 @@ use function Laravel\Prompts\error;
 
 class AdminController extends Controller
 {
-    /* TODO- IN THE DASHBOARD ARE DISPLAYED ALL THE ADMINISTRATORS EVEN THE LOGGED ONE  */
-    /* HE CAN ACCIDENTALLY FIRE HIMESELF FROM THE WORK SO THAT NEEDS TO BE FIXED */
     public function index() { return redirect()->route('open-admin-view'); }
 
     /* -------------------------------DEPARTAMENTS CRUD OPERATIONS------------------------------- */
@@ -82,11 +81,14 @@ class AdminController extends Controller
             $departament->delete();
             return redirect()->route('show-departaments')->with('message',  'Departamenti u fshi me sukses.');
         }
-
     }
 
     /* -------------------------------ADMINS CRUD OPERATIONS------------------------------- */
-    public function displayAdmins() { return view('admin.administratoret', ['admins' => Admin::all()]); }
+    public function displayAdmins() {
+        $loggedAdminId = Auth::guard('admin')->user()->id;
+        $admins = Admin::where('id', '!=', $loggedAdminId)->get();
+        return view('admin.administratoret', ['admins' => $admins]);
+    }
 
     public function openCreateAdminView() { return view('admin.shto-admin'); }
 
