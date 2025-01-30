@@ -37,6 +37,7 @@
                                 @csrf
                                 <button type="submit" class="btn btn-link">Log Out</button>
                             </form>
+                            <a href="{{ route('logout') }}" type="submit" class="btn btn-link">Log Out</a>
                         </div>
                     </div>
                 </div>

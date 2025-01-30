@@ -14,4 +14,9 @@ class Test extends Model
         'results',
         'status',
     ];
+
+    public function technologist()
+    {
+        return $this->belongsTo(Technologist::class);
+    }
 }

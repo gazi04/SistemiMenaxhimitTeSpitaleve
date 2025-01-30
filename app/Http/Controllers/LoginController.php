@@ -19,22 +19,24 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        if(Auth::guard('admin')->check()) {
+        if (Auth::guard('admin')->check()) {
             return redirect()->route('admin-dashboard');
         }
-        if(Auth::guard('doctor')->check()) {
+        if (Auth::guard('doctor')->check()) {
             return redirect()->route('doctor-dashboard');
         }
-        if(Auth::guard('patient')->check()) {
+        if (Auth::guard('patient')->check()) {
             return redirect()->route('patient-dashboard');
         }
-        if(Auth::guard('nurse')->check()) {
+        if (Auth::guard('nurse')->check()) {
             return redirect()->route('nurse-dashboard');
         }
-        if(Auth::guard('technologist')->check()) {
+
+
+        if (Auth::guard('technologist')->check()) {
             return redirect()->route('technologist-dashboard');
         }
-        if(Auth::guard('receptionist')->check()) {
+        if (Auth::guard('receptionist')->check()) {
             return redirect()->route('receptionist-dashboard');
         }
 
@@ -52,8 +54,9 @@ class LoginController extends Controller
 
         if ($admin) {
             $this->isEmployed($admin);
-            try {Auth::guard('admin')->login($admin);}
-            catch(Exception $e) {
+            try {
+                Auth::guard('admin')->login($admin);
+            } catch (Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
             }
             return redirect()->route('admin-dashboard');
@@ -61,8 +64,9 @@ class LoginController extends Controller
 
         $doctor = Doctor::where($credentials)->first();
         if ($doctor) {
-            try {$this->isEmployed($doctor);}
-            catch(Exception $e) {
+            try {
+                $this->isEmployed($doctor);
+            } catch (Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
             }
             Auth::guard('doctor')->login($doctor);
@@ -71,8 +75,9 @@ class LoginController extends Controller
 
         $patient = Patient::where($credentials)->first();
         if ($patient) {
-            try {Auth::guard('patient')->login($patient);}
-            catch(Exception $e) {
+            try {
+                Auth::guard('patient')->login($patient);
+            } catch (Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
             }
             return redirect()->route('patient-dashboard');
@@ -81,8 +86,9 @@ class LoginController extends Controller
         $nurse = Nurse::where($credentials)->first();
         if ($nurse) {
             $this->isEmployed($nurse);
-            try {Auth::guard('nurse')->login($nurse);}
-            catch(Exception $e) {
+            try {
+                Auth::guard('nurse')->login($nurse);
+            } catch (Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
             }
             return redirect()->route('nurse-dashboard');
@@ -91,8 +97,9 @@ class LoginController extends Controller
         $technologist = Technologist::where($credentials)->first();
         if ($technologist) {
             $this->isEmployed($technologist);
-            try {Auth::guard('technologist')->login($technologist);}
-            catch(Exception $e) {
+            try {
+                Auth::guard('technologist')->login($technologist);
+            } catch (Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
             }
             return redirect()->route('technologist-dashboard');
@@ -101,8 +108,9 @@ class LoginController extends Controller
         $receptionist = Receptionist::where($credentials)->first();
         if ($receptionist) {
             $this->isEmployed($receptionist);
-            try {Auth::guard('receptionist')->login($receptionist);}
-            catch(Exception $e) {
+            try {
+                Auth::guard('receptionist')->login($receptionist);
+            } catch (Exception $e) {
                 return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
             }
             return redirect()->route('receptionist-dashboard');
@@ -141,7 +149,9 @@ class LoginController extends Controller
 
     private function isEmployed(Model $model)
     {
-        if (!$model->is_employed) { return 'nuk mund te kyqesh je pushuar nga puna'; }
+        if (!$model->is_employed) {
+            return 'nuk mund te kyqesh je pushuar nga puna';
+        }
         return true;
     }
 
@@ -173,8 +183,9 @@ class LoginController extends Controller
 
         $patient->sendEmailVerificationNotification();
 
-        try {Auth::guard('patient')->login($patient);}
-        catch(Exception $e) {
+        try {
+            Auth::guard('patient')->login($patient);
+        } catch (Exception $e) {
             return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
         }
 
