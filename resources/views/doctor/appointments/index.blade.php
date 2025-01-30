@@ -1,15 +1,29 @@
 @extends('layout')
 
 @section('content')
-<div class="main-wrapper">
-    @include('doctor.includes.header')
-    @include('doctor.includes.sidebar')
-    <div class="page-wrapper">
-        <div class="content">
-            {{-- Session-based alerts --}}
-            @if (session('message'))
-                <div id="notify" class="alert alert-success" role="alert">
-                    {{ session('message') }}
+    <div class="main-wrapper">
+        @include('doctor.includes.header')
+        @include('doctor.includes.sidebar')
+        <div class="page-wrapper">
+            <div class="content">
+                @if (session('message'))
+                    <div id="notify" class="alert alert-success" role="alert">
+                        {{ session('message') }}
+                    </div>
+                @elseif (session('error'))
+                    <div id="notify" class="alert alert-danger" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h2 class="page-title">Përshëndetje {{ Auth::guard('doctor')->user()->first_name }} {{ Auth::guard('doctor')->user()->last_name }}!</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 col-3">
+                        <h4 class="page-title">Terminet e sodit</h4>
+                    </div>
                 </div>
             @elseif (session('error'))
                 <div id="notify" class="alert alert-danger" role="alert">

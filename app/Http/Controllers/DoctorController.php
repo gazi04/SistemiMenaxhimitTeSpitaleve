@@ -10,10 +10,8 @@ use Illuminate\Support\Facades\Log;
 
 class DoctorController extends Controller
 {
-    public function index()
-    {
-        return redirect()->route('manage-appointments-view');
-    }
+    public function index() { return redirect()->route('manage-appointments-view'); }
+
 
     public function openManagePatientView()
     {

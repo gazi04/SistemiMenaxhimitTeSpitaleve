@@ -49,19 +49,23 @@
                         </table>
                     </div>
                 </div>
-            </div>
-            @if ($ongoingAppointment)
-                <div class="row">
-                    <form method="GET" action="{{ route('treat-patient-view') }}">
-                        @csrf
-                        <div class="action-buttons">
-                            <input type="hidden" name="patient_id" value="{{ $patient->id }}" />
-                            <input type="hidden" name="appointment_id" value="{{ $ongoingAppointment->id }}" />
-                            <input type="submit" class="btn btn-primary" value="Trajto Pacientin" />
-                        </div>
-                    </form>
-                </div>
-            @endif
+                {{--TODO- TEST THE DOCTOR MODULE BY --}}
+                {{--1. LOGIN AS PATIENT AND GET AN APPOINTMENT--}}
+                {{--2. LOGIN AS RECEPTIONIST WILL CHANGE THE STATUS FOR THE APPOINTMENT TO PATIENT HAS ARRIVED --}}
+                {{--3. LOGIN AS DOCTOR AND TREAT THE PATIENT BY GIVING HIM A DIAGNOSE AND A THERAPY--}}
+                @if ($ongoingAppointment)
+                    <div class="row">
+                        <form method="GET" action="{{ route('treat-patient-view') }}">
+                            @csrf
+                            <div class="action-buttons">
+                                <input type="hidden" name="patient_id" value="{{ $patient->id }}" />
+                                <input type="hidden" name="appointment_id" value="{{ $ongoingAppointment->id }}" />
+                                <input type="submit" class="btn btn-primary" value="Trajto Pacientin" />
+                            </div>
+                        </form>
+                    </div>
+                @endif
+                
             <br>
             <div class="row">
                 <div class="col-sm-4 col-3">

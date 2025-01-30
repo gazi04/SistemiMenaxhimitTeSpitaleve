@@ -8,6 +8,7 @@ use App\Http\Controllers\TherapyController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ReceptionistController;
 use App\Http\Controllers\NurseController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\DoctorMiddleware;
@@ -34,6 +35,10 @@ Route::post('/email/verification-notification', [EmailController::class, 'Resend
 /* -------------------------------ADMIN DASHBOARD------------------------------- */
 Route::middleware(AdminMiddleware::class)->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
+    Route::get('/show/patients', [PatientController::class, 'indexForAdmin'])->name('open-patient-view');
+    Route::post('/show/patients', [PatientController::class, 'searchPatient'])->name('search-patients');
+    Route::get('/modify/patient/{id}', [PatientController::class, 'modifyPatientView'])->name('modify-patient-view');
+    Route::post('/modify/patient', [PatientController::class, 'modifyPatient'])->name('modify-patient');
 
     /* -------------------------------DEPARTAMENT MANAGEMENT------------------------------- */
     Route::get('/departaments', [AdminController::class, 'displayDepartaments'])->name('show-departaments');
@@ -87,6 +92,7 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::post('/users/edit/technologist', [AdminController::class, 'editTechnologist'])->name('edit-technologist');
     Route::post('/users/fire/technologist', [AdminController::class, 'fireTechnologist'])->name('fire-technologist');
     Route::post('/users/hire/technologist', [AdminController::class, 'hireTechnologist'])->name('hire-technologist');
+
 });
 
 /* -------------------------------DOCTOR DASHBOARD------------------------------- */
@@ -141,7 +147,6 @@ Route::middleware(TechnologistMiddleware::class)->group(function () {
 
 /* -------------------------------RECEPTIONIST DASHBOARD------------------------------- */
 Route::middleware(ReceptionistMiddleware::class)->group(function () {
-    Route::get('/receptionist-dashboard', function () {
-        return 'receptionist dashboar';
-    })->name('receptionist-dashboard');
+    Route::get('/receptionist/dashboard', [ReceptionistController::class, 'index'])->name('receptionist-dashboard');
+    Route::post('/change-status', [ReceptionistController::class, 'changeStatus'])->name('change-status');
 });
