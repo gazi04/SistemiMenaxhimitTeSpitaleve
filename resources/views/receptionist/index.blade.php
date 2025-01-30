@@ -15,6 +15,9 @@
                         {{ session('error') }}
                     </div>
                 @endif
+                <div id="notify" class="alert alert-success">
+                    <h3>Mirësevini recepsionisti/ja {{ Auth::guard('receptionist')->user()->first_name }} {{ Auth::guard('receptionist')->user()->last_name }}!</h3>
+                </div>
                 <div class="row">
                     <div class="col-sm-4 col-3">
                         <h4 class="page-title">Terminet e sodit</h4>
