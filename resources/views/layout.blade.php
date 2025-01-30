@@ -31,7 +31,7 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
     @yield('scripts')
     <script>
-        setTimeout(function() {
+        setTimeout(function () {
             const notifier = document.getElementById('notify');
             if (notifier) {
                 notifier.style.transition = "opacity 0.5s ease";
@@ -41,4 +41,5 @@
         }, 5000);
     </script>
 </body>
+
 </html>
