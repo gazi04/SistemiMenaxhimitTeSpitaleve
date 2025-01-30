@@ -15,9 +15,12 @@
                     {{ session('error') }}
                 </div>
             @endif
+            <div id="notify" class="alert alert-success">
+                <h3>Mirësevini administratori {{ Auth::guard('admin')->user()->name }}!</h3>
+            </div>
             <div class="row">
                 <div class="col-sm-4 col-3">
-                    <h4 class="page-title">Administratoret</h4>
+                    <h4 class="page-title">Administratorët</h4>
                 </div>
                 <div class="col-sm-8 col-9 text-right m-b-20">
                     <a href="{{ route('create-admin-view')}}" class="btn btn-primary btn-rounded float-right">

@@ -2,7 +2,7 @@
     <div class="header-left">
         <a href="{{ route('admin-dashboard') }}" class="logo">
             <img src="{{ asset('assets/img/logo.png') }}" width="35" height="35" alt="" />
-            <span>Preclinic</span>
+            <span>Paraklinika</span>
         </a>
     </div>
     <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
@@ -16,10 +16,7 @@
                 <span>Pacienti</span>
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{ url('profile') }}">My Profile</a>
-                <a class="dropdown-item" href="{{ url('edit-profile') }}">Edit Profile</a>
-                <a class="dropdown-item" href="{{ url('settings') }}">Settings</a>
-                <a class="dropdown-item" href="{{ url('logout') }}">Logout</a>
+                <a class="dropdown-item" href="{{ route('logout') }}">Çkyçu</a>
             </div>
         </li>
     </ul>
@@ -27,10 +24,7 @@
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
                                                                             class="fa fa-ellipsis-v"></i></a>
         <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="{{ url('profile') }}">My Profile</a>
-            <a class="dropdown-item" href="{{ url('edit-profile') }}">Edit Profile</a>
-            <a class="dropdown-item" href="{{ url('settings') }}">Settings</a>
-            <a class="dropdown-item" href="{{ url('login') }}">Logout</a>
+            <a class="dropdown-item" href="{{ route('logout') }}">Çkyçu</a>
         </div>
     </div>
 </div>
