@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EmailController;
@@ -9,6 +8,7 @@ use App\Http\Controllers\TherapyController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\NurseController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\DoctorMiddleware;
 use App\Http\Middleware\PatientMiddleware;
@@ -120,15 +120,28 @@ Route::middleware(PatientMiddleware::class)->group(function () {
 
 /* -------------------------------NURSE DASHBOARD------------------------------- */
 Route::middleware(NurseMiddleware::class)->group(function () {
-    Route::get('/nurse-dashboard',function(){ return 'nurse dashboar';})->name('nurse-dashboard');
+    Route::get('/nurse-dashboard', [NurseController::class, 'dashboard'])->name('nurse-dashboard');
+    Route::get('/stoku', [NurseController::class, 'stoku'])->name('stoku');
+    Route::get('/search-medication', [NurseController::class, 'searchMedication'])->name('search-medication');
+    Route::get('/stoku', [NurseController::class, 'stoku'])->name('stoku');
+    Route::post('/order-medication', [NurseController::class, 'orderMedication'])->name('order-medication');
+    Route::get('/shtoMedikament', [NurseController::class, 'create'])->name('medications.create');
+    Route::post('/shtoMedikament', [NurseController::class, 'store'])->name('medications.store');
+    Route::post('/medications/use', [NurseController::class, 'useMedication'])->name('medications.use');
+
 });
+
 
 /* -------------------------------TECHNOLOGIST DASHBOARD------------------------------- */
 Route::middleware(TechnologistMiddleware::class)->group(function () {
-    Route::get('/technologist-dashboard',function(){ return 'techonolgists dashboar';})->name('technologist-dashboard');
+    Route::get('/technologist-dashboard', function () {
+        return 'techonolgists dashboar';
+    })->name('technologist-dashboard');
 });
 
 /* -------------------------------RECEPTIONIST DASHBOARD------------------------------- */
 Route::middleware(ReceptionistMiddleware::class)->group(function () {
-    Route::get('/receptionist-dashboard',function(){ return 'receptionist dashboar';})->name('receptionist-dashboard');
+    Route::get('/receptionist-dashboard', function () {
+        return 'receptionist dashboar';
+    })->name('receptionist-dashboard');
 });

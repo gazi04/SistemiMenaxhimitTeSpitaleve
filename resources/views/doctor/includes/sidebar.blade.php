@@ -11,16 +11,6 @@
                     <a href="{{ route('manage-patients') }}"><i class="fa fa-wheelchair"></i><span>Menaxho
                             Pacientet</span></a>
                 </li>
-                <li>
-                    <a href="{{ route('show-departaments') }}">
-                        <i class="fa fa-hospital-o" class="active"></i>
-                        <span>Departmentet</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('manage-appointments-view') }}"><i class="fa fa-calendar"></i><span>Menaxho
-                            Terminet</span></a>
-                </li>
             </ul>
         </div>
     </div>
