@@ -12,5 +12,9 @@ class DoctorController extends Controller
 {
     public function index() { return redirect()->route('manage-appointments-view'); }
 
-    public function openManagePatientView() { return view('doctor.patient.manage', ['patients' => Patient::all()]); }
+
+    public function openManagePatientView()
+    {
+        return view('doctor.patient.manage', ['patients' => Patient::all()]);
+    }
 }

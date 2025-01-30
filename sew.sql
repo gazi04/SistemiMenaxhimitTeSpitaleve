@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 15, 2025 at 01:57 PM
+-- Generation Time: Jan 30, 2025 at 09:07 PM
 -- Server version: 11.6.2-MariaDB
 -- PHP Version: 8.3.15
 
@@ -83,7 +83,11 @@ INSERT INTO `appointments` (`id`, `patient_id`, `doctor_id`, `diagnoses_id`, `th
 (9, 6, 3, NULL, NULL, '2025-01-14 12:00:00', '2025-01-14 14:00:00', 'pending', '2025-01-11 16:53:27', '2025-01-11 16:53:27'),
 (10, 1, 3, NULL, NULL, '2025-01-15 08:00:00', '2025-01-15 10:00:00', 'pending', '2025-01-15 05:43:35', '2025-01-15 05:43:35'),
 (11, 1, 3, NULL, NULL, '2025-01-15 12:00:00', '2025-01-15 14:00:00', 'pending', '2025-01-15 10:53:25', '2025-01-15 10:53:25'),
-(12, 1, 3, 5, 3, '2025-01-15 14:00:00', '2025-01-15 16:00:00', 'completed', '2025-01-15 12:56:52', '2025-01-15 13:37:44');
+(12, 1, 3, 5, 3, '2025-01-15 14:00:00', '2025-01-15 16:00:00', 'completed', '2025-01-15 12:56:52', '2025-01-15 13:37:44'),
+(13, 1, 1, NULL, NULL, '2025-01-16 18:00:00', '2025-01-16 20:00:00', 'pending', '2025-01-16 07:55:24', '2025-01-16 07:55:24'),
+(14, 1, 3, NULL, NULL, '2025-01-30 14:00:00', '2025-01-30 16:00:00', 'pending', '2025-01-30 11:15:45', '2025-01-30 11:15:45'),
+(15, 1, 3, NULL, NULL, '2025-02-01 12:00:00', '2025-02-01 14:00:00', 'Në pritje', '2025-01-30 18:43:01', '2025-01-30 18:43:01'),
+(16, 1, 3, NULL, NULL, '2025-02-01 18:00:00', '2025-02-01 20:00:00', 'Anuluar', '2025-01-30 18:48:18', '2025-01-30 18:48:48');
 
 -- --------------------------------------------------------
 
@@ -242,6 +246,30 @@ CREATE TABLE `job_batches` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `medications`
+--
+
+CREATE TABLE `medications` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `dose` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `stock` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `medications`
+--
+
+INSERT INTO `medications` (`id`, `name`, `type`, `dose`, `description`, `stock`, `created_at`, `updated_at`) VALUES
+(1, 'Daleron', 'Infuzion', '300ml', 'Per qetsimin e dhimbjeve', 39, '2025-01-30 21:01:31', '2025-01-30 21:01:38');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -279,7 +307,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (21, '2025_01_08_195958_update_appointments_table', 12),
 (22, '2025_01_09_140049_create_diagnoses_table', 13),
 (23, '2025_01_09_143433_create_therapies_table', 13),
-(24, '2025_01_13_180328_add_therapy_and_diagnose_to_appointments', 14);
+(24, '2025_01_13_180328_add_therapy_and_diagnose_to_appointments', 14),
+(25, '2025_01_15_create_medications_table', 15);
 
 -- --------------------------------------------------------
 
@@ -352,7 +381,7 @@ INSERT INTO `patients` (`id`, `id_number`, `personal_id`, `first_name`, `last_na
 (6, 'P00000002', '12342358', 'gazi', 'ha', 1, '045681376', 'gazmendhalili2016@gmail.com', '2024-12-25 07:26:33', '2025-01-09 05:08:46', NULL, '2025-01-09'),
 (7, 'P00000003', '1324321', 'ttt', 'kkkk', 0, '923479832', 'tk@gmail.com', '2024-12-26 09:38:17', '2024-12-26 09:38:30', NULL, NULL),
 (8, 'P00000004', '2314231', 'llll', 'uuuu', 1, '321784293', 'llu@gmail.com', '2024-12-26 09:50:20', '2024-12-26 11:37:55', NULL, '2024-12-26'),
-(10, 'P00000005', '123890', 'pacienti1', 'pac1', 0, '045681372', 'pacienti1@gmail.com', '2025-01-14 17:01:53', '2025-01-14 17:06:07', NULL, '2025-01-14');
+(10, 'P00000005', '123890', 'test', 'pac1', 0, '045681372', 'pacienti1@gmail.com', '2025-01-14 17:01:53', '2025-01-29 21:18:30', NULL, '2025-01-14');
 
 -- --------------------------------------------------------
 
@@ -378,7 +407,7 @@ CREATE TABLE `receptionists` (
 --
 
 INSERT INTO `receptionists` (`id`, `id_number`, `personal_id`, `first_name`, `last_name`, `phone_number`, `email`, `is_employed`, `created_at`, `updated_at`) VALUES
-(1, 'R00000001', '830285', 'recepsionistja', 'mbiemri', '045819004', 'rece@icloud.com', 1, '2024-12-06 14:17:04', '2024-12-06 14:17:04'),
+(1, 'R00000001', '830285', 'edi', 'ajeti', '045819004', 'rece@icloud.com', 1, '2024-12-06 14:17:04', '2024-12-06 14:17:04'),
 (2, 'R00000002', '6637362', 'receptionistti', 'arifi', '04975637', 'edit@gmail.com', 0, '2024-12-10 16:31:13', '2024-12-15 14:42:32'),
 (4, 'R00000003', '56566', 'RR', 'rree', '012380412', 're@gmail.com', 1, '2024-12-20 15:43:19', '2024-12-20 15:52:28');
 
@@ -431,9 +460,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('8X5SpeR3YeAc8AS5M2kihI7ZJTVjUhUGLpQ6uMk3', NULL, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibXc3aGNjUUNqaTFGSUdVUG5MWk42RVVJNHJROG94S1VOY0dxNVQybiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9tYW5hZ2UvYXBwb2ludG1lbnRzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1736939698),
-('C64vlxp1dOsX3x64LoFp71FwVFT4VLBHZgryvqV3', NULL, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTlUxVmM4MzN1OHlta1BXRTdXWmVzWU1QUnJnZzJ3RGtLdjFrZlhiTiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9wYXRpZW50P2lkPTEiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUzOiJsb2dpbl9kb2N0b3JfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO30=', 1736948272),
-('IZdRQWH4gnjGib5ntntgZHFhO6c6YnMg3FZf52hI', NULL, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64; rv:133.0) Gecko/20100101 Firefox/133.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiaEQ3aHgxZElrbDh0YmtGWXpLTEdwUTdYbjZnUlpwQWJQeUdZUVlZciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9sb2dpbiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1736939698);
+('Q0pWl4qKmUPn1LvwlJpUZCPQNyTJJmzSp8Ts87FD', NULL, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64; rv:134.0) Gecko/20100101 Firefox/134.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiN0N0UFI0VzIyWEpINzZCU3dVeXRqZ0JvWjdsRVNyOHVkeDVQbk9ReCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9udXJzZS1kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUyOiJsb2dpbl9udXJzZV81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1738270903);
 
 -- --------------------------------------------------------
 
@@ -614,6 +641,12 @@ ALTER TABLE `job_batches`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `medications`
+--
+ALTER TABLE `medications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -731,7 +764,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `departaments`
@@ -764,10 +797,16 @@ ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `medications`
+--
+ALTER TABLE `medications`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `nurses`

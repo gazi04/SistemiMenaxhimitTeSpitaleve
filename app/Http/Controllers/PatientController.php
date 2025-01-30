@@ -153,8 +153,7 @@ class PatientController extends Controller
                 'patient_id' => 'required|integer|exists:patients,id',
                 'appointment_id' => 'required|integer|exists:appointments,id',
             ]);
-        }
-        catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             return redirect()->back()->with('error', 'Ka ndodhur nje gabim ne sistem, ku id pacientit dhe takimit nuk gjenden ne databaze');
         }
         return view('doctor.patient.treat', [
@@ -172,8 +171,7 @@ class PatientController extends Controller
                 'diagnose' => 'required|string',
                 'therapy' => 'required|string',
             ]);
-        }
-        catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             return redirect()->back()->with('error', 'Ka ndodhur një gabim sistemi, ku ID-të e pacientit dhe të takimit nuk gjenden në bazën e të dhënave.');
         }
 

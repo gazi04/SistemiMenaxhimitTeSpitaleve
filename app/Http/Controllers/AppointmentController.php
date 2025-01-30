@@ -72,22 +72,22 @@ class AppointmentController extends Controller
                                 });
                         });
                 })->orWhere(function ($query) use ($request, $appointmentStart, $appointmentEnd) {
-                        $query->where('patient_id', Auth::guard('patient')->user()->id)
-                            ->where(function ($q) use ($appointmentStart, $appointmentEnd) {
-                                $q->where(function ($q2) use ($appointmentStart, $appointmentEnd) {
-                                    $q2->where('start_time', '<', $appointmentEnd)
-                                        ->where('start_time', '>=', $appointmentStart);
+                    $query->where('patient_id', Auth::guard('patient')->user()->id)
+                        ->where(function ($q) use ($appointmentStart, $appointmentEnd) {
+                            $q->where(function ($q2) use ($appointmentStart, $appointmentEnd) {
+                                $q2->where('start_time', '<', $appointmentEnd)
+                                    ->where('start_time', '>=', $appointmentStart);
+                            })
+                                ->orWhere(function ($q2) use ($appointmentStart, $appointmentEnd) {
+                                    $q2->where('end_time', '>', $appointmentStart)
+                                        ->where('end_time', '<=', $appointmentEnd);
                                 })
-                                    ->orWhere(function ($q2) use ($appointmentStart, $appointmentEnd) {
-                                        $q2->where('end_time', '>', $appointmentStart)
-                                            ->where('end_time', '<=', $appointmentEnd);
-                                    })
-                                    ->orWhere(function ($q2) use ($appointmentStart, $appointmentEnd) {
-                                        $q2->where('start_time', '<=', $appointmentStart)
-                                            ->where('end_time', '>=', $appointmentEnd);
-                                    });
-                            });
-                    })->exists();
+                                ->orWhere(function ($q2) use ($appointmentStart, $appointmentEnd) {
+                                    $q2->where('start_time', '<=', $appointmentStart)
+                                        ->where('end_time', '>=', $appointmentEnd);
+                                });
+                        });
+                })->exists();
 
                 if (!$isTaken) {
                     $availableAppointments[] = [
@@ -118,8 +118,7 @@ class AppointmentController extends Controller
                 'start_time' => 'required',
                 'end_time' => 'required',
             ]);
-        }
-        catch (ValidationException $e) {
+        } catch (ValidationException $e) {
             return redirect()->back()->with('error', 'Ka ndodhur një gabim i sistemit, ju lutemi provoni përsëri më vonë.');
         }
 
@@ -170,9 +169,9 @@ class AppointmentController extends Controller
 
     public function modifyAppointmentView(Request $request)
     {
-        try { $appointment = Appointment::findOrFail($request->appointmentId); }
-        catch (ModelNotFoundException $ex)
-        {
+        try {
+            $appointment = Appointment::findOrFail($request->appointmentId);
+        } catch (ModelNotFoundException $ex) {
             return redirect()->route('manage-appointments-view')->with('error', 'Ka ndodhur nje gabim, nuk mund te gjindet termini ne databaze.');
         }
         return view('doctor.appointments.modify', ['appointment_id' => $appointment->id]);
@@ -190,8 +189,7 @@ class AppointmentController extends Controller
 
         try {
             $appointment = Appointment::findOrFail($request->appointment_id);
-        }
-        catch (ModelNotFoundException $ex) {
+        } catch (ModelNotFoundException $ex) {
             return redirect()->route('manage-appointments-view')->with('error', 'Ndodhi një gabim, i paaftë për të gjetur takimin në bazën e të dhënave.');
         }
 
@@ -254,8 +252,9 @@ class AppointmentController extends Controller
         $validated['new_end_time'] = Carbon::parse($request->new_start_time)->addHours(2);
         $validated['new_start_time'] = Carbon::parse($request->new_start_time);
 
-        try { $appointment = Appointment::findOrFail($request->appointment_id);}
-        catch(ModelNotFoundException $ex) {
+        try {
+            $appointment = Appointment::findOrFail($request->appointment_id);
+        } catch (ModelNotFoundException $ex) {
             return redirect()->route('manage-appointments-view')->with('error', 'Ndodhi një gabim gjatë procesit, konsullata nuk mund të gjendet në bazën e të dhënave, provoni përsëri.');
         }
 
@@ -266,15 +265,14 @@ class AppointmentController extends Controller
 
         try {
             $doctor = Auth::guard('doctor')->user();
-            $doctor_full_name = $doctor->first_name.' '.$doctor->last_name;
+            $doctor_full_name = $doctor->first_name . ' ' . $doctor->last_name;
             Mail::to($appointment->patient->email)->send(new AppointmentChanged(
                 $validated['new_start_time'],
                 $doctor->email,
                 $doctor_full_name,
                 $appointment->patient->first_name
             ));
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             Log::error('Failed to send email to patient.', [
                 'exception_code' => $ex->getCode(),
                 'exception_message' => $ex->getMessage(),
@@ -290,24 +288,25 @@ class AppointmentController extends Controller
 
     public function cancelAppointment(Request $request)
     {
-        try { $appointment = Appointment::findOrFail($request->appointment_id);}
-        catch(ModelNotFoundException $ex) {
+        try {
+            $appointment = Appointment::findOrFail($request->appointment_id);
+        } catch (ModelNotFoundException $ex) {
             return redirect()->route('manage-appointments-view')->with('error', 'Ndodhi një gabim gjatë procesit, konsullata nuk mund të gjendet në bazën e të dhënave, provoni përsëri.');
         }
 
         $appointment->update(['status' => 'Anuluar']);
 
+
         try {
             $doctor = Auth::guard('doctor')->user();
-            $doctor_full_name = $doctor->first_name.' '.$doctor->last_name;
+            $doctor_full_name = $doctor->first_name . ' ' . $doctor->last_name;
             Mail::to($appointment->patient->email)->send(new AppointmentCanceled(
                 $appointment->start_time,
                 $doctor->email,
                 $doctor_full_name,
                 $appointment->patient->first_name
             ));
-        }
-        catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             Log::error('Failed to send email to patient.', [
                 'exception_code' => $ex->getCode(),
                 'exception_message' => $ex->getMessage(),
@@ -315,7 +314,11 @@ class AppointmentController extends Controller
                 'patient_email' => $appointment->patient->email ?? 'N/A',
                 'doctor_email' => Auth::guard('doctor')->user()->email ?? 'N/A',
             ]);
+
             return redirect()->route('manage-appointments-view')->with('error', 'Takimi është anuluar me sukses por, ndodhi një gabim gjatë dërgimit të emailit ju sugjerojmë të njoftoni pacientin përmes një mesazhi email.');
         }
+
+        return redirect()->route('manage-appointments-view')->with('message', 'Takimi u anulua me sukses.');
     }
+
 }

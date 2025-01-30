@@ -210,6 +210,14 @@ textarea.form-control {
 .table.table-white {
     background-color: #fff;
 }
+.table > thead {
+    background-color: white;
+}
+
+.tableColour-white {
+    background-color: white;
+}
+
 .table > tbody > tr > td {
     font-weight: 300;
 }
