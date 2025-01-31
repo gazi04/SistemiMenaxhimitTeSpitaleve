@@ -19,8 +19,12 @@ use App\Http\Middleware\ReceptionistMiddleware;
 use Illuminate\Support\Facades\App;
 
 Route::get('/', function () {
-    return redirect()->route('login');
-});
+    return view('home.index');
+})->name('home-page');
+
+Route::get('/departamentet', function() {
+    return view('home.departament');
+})->name('departamentet-view');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);

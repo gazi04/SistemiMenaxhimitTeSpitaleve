@@ -13,28 +13,28 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css" />
-    <link rel="stylesheet" href="css/animate.css" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/open-iconic-bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/animate.css') }}" />
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css" />
-    <link rel="stylesheet" href="css/owl.theme.default.min.css" />
-    <link rel="stylesheet" href="css/magnific-popup.css" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/owl.carousel.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/owl.theme.default.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/magnific-popup.css') }}" />
 
-    <link rel="stylesheet" href="css/aos.css" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/aos.css') }}" />
 
-    <link rel="stylesheet" href="css/ionicons.min.css" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/ionicons.min.css') }}" />
 
-    <link rel="stylesheet" href="css/bootstrap-datepicker.css" />
-    <link rel="stylesheet" href="css/jquery.timepicker.css" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/bootstrap-datepicker.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/jquery.timepicker.css') }}" />
 
-    <link rel="stylesheet" href="css/flaticon.css" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/flaticon.css') }}" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/flaticon/3.0.1/font/flaticon.css"
     />
 
-    <link rel="stylesheet" href="css/icomoon.css" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/icomoon.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/home_page/css/style.css') }}" />
   </head>
   <body>
     <nav
@@ -116,10 +116,10 @@
               <a href="about.html" class="nav-link">Rreth nesh</a>
             </li>
             <li class="nav-item">
-              <a href="doctor.html" class="nav-link">Doktorët</a>
+              <a href="#doktoret" class="nav-link">Doktorët</a>
             </li>
             <li class="nav-item">
-              <a href="department.html" class="nav-link">Departmentet</a>
+              <a href="#departamenti-section" class="nav-link">Departmentet</a>
             </li>
           </ul>
         </div>
@@ -130,7 +130,7 @@
     <section class="home-slider owl-carousel">
       <div
         class="slider-item"
-        style="background-image: url(images/bg_1.jpg)"
+        style="background-image: url({{ asset('assets/home_page/images/bg_1.jpg') }})"
         data-stellar-background-ratio="0.5"
       >
         <div class="overlay"></div>
@@ -156,7 +156,7 @@
         </div>
       </div>
 
-      <div class="slider-item" style="background-image: url(images/bg_2.jpg)">
+      <div class="slider-item" style="background-image: url({{ asset('assets/home_page/images/bg_2.jpg') }})">
         <div class="overlay"></div>
         <div class="container">
           <div
@@ -263,7 +263,7 @@
         <div class="row no-gutters">
           <div
             class="col-md-5 p-md-5 img img-2 mt-5 mt-md-0"
-            style="background-image: url(images/about.jpg)"
+            style="background-image: url({{ asset('assets/home_page/images/about.jpg') }})"
           ></div>
           <div class="col-md-7 wrap-about py-4 py-md-5 ftco-animate">
             <div class="heading-section mb-5">
@@ -355,7 +355,7 @@
 
     <section
       class="ftco-intro"
-      style="background-image: url(images/bg_3.jpg)"
+      style="background-image: url({{ asset('assets/home_page/images/bg_3.jpg') }})"
       data-stellar-background-ratio="0.5"
     >
       <div class="overlay"></div>
@@ -378,7 +378,7 @@
       </div>
     </section>
 
-    <section class="ftco-section">
+    <section class="ftco-section" id="departamenti-section">
       <div class="container">
         <div class="row justify-content-center mb-5 pb-2">
           <div class="col-md-8 text-center heading-section ftco-animate">
@@ -474,7 +474,7 @@
                     >
                       <div
                         class="img d-flex align-self-stretch"
-                        style="background-image: url(images/dept-1.jpg)"
+                        style="background-image: url({{ asset('assets/home_page/images/dept-1.jpg') }})"
                       ></div>
                     </div>
                     <div class="col-lg-8">
@@ -572,7 +572,7 @@
                     >
                       <div
                         class="img d-flex align-self-stretch"
-                        style="background-image: url(images/dept-2.jpg)"
+                        style="background-image: url({{ asset('assets/home_page/images/dept-2.jpg') }})"
                       ></div>
                     </div>
                     <div class="col-md-8">
@@ -672,7 +672,7 @@
                     >
                       <div
                         class="img d-flex align-self-stretch"
-                        style="background-image: url(images/dept-3.jpg)"
+                        style="background-image: url({{ asset('assets/home_page/images/dept-3.jpg') }})"
                       ></div>
                     </div>
                     <div class="col-md-8">
@@ -765,7 +765,7 @@
                     >
                       <div
                         class="img d-flex align-self-stretch"
-                        style="background-image: url(images/dept-4.jpg)"
+                        style="background-image: url({{ asset('assets/home_page/images/dept-4.jpg') }})"
                       ></div>
                     </div>
                     <div class="col-md-8">
@@ -861,7 +861,7 @@
                     >
                       <div
                         class="img d-flex align-self-stretch"
-                        style="background-image: url(images/dept-5.jpg)"
+                        style="background-image: url({{ asset('assets/home_page/images/dept-5.jpg') }})"
                       ></div>
                     </div>
                     <div class="col-md-8">
@@ -948,7 +948,7 @@
       </div>
     </section>
 
-    <section class="ftco-section ftco-no-pt">
+    <section class="ftco-section ftco-no-pt" id="doktoret">
       <div class="container">
         <div class="row justify-content-center mb-5 pb-2">
           <div class="col-md-8 text-center heading-section ftco-animate">
@@ -967,7 +967,7 @@
               <div class="img-wrap d-flex align-items-stretch">
                 <div
                   class="img align-self-stretch"
-                  style="background-image: url(images/doc-1.jpg)"
+                  style="background-image: url({{ asset('assets/home_page/images/doc-1.jpg') }})"
                 ></div>
               </div>
               <div class="text pt-3 text-center">
@@ -1001,7 +1001,7 @@
               <div class="img-wrap d-flex align-items-stretch">
                 <div
                   class="img align-self-stretch"
-                  style="background-image: url(images/doc-2.jpg)"
+                  style="background-image: url({{ asset('assets/home_page/images/doc-2.jpg') }})"
                 ></div>
               </div>
               <div class="text pt-3 text-center">
@@ -1035,7 +1035,7 @@
               <div class="img-wrap d-flex align-items-stretch">
                 <div
                   class="img align-self-stretch"
-                  style="background-image: url(images/doc-3.jpg)"
+                  style="background-image: url({{ asset('assets/home_page/images/doc-3.jpg') }})"
                 ></div>
               </div>
               <div class="text pt-3 text-center">
@@ -1069,7 +1069,7 @@
               <div class="img-wrap d-flex align-items-stretch">
                 <div
                   class="img align-self-stretch"
-                  style="background-image: url(images/doc-4.jpg)"
+                  style="background-image: url({{ asset('assets/home_page/images/doc-4.jpg') }})"
                 ></div>
               </div>
               <div class="text pt-3 text-center">
@@ -1232,7 +1232,7 @@
               <div class="block-21 mb-4 d-flex">
                 <a
                   class="blog-img mr-4"
-                  style="background-image: url(images/image_1.jpg)"
+                  style="background-image: url({{ asset('assets/home_page/images/image_1.jpg') }})"
                 ></a>
                 <div class="text">
                   <h3 class="heading">
@@ -1258,7 +1258,7 @@
               <div class="block-21 mb-5 d-flex">
                 <a
                   class="blog-img mr-4"
-                  style="background-image: url(images/image_2.jpg)"
+                  style="background-image: url({{ asset('assets/home_page/images/image_2.jpg') }})"
                 ></a>
                 <div class="text">
                   <h3 class="heading">
@@ -1352,22 +1352,22 @@
       </svg>
     </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/bootstrap-datepicker.js"></script>
-    <script src="js/jquery.timepicker.min.js"></script>
-    <script src="js/scrollax.min.js"></script>
+    <script src="{{ asset('assets/home_page/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/jquery-migrate-3.0.1.min.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/jquery.easing.1.3.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/jquery.stellar.min.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/aos.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/jquery.animateNumber.min.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/jquery.timepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/scrollax.min.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="js/google-map.js"></script>
-    <script src="js/main.js"></script>
+    <script src="{{ asset('assets/home_page/js/google-map.js') }}"></script>
+    <script src="{{ asset('assets/home_page/js/main.js') }}"></script>
   </body>
 </html>
