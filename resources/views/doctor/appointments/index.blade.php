@@ -25,18 +25,6 @@
                         <h4 class="page-title">Terminet e sodit</h4>
                     </div>
                 </div>
-            @elseif (session('error'))
-                <div id="notify" class="alert alert-danger" role="alert">
-                    {{ session('error') }}
-                </div>
-            @endif
-
-            <div class="row">
-                <div class="col-sm-4 col-3">
-                    <h4 class="page-title">Terminet e sodit</h4>
-                </div>
-            </div>
-
             <div class="row">
                 <div class="col-sm-12">
                     @if ($todaysAppointments->isEmpty())

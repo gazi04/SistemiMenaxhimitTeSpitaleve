@@ -15,14 +15,14 @@
             </div>
         @endif
 
-        <h1 class="text-center">Kerko Pacientin</h1>
+        <h1 class="text-center">Kërko Pacientin</h1>
 
         <form method="GET" action="{{ route('search-patient') }}" class="mb-4">
             <div class="input-group">
                 <input type="text" id="search-input" name="searchingTerm" class="form-control"
                     placeholder="Kerko sipas emrit ose email-it" autocomplete="off">
                 &nbsp;&nbsp;
-                <input class="btn btn-primary" type="submit" value="Kerko" />
+                <input class="btn btn-primary" type="submit" value="Kërko" />
             </div>
         </form>
 
