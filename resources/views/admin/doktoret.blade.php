@@ -66,33 +66,6 @@
                         </div>
                     </div>
                 @endforeach
-                <div class="col-md-4 col-sm-4 col-lg-3">
-                    <div class="profile-widget">
-                        <div class="doctor-img">
-                            <a class="avatar" href="{{url('profile')}}">
-                                <img alt="" src="{{asset('assets/img/doctor-thumb-03.jpg')}}" />
-                            </a>
-                        </div>
-                        <h4 class="doctor-name text-ellipsis">
-                            <a href="{{ url('profile')}}"></a>
-                        </h4>
-                        <div class="doc-prof">
-                            <span class="dep">Departamenti</span>
-                            <span>Gynecologist</span>
-                        </div>
-                        <div class="user-country">
-                            <i class="fa fa-envelope"></i> cristina@gmail.com
-                        </div>
-                        <div class="action-buttons">
-                            <a href="{{ url('modifiko-doktor')}}" class="btn btn-primary">
-                                <i class="fa fa-pencil"></i> Modifiko
-                            </a>
-                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete_doctor">
-                                <i class="fa fa-trash-o"></i> Fshij
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div id="delete_doctor" class="modal fade delete-modal" role="dialog">
