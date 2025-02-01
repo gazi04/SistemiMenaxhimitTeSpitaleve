@@ -20,11 +20,12 @@
                 <div class="col-lg-8 offset-lg-2">
                     <form action="{{ route('modify-patient') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="id" value="{{ $patient->id }}" />
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>ID e Pacientit <span class="text-danger">*</span></label>
-                                    <input class="form-control" name="id" type="text" value="{{ $patient->id }}" readonly="" />
+                                    <input class="form-control" type="text" value="{{ $patient->id_number }}" readonly="" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -64,18 +65,19 @@
                                             @error('numri_kontaktues') <span class="text-danger">{{ $message }}</span> @enderror
                                         </div>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <div class="from-group">
+                                            <label>Gjinia</label>
+                                            <select class="form-control select" name="gjinia">
+                                                <option value="">Zgjidhni Gjinin</option>
+                                                <option value="0" {{ $patient->gender == 0 ? 'selected' : '' }}>Femer</option>
+                                                <option value="1" {{ $patient->gender == 1 ? 'selected' : '' }}>Mashkull</option>
+                                            </select>
+                                            @error('gjinia') <span class="text-danger">{{ $message }}</span> @enderror
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="from-group">
-                                <label>Gjinia</label>
-                                <select class="form-control select" name="gjinia">
-                                    <option value="">Zgjidhni Gjinin</option>
-                                    <option value="0">Femer</option>
-                                    <option value="1">Mashkull</option>
-                                </select>
-                                @error('gjinia') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                         <div class="m-t-20 text-center">
