@@ -16,14 +16,15 @@ use App\Http\Middleware\PatientMiddleware;
 use App\Http\Middleware\NurseMiddleware;
 use App\Http\Middleware\TechnologistMiddleware;
 use App\Http\Middleware\ReceptionistMiddleware;
+use App\Models\Departament;
 use Illuminate\Support\Facades\App;
 
 Route::get('/', function () {
-    return view('home.index');
+    return view('home.index', ['dep' => Departament::find(1)]);
 })->name('home-page');
 
 Route::get('/departamentet', function() {
-    return view('home.departament');
+    return view('home.departament', ['dep' => Departament::find(1)]);
 })->name('departamentet-view');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
