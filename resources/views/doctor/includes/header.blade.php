@@ -2,7 +2,7 @@
     <div class="header-left">
         <a href="{{ route('admin-dashboard') }}" class="logo">
             <img src="{{ asset('assets/img/logo.png') }}" width="35" height="35" alt="" />
-            <span>Paraklinika</span>
+            <span>SMS</span>
         </a>
     </div>
     <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>

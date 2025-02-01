@@ -36,10 +36,6 @@
                             <h4 class="doctor-name text-ellipsis">
                                 <a href="{{ url('profile')}}">{{ $nurse->first_name }} {{ $nurse->last_name }}</a>
                             </h4>
-                            <div class="doc-prof">
-                                <span class="dep">Departamenti</span>
-                                <span> </span>
-                            </div>
                             <div class="user-country">
                                 <i class="fa fa-envelope"></i> {{ $nurse->email }}
                             </div>
