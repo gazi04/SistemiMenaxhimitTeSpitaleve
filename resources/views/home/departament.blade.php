@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Dr.care - Free Bootstrap 4 Template by Colorlib</title>
+    <title>@yield('title', 'Sistemi per Menaxhimin e Spitalit')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -48,7 +48,7 @@
                     <div class="col-md-8 text-center heading-section ftco-animate">
                         <span class="subheading">Departmentet</span>
                         <h2 class="mb-4">Departamenti Klinik</h2>
-                        <p>Separated they live in. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country</p>
+                        <p>Departamenti Klinik është një njësi spitalore që ofron kujdes mjekësor direkt për pacientët, përfshirë diagnozën, trajtimin dhe menaxhimin e sëmundjeve. Ai përbëhet nga mjekë, infermierë dhe profesionistë të tjerë shëndetësorë që punojnë së bashku për trajtim efikas.</p>
                     </div>
                 </div>
 

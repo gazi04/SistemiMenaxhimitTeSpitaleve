@@ -6,7 +6,7 @@
           class="row no-gutters d-flex align-items-start align-items-center px-3 px-md-0"
         >
           <div class="col-lg-2 pr-4 align-items-center">
-            <a class="navbar-brand" href="index.html">QK<span>UK</span></a>
+            <a class="navbar-brand" href="{{ route('home-page') }}">QK<span>UK</span></a>
           </div>
           <div class="col-lg-10 d-none d-md-block">
             <div class="row d-flex">
@@ -17,8 +17,7 @@
                   <span class="icon-map"></span>
                 </div>
                 <span class="text"
-                  >Address: 198 West 21th Street, Suite 721 New York NY
-                  10016</span
+                  >Adresa: J5V6+98V, Prishtina 10000</span
                 >
               </div>
               <div class="col-md pr-4 d-flex topper align-items-center">

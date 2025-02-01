@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Dr.care - Free Bootstrap 4 Template by Colorlib</title>
+    <title>@yield('title', 'Sistemi per Menaxhimin e Spitalit')</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -141,10 +141,10 @@
                 <span class="flaticon-stethoscope"></span>
               </div>
               <div class="media-body p-2 mt-3">
-                <h3 class="heading">Mundesi kontrolle</h3>
+                <h3 class="heading">Mundësi kontrolle</h3>
                 <p>
                   Mund të rezervoni një takim në çdo kohë që ju përshtatet, për
-                  një shërbim fleksibël dhe të përshtatshëm.
+                  një shërbim fleksibil dhe të përshtatshëm.
                 </p>
               </div>
             </div>
@@ -159,7 +159,7 @@
                 <span class="flaticon-24-hours"></span>
               </div>
               <div class="media-body p-2 mt-3">
-                <h3 class="heading">Sherbim 24-ore</h3>
+                <h3 class="heading">Shërbim 24 orë</h3>
                 <p>
                   Ofrimi i shërbimeve gjatë gjithë ditës dhe natës, duke
                   siguruar mbështetje të pakufizuar dhe cilësore.
@@ -205,8 +205,7 @@
                     <div class="text">
                       <h3>Kujdesi parësor</h3>
                       <p>
-                        Far far away, behind the word mountains, far from the
-                        countries Vokalia.
+                      Kujdesi parësor është niveli i parë i shërbimeve shëndetësore, duke ofruar parandalim, diagnozë dhe trajtim për sëmundjet e zakonshme. Ai sigurohet nga mjekët e familjes dhe profesionistë të tjerë shëndetësorë, duke luajtur një rol kyç në menaxhimin e shëndetit dhe parandalimin e komplikacioneve.
                       </p>
                     </div>
                   </div>
@@ -237,8 +236,7 @@
                     <div class="text">
                       <h3>Kontrollimi simptomave</h3>
                       <p>
-                        Far far away, behind the word mountains, far from the
-                        countries Vokalia.
+                      Kontrolli i simptomave është procesi i vlerësimit dhe menaxhimit të shenjave dhe ankesa që një pacient ka për shkak të një sëmundjeje ose gjendje shëndetësore. Ky proces përfshin diagnostikimin e saktë të simptomave, përdorimin e trajtimeve të përshtatshme dhe monitorimin e përmirësimit të pacientit për të siguruar që simptomat të kontrollohen dhe të menaxhohen në mënyrë efikase.
                       </p>
                     </div>
                   </div>
@@ -313,7 +311,7 @@
       <div class="container">
         <div class="row justify-content-center mb-5 pb-2">
           <div class="col-md-8 text-center heading-section ftco-animate">
-            <span class="subheading">Mjeket</span>
+            <span class="subheading">Mjekët</span>
             <h2 class="mb-4">Mjekë të kualifikuar</h2>
             <p>
               Ne ofrojmë kujdes shëndetësor nga mjekë me përvojë dhe të
@@ -332,12 +330,11 @@
                 ></div>
               </div>
               <div class="text pt-3 text-center">
-                <h3>Dr. Llyod Wilson</h3>
+                <h3>Dr.Naim Zeka</h3>
                 <span class="position mb-2">Neurologist</span>
                 <div class="faded">
                   <p>
-                    I am an ambitious workaholic, but apart from that, pretty
-                    simple person.
+                  Unë jam Naim Zeka, neurolog me përvojë në diagnostikimin dhe trajtimin e çrregullimeve të sistemit nervor. Përkushtohem që të ofroj kujdes cilësor për pacientët dhe të përdor metodat më të fundit për menaxhimin e kushteve neurologjike. Gjatë karrierës sime, kam ndihmuar shumë pacientë të përballojnë sfida të ndryshme neurologjike dhe të përmirësojnë cilësinë e jetës së tyre.
                   </p>
                   <ul class="ftco-social text-center">
                     <li class="ftco-animate">
@@ -366,12 +363,11 @@
                 ></div>
               </div>
               <div class="text pt-3 text-center">
-                <h3>Dr. Rachel Parker</h3>
+                <h3>Dr.Ardian Shabani</h3>
                 <span class="position mb-2">Oftamolog</span>
                 <div class="faded">
                   <p>
-                    I am an ambitious workaholic, but apart from that, pretty
-                    simple person.
+                  Unë jam Ardian Shabani, oftamolog me përvojë në trajtimin e sëmundjeve të syrit. Kam aftësi të shkëlqyera në diagnostikimin dhe trajtimin e kushteve oftalmologjike, duke përdorur teknologji moderne. Përkushtohem të ofroj kujdes të shkëlqyer për pacientët dhe të ruaj shëndetin e syve të tyre.
                   </p>
                   <ul class="ftco-social text-center">
                     <li class="ftco-animate">
@@ -400,12 +396,11 @@
                 ></div>
               </div>
               <div class="text pt-3 text-center">
-                <h3>Dr. Ian Smith</h3>
-                <span class="position mb-2">Dentist</span>
+                <h3>Dr.Bekim Kosumi</h3>
+                <span class="position mb-2">Stomatolog</span>
                 <div class="faded">
                   <p>
-                    I am an ambitious workaholic, but apart from that, pretty
-                    simple person.
+                  Unë jam Bekim Kosumi, stomatolog i specializuar në diagnostikimin dhe trajtimin e problemeve dentare. Përdor teknika moderne dhe qasje të kujdesshme për të ofruar trajtime pa dhimbje dhe efektive. Kam përkushtim të plotë në kujdesin për shëndetin e gojës dhe dhëmbëve të pacientëve të mi.
                   </p>
                   <ul class="ftco-social text-center">
                     <li class="ftco-animate">
@@ -434,12 +429,11 @@
                 ></div>
               </div>
               <div class="text pt-3 text-center">
-                <h3>Dr. Alicia Henderson</h3>
-                <span class="position mb-2">Pediatre</span>
+                <h3>Dr.Osman Ramadani</h3>
+                <span class="position mb-2">Kardiolog</span>
                 <div class="faded">
                   <p>
-                    I am an ambitious workaholic, but apart from that, pretty
-                    simple person.
+                  Unë jam Osman Ramadani, kardiolog me përvojë në trajtimin e problemeve të zemrës. Specializohem në diagnostikimin dhe menaxhimin e sëmundjeve kardiovaskulare, duke përdorur metoda moderne dhe teknika të avancuara. Jam i përkushtuar për të siguruar kujdes të shkëlqyer dhe për të ndihmuar pacientët të mbajnë zemrën e shëndetshme.
                   </p>
                   <ul class="ftco-social text-center">
                     <li class="ftco-animate">

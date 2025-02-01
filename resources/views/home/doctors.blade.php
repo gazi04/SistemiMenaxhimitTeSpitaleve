@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Dr.care - Free Bootstrap 4 Template by Colorlib</title>
+    <title>@yield('title', 'Sistemi per Menaxhimin e Spitalit')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -27,8 +27,6 @@
     <link rel="stylesheet" href="{{ asset('assets/home_page/css/style.css') }}">
   </head>
   <body>
-
-
    @include('home.includes.header')
    @include('home.includes.menu')
 
@@ -53,10 +51,10 @@
 								<div class="img align-self-stretch" style="background-image: url({{ asset('assets/home_page/images/doc-1.jpg') }});"></div>
 							</div>
 							<div class="text pt-3 text-center">
-								<h3>Dr. Lloyd Wilson</h3>
+								<h3>Dr.Naim Zeka</h3>
 								<span class="position mb-2">Neurolog</span>
 								<div class="faded">
-									<p>I am an ambitious workaholic, but apart from that, pretty simple person.</p>
+									<p>Unë jam Naim Zeka, neurolog me përvojë në diagnostikimin dhe trajtimin e çrregullimeve të sistemit nervor. Përkushtohem që të ofroj kujdes cilësor për pacientët dhe të përdor metodat më të fundit për menaxhimin e kushteve neurologjike. Gjatë karrierës sime, kam ndihmuar shumë pacientë të përballojnë sfida të ndryshme neurologjike dhe të përmirësojnë cilësinë e jetës së tyre.</p>
 									<ul class="ftco-social text-center">
 		                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 		                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -73,10 +71,10 @@
 								<div class="img align-self-stretch" style="background-image: url({{ asset('assets/home_page/images/doc-2.jpg') }});"></div>
 							</div>
 							<div class="text pt-3 text-center">
-								<h3>Dr. Rachel Parker</h3>
+								<h3>Dr.Ardian Shabani</h3>
 								<span class="position mb-2">Oftamolog</span>
 								<div class="faded">
-									<p>I am an ambitious workaholic, but apart from that, pretty simple person.</p>
+									<p>Unë jam Ardian Shabani, oftamolog me përvojë në trajtimin e sëmundjeve të syrit. Kam aftësi të shkëlqyera në diagnostikimin dhe trajtimin e kushteve oftalmologjike, duke përdorur teknologji moderne. Përkushtohem të ofroj kujdes të shkëlqyer për pacientët dhe të ruaj shëndetin e syve të tyre.</p>
 									<ul class="ftco-social text-center">
 		                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 		                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -93,10 +91,10 @@
 								<div class="img align-self-stretch" style="background-image: url({{ asset('assets/home_page/images/doc-3.jpg') }});"></div>
 							</div>
 							<div class="text pt-3 text-center">
-								<h3>Dr. Ian Smith</h3>
-								<span class="position mb-2">Dentist</span>
+								<h3>Dr.Bekim Kosumi</h3>
+								<span class="position mb-2">Stomatolog</span>
 								<div class="faded">
-									<p>I am an ambitious workaholic, but apart from that, pretty simple person.</p>
+									<p>Unë jam Bekim Kosumi, stomatolog i specializuar në diagnostikimin dhe trajtimin e problemeve dentare. Përdor teknika moderne dhe qasje të kujdesshme për të ofruar trajtime pa dhimbje dhe efektive. Kam përkushtim të plotë në kujdesin për shëndetin e gojës dhe dhëmbëve të pacientëve të mi.</p>
 									<ul class="ftco-social text-center">
 		                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 		                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -113,10 +111,10 @@
 								<div class="img align-self-stretch" style="background-image: url({{ asset('assets/home_page/images/doc-4.jpg') }});"></div>
 							</div>
 							<div class="text pt-3 text-center">
-								<h3>Dr. Alicia Henderson</h3>
-								<span class="position mb-2">Pediatre</span>
+								<h3>Dr.Osman Ramadani</h3>
+								<span class="position mb-2">Kardiolog</span>
 								<div class="faded">
-									<p>I am an ambitious workaholic, but apart from that, pretty simple person.</p>
+									<p>Unë jam Osman Ramadani, kardiolog me përvojë në trajtimin e problemeve të zemrës. Specializohem në diagnostikimin dhe menaxhimin e sëmundjeve kardiovaskulare, duke përdorur metoda moderne dhe teknika të avancuara. Jam i përkushtuar për të siguruar kujdes të shkëlqyer dhe për të ndihmuar pacientët të mbajnë zemrën e shëndetshme.</p>
 									<ul class="ftco-social text-center">
 		                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 		                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -134,10 +132,10 @@
 								<div class="img align-self-stretch" style="background-image: url({{ asset('assets/home_page/images/doc-5.jpg') }});"></div>
 							</div>
 							<div class="text pt-3 text-center">
-								<h3>Dr. Lloyd Wilson</h3>
+								<h3>Dr.Naim Zeka</h3>
 								<span class="position mb-2">Neurolog</span>
 								<div class="faded">
-									<p>I am an ambitious workaholic, but apart from that, pretty simple person.</p>
+									<p>Unë jam Naim Zeka, neurolog me përvojë në diagnostikimin dhe trajtimin e çrregullimeve të sistemit nervor. Përkushtohem që të ofroj kujdes cilësor për pacientët dhe të përdor metodat më të fundit për menaxhimin e kushteve neurologjike. Gjatë karrierës sime, kam ndihmuar shumë pacientë të përballojnë sfida të ndryshme neurologjike dhe të përmirësojnë cilësinë e jetës së tyre.</p>
 									<ul class="ftco-social text-center">
 		                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 		                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -154,10 +152,10 @@
 								<div class="img align-self-stretch" style="background-image: url({{ asset('assets/home_page/images/doc-6.jpg') }});"></div>
 							</div>
 							<div class="text pt-3 text-center">
-								<h3>Dr. Rachel Parker</h3>
+								<h3>Dr.Ardian Shabani</h3>
 								<span class="position mb-2">Oftamolog</span>
 								<div class="faded">
-									<p>I am an ambitious workaholic, but apart from that, pretty simple person.</p>
+									<p>Unë jam Ardian Shabani, oftamolog me përvojë në trajtimin e sëmundjeve të syrit. Kam aftësi të shkëlqyera në diagnostikimin dhe trajtimin e kushteve oftalmologjike, duke përdorur teknologji moderne. Përkushtohem të ofroj kujdes të shkëlqyer për pacientët dhe të ruaj shëndetin e syve të tyre.</p>
 									<ul class="ftco-social text-center">
 		                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 		                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -174,10 +172,10 @@
 								<div class="img align-self-stretch" style="background-image: url({{ asset('assets/home_page/images/doc-7.jpg') }});"></div>
 							</div>
 							<div class="text pt-3 text-center">
-								<h3>Dr. Ian Smith</h3>
-								<span class="position mb-2">Dentist</span>
+								<h3>Dr.Bekim Kosumi</h3>
+								<span class="position mb-2">Stomatolog</span>
 								<div class="faded">
-									<p>I am an ambitious workaholic, but apart from that, pretty simple person.</p>
+									<p>Unë jam Bekim Kosumi, stomatolog i specializuar në diagnostikimin dhe trajtimin e problemeve dentare. Përdor teknika moderne dhe qasje të kujdesshme për të ofruar trajtime pa dhimbje dhe efektive. Kam përkushtim të plotë në kujdesin për shëndetin e gojës dhe dhëmbëve të pacientëve të mi.</p>
 									<ul class="ftco-social text-center">
 		                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 		                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
@@ -194,10 +192,10 @@
 								<div class="img align-self-stretch" style="background-image: url({{ asset('assets/home_page/images/doc-8.jpg') }});"></div>
 							</div>
 							<div class="text pt-3 text-center">
-								<h3>Dr. Alicia Henderson</h3>
-								<span class="position mb-2">Pediatre</span>
+								<h3>Dr.Osman Ramadani</h3>
+								<span class="position mb-2">Kardiolog</span>
 								<div class="faded">
-									<p>I am an ambitious workaholic, but apart from that, pretty simple person.</p>
+									<p>Unë jam Osman Ramadani, kardiolog me përvojë në trajtimin e problemeve të zemrës. Specializohem në diagnostikimin dhe menaxhimin e sëmundjeve kardiovaskulare, duke përdorur metoda moderne dhe teknika të avancuara. Jam i përkushtuar për të siguruar kujdes të shkëlqyer dhe për të ndihmuar pacientët të mbajnë zemrën e shëndetshme.</p>
 									<ul class="ftco-social text-center">
 		                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
 		                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>

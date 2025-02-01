@@ -3,10 +3,9 @@
         <div class="row mb-5">
           <div class="col-md">
             <div class="ftco-footer-widget mb-5">
-              <h2 class="ftco-heading-2 logo">Dr.<span>care</span></h2>
+              <h2 class="ftco-heading-2 logo">Dr.<span>Ardian Shabani</span></h2>
               <p>
-                Far far away, behind the word mountains, far from the countries
-                Vokalia and Consonantia, there live the blind texts.
+              Ardian Shabani është një oftalmolog i njohur dhe i respektuar, me një eksperiencë të gjerë në diagnostikimin dhe trajtimin e sëmundjeve të syrit. Ai është i njohur për aftësitë e tij të jashtëzakonshme në trajtimin e kushteve të ndryshme oftalmologjike, duke përfshirë kirurgjitë komplekse dhe menaxhimin e problemeve të shikimit. Pacientët e tij vlerësojnë qasjen e tij të kujdesshme dhe empatik, si dhe komunikimin e shkëlqyer që ai ofron për të siguruar që ata të kuptojnë çdo fazë të trajtimit. Ardian Shabani është gjithashtu një mbështetës i rëndësishëm i parandalimit të sëmundjeve të syrit dhe edukatës shëndetësore, duke i ndihmuar pacientët të kujdesen për shëndetin e syrit të tyre dhe të parandalojnë probleme të mundshme në të ardhmen.
               </p>
             </div>
             <div class="ftco-footer-widget mb-5">
@@ -16,20 +15,19 @@
                   <li>
                     <span class="icon icon-map-marker"></span
                     ><span class="text"
-                      >203 Fake St. Mountain View, San Francisco, California,
-                      USA</span
+                      >Adresa: Rr. Esat Berisha pn Gjilan</span
                     >
                   </li>
                   <li>
                     <a href="#"
                       ><span class="icon icon-phone"></span
-                      ><span class="text">+2 392 3929 210</span></a
+                      ><span class="text">+383 44 222 222</span></a
                     >
                   </li>
                   <li>
                     <a href="#"
                       ><span class="icon icon-envelope"></span
-                      ><span class="text">info@yourdomain.com</span></a
+                      ><span class="text">emaili@htomail.com</span></a
                     >
                   </li>
                 </ul>
@@ -52,7 +50,7 @@
           </div>
           <div class="col-md">
             <div class="ftco-footer-widget mb-5 ml-md-4">
-              <h2 class="ftco-heading-2">Links</h2>
+              <h2 class="ftco-heading-2">Linqet</h2>
               <ul class="list-unstyled">
                 <li>
                   <a href="#"
@@ -208,7 +206,7 @@
         <div class="row">
           <div class="col-md-12 text-center">
             <p>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              <!-- Lidhja për në Colorlib nuk mund të hiqet. Modeli është i licencuar sipas CC BY 3.0. -->
               Të drejtat autoriale &copy;
               <script>
                 document.write(new Date().getFullYear());
@@ -216,7 +214,7 @@
               Të gjitha të drejtat e rezervuara | Ky shabllon është bërë
               <i class="icon-heart" aria-hidden="true"></i> nga
               <a href="https://colorlib.com" target="_blank">Colorlib</a>
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              <!-- Lidhja për në Colorlib nuk mund të hiqet. Modeli është i licencuar sipas CC BY 3.0. -->
             </p>
           </div>
         </div>
