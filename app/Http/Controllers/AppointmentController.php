@@ -273,13 +273,6 @@ class AppointmentController extends Controller
                 $appointment->patient->first_name
             ));
         } catch (\Exception $ex) {
-            Log::error('Failed to send email to patient.', [
-                'exception_code' => $ex->getCode(),
-                'exception_message' => $ex->getMessage(),
-                'stack_trace' => $ex->getTraceAsString(),
-                'patient_email' => $appointment->patient->email ?? 'N/A',
-                'doctor_email' => Auth::guard('doctor')->user()->email ?? 'N/A',
-            ]);
             return redirect()->route('manage-appointments-view')->with('error', 'Takimi është modifikuar me sukses por, ndodhi një gabim gjatë dërgimit të emailit ju sugjerojmë të njoftoni pacientin përmes një mesazhi email.');
         }
 
