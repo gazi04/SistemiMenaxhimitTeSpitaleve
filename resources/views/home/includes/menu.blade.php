@@ -30,10 +30,10 @@
               <a href="{{ route('home-page') }}" class="nav-link pl-0">Ballina</a>
             </li>
             <li class="nav-item">
-              <a href="about.html" class="nav-link">Rreth nesh</a>
+              <a href="{{ route('about-view') }}" class="nav-link">Rreth nesh</a>
             </li>
             <li class="nav-item">
-              <a href="doctor.html" class="nav-link">Doktorët</a>
+              <a href="{{ route('doctors-view') }}" class="nav-link">Doktorët</a>
             </li>
             <li class="nav-item">
               <a href="{{ route('departamentet-view') }}" class="nav-link">Departmentet</a>

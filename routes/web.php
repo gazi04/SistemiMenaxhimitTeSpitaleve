@@ -27,6 +27,14 @@ Route::get('/departamentet', function() {
     return view('home.departament', ['dep' => Departament::find(1)]);
 })->name('departamentet-view');
 
+Route::get('/doktoret', function() {
+    return view('home.doctors');
+})->name('doctors-view');
+
+Route::get('/rreth-nesh', function() {
+    return view('home.about');
+})->name('about-view');
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
