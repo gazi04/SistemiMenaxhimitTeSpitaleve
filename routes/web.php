@@ -137,6 +137,9 @@ Route::middleware(PatientMiddleware::class)->group(function () {
 
     Route::get('/get/doctors/{departmentId}', [AppointmentController::class, 'getDoctorsByDepartment']);
     Route::get('/get/department/{doctorId}', [AppointmentController::class, 'getDepartmentByDoctor']);
+
+    Route::get('/get/diagnoses', [DiagnoseController::class, 'displayDiagnosesView'])->name('display-diagnoses-view');
+    Route::get('/get/tests', [TestController::class, 'displayTestView'])->name('displays-tests-view');
 });
 
 /* -------------------------------NURSE DASHBOARD------------------------------- */
@@ -151,7 +154,6 @@ Route::middleware(NurseMiddleware::class)->group(function () {
     Route::post('/medications/use', [NurseController::class, 'useMedication'])->name('medications.use');
 
 });
-
 
 /* -------------------------------TECHNOLOGIST DASHBOARD------------------------------- */
 Route::middleware(TechnologistMiddleware::class)->group(function () {
