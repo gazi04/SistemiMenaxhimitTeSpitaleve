@@ -6,11 +6,11 @@
 <div class="page-wrapper">
     <div class="container mt-5">
         @if (session('message'))
-            <div class="alert alert-success">
+            <div id="notify" class="alert alert-success">
                 {{ session('message') }}
             </div>
         @elseif (session('error'))
-            <div class="alert alert-danger">
+            <div id="notify" class="alert alert-danger">
                 {{ session('error') }}
             </div>
         @endif
@@ -27,7 +27,6 @@
         </form>
 
         @if ($patients->isEmpty())
-            <!-- Bootstrap danger alert -->
             <div class="alert alert-danger text-center" role="alert">
                 Nuk u gjet asnje perdorues qe pershtatet me kerkimin tuaj.
             </div>
