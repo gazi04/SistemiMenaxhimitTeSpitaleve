@@ -10,11 +10,13 @@ use App\Models\Nurse;
 use App\Models\Patient;
 use App\Models\Receptionist;
 use App\Models\Technologist;
+use App\Mail\SendIdNumberToStaff;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Mail;
 use PgSql\Lob;
 
 use function Laravel\Prompts\error;
@@ -100,11 +102,21 @@ class AdminController extends Controller
             'email' => 'required|email:filter|unique:admins,email'
         ]);
 
-        Admin::create([
+        $admin = Admin::create([
             'personal_id' => $validated['numri_personal'],
             'name' => $validated['emri'],
             'email' => $validated['email']
         ]);
+
+        try {
+            Mail::to($admin->email)->send(new SendIdNumberToStaff(
+                $admin->id_number,
+                $admin->name,
+                ''
+            ));
+        } catch (\Exception $ex) {
+            return redirect()->route('open-admin-view')->with('error', 'Llogaria për administratorin u krijua me sukses, por pati një problem në procesin e dërgimit të tij të numrit të ID-së përmes email-it.');
+        }
 
         return redirect()->route('open-admin-view')->with('message', 'Administratori eshte krijuar me sukses');
     }
@@ -189,7 +201,7 @@ class AdminController extends Controller
             'email' => 'required|email:filter|unique:doctors,email'
         ]);
 
-        Doctor::create([
+        $doctor = Doctor::create([
             'personal_id' => $validated['numri_personal'],
             'departament_id' => $validated['departamenti'],
             'first_name' => $validated['emri'],
@@ -197,6 +209,17 @@ class AdminController extends Controller
             'phone_number' => $validated['numri_kontaktues'],
             'email' => $validated['email']
         ]);
+
+        try {
+            Mail::to($doctor->email)->send(new SendIdNumberToStaff(
+                $doctor->id_number,
+                $doctor->first_name,
+                $doctor->last_name
+            ));
+        } catch (\Exception $ex) {
+            return redirect()->route('open-doctor-view')->with('error', 'Llogaria për doktorin u krijua me sukses, por pati një problem në procesin e dërgimit të tij të numrit të ID-së përmes email-it.');
+        }
+
         return redirect()->route('open-doctor-view')->with('message', 'Doktor eshte krijuar me sukses');
     }
 
@@ -294,7 +317,16 @@ class AdminController extends Controller
             'phone_number' => $validated['numri_kontaktues'],
             'email' => $validated['email']
         ]);
-        Log::info($nurse);
+
+        try {
+            Mail::to($nurse->email)->send(new SendIdNumberToStaff(
+                $nurse->id_number,
+                $nurse->first_name,
+                $nurse->last_name
+            ));
+        } catch (\Exception $ex) {
+            return redirect()->route('open-doctor-view')->with('error', 'Llogaria për infermierin u krijua me sukses, por pati një problem në procesin e dërgimit të tij të numrit të ID-së përmes email-it.');
+        }
 
         return redirect()->route('open-nurse-view')->with('message', 'Infermieri/ja eshte krijuar me sukses');
     }
@@ -387,13 +419,23 @@ class AdminController extends Controller
             'email' => 'required|email:filter|unique:nurses,email'
         ]);
 
-        Receptionist::create([
+        $receptionist = Receptionist::create([
             'personal_id' => $validated['numri_personal'],
             'first_name' => $validated['emri'],
             'last_name' => $validated['mbiemri'],
             'phone_number' => $validated['numri_kontaktues'],
             'email' => $validated['email']
         ]);
+
+        try {
+            Mail::to($receptionist->email)->send(new SendIdNumberToStaff(
+                $receptionist->id_number,
+                $receptionist->first_name,
+                $receptionist->last_name
+            ));
+        } catch (\Exception $ex) {
+            return redirect()->route('open-doctor-view')->with('error', 'Llogaria për recepsionistin u krijua me sukses, por pati një problem në procesin e dërgimit të tij të numrit të ID-së përmes email-it.');
+        }
         return redirect()->route('open-receptionist-view')->with('message', 'Recepsionisti eshte krijuar me sukses');
     }
 
@@ -483,13 +525,23 @@ class AdminController extends Controller
             'email' => 'required|email:filter|unique:nurses,email'
         ]);
 
-        Technologist::create([
+        $technologist = Technologist::create([
             'personal_id' => $validated['numri_personal'],
             'first_name' => $validated['emri'],
             'last_name' => $validated['mbiemri'],
             'phone_number' => $validated['numri_kontaktues'],
             'email' => $validated['email']
         ]);
+
+        try {
+            Mail::to($technologist->email)->send(new SendIdNumberToStaff(
+                $technologist->id_number,
+                $technologist->first_name,
+                $technologist->last_name
+            ));
+        } catch (\Exception $ex) {
+            return redirect()->route('open-doctor-view')->with('error', 'Llogaria për teknologun u krijua me sukses, por pati një problem në procesin e dërgimit të tij të numrit të ID-së përmes email-it.');
+        }
 
         return redirect()->route('open-technologist-view')->with('message', 'Teknologu eshte krijuar me sukses');
     }

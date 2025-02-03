@@ -10,6 +10,8 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ReceptionistController;
 use App\Http\Controllers\NurseController;
+use App\Http\Controllers\TechnologistController;
+use App\Http\Controllers\TestController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\DoctorMiddleware;
 use App\Http\Middleware\PatientMiddleware;
@@ -153,9 +155,11 @@ Route::middleware(NurseMiddleware::class)->group(function () {
 
 /* -------------------------------TECHNOLOGIST DASHBOARD------------------------------- */
 Route::middleware(TechnologistMiddleware::class)->group(function () {
-    Route::get('/technologist-dashboard', function () {
-        return 'techonolgists dashboar';
-    })->name('technologist-dashboard');
+    Route::get('/dashboard', [TechnologistController::class, 'dashboard'])->name('technologist-dashboard');
+    Route::get('/test/create', [TechnologistController::class, 'create'])->name('technologist.tests.create');
+    Route::post('/test/create', [TechnologistController::class, 'store'])->name('technologist.tests.store');
+    Route::post('/test', [TestController::class, 'searchTests'])->name('search-tests');
+    Route::get('/tests/{id}', [TechnologistController::class, 'show'])->name('technologist.tests.show');
 });
 
 /* -------------------------------RECEPTIONIST DASHBOARD------------------------------- */

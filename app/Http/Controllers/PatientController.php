@@ -42,8 +42,8 @@ class PatientController extends Controller
             'mbiemri' => 'required|string',
             'email' => 'required|email:filter',
             'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
+            'gjinia' => 'numeric|in:0,1',
         ]);
-
 
         try { $patient = Patient::findOrFail($validated['id']); }
         catch(ModelNotFoundException $e){
@@ -56,6 +56,7 @@ class PatientController extends Controller
             'last_name' => $validated['mbiemri'],
             'phone_number' => $validated["numri_kontaktues"],
             'email' => $validated["email"],
+            'gender' => $validated["gjinia"],
         ]);
         return redirect()->route('open-patient-view')->with('message', 'Pacienti eshte perditesuar me sukses');
     }

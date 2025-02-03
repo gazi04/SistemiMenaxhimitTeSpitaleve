@@ -3688,6 +3688,10 @@ table.table-inbox tbody tr.checked {
     -webkit-transition: all 0.3s ease-in-out 0s;
     transition: all 0.3s ease-in-out 0s;
 }
+.analysis-print {
+    background-color: white;
+    padding: 15px;
+}
 .post-thumb a:hover img {
     -moz-transform: scale(1.2);
     -webkit-transform: scale(1.2);

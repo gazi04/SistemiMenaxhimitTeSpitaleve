@@ -10,21 +10,21 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SendPatinetId extends Mailable
+class SendIdNumberToStaff extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private string $patient_id;
-    private string $first_name;
-    private string $last_name;
+    private string $id;
+    private string $name;
+    private string $last_name = "";
 
     /**
      * Create a new message instance.
      */
-    public function __construct($patient_id, $firstName,  $lastName)
+    public function __construct($id, $name, $lastName)
     {
-        $this->patient_id = $patient_id;
-        $this->first_name = $firstName;
+        $this->id = $id;
+        $this->name = $name;
         $this->last_name = $lastName;
     }
 
@@ -34,8 +34,8 @@ class SendPatinetId extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('gaziSEW@gmail.com', 'Admin Gazi'),
-            subject: 'ID-ja jote per llogarine e pacientit',
+            from: new Address('administratoriSMS@gmail.com', 'Administratori i Sistemit të Menaxhimit të Spitalit'),
+            subject: 'Dërgimi i numrit tuaj ID',
         );
     }
 
@@ -45,11 +45,11 @@ class SendPatinetId extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.send-patient-id',
+            view: 'email.send-staff-id',
             with: [
-                'patientId' => $this->patient_id,
-                'firstName' => $this->first_name,
-                'lastName' => $this->last_name
+                'staffId' => $this->id,
+                'name' => $this->name,
+                'lastname' => $this->last_name
             ]
         );
     }
