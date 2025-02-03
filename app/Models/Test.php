@@ -10,13 +10,16 @@ class Test extends Model
         'patient_id',
         'technologist_id',
         'test_type',
-        // TODO: look at the create_test migration
         'results',
-        'status',
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class, 'patient_id');
+    }
 
     public function technologist()
     {
-        return $this->belongsTo(Technologist::class);
+        return $this->belongsTo(Technologist::class, 'technologist_id');
     }
 }

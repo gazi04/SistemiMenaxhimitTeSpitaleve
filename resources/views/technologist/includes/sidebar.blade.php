@@ -4,14 +4,10 @@
             <ul>
                 <li class="menu-title">Menyja Kryesore</li>
                 <li>
-                    <a href="{{ route('nurse-dashboard') }}">
+                    <a href="{{ route('technologist-dashboard') }}">
                         <i class="fa fa-dashboard"></i>
-                        <span>Paneli i Infermiereve</span></a>
+                        <span>Paneli i Teknologeve</span></a>
                 </li>
-                <li>
-                    <a href="{{ url('stoku') }}"><i class="fa fa-cube"></i> <span>Stoku</span></a>
-                </li>
-
             </ul>
         </div>
     </div>
