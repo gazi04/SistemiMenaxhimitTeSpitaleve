@@ -22,7 +22,7 @@ class AppointmentController extends Controller
     {
         return view('patient.appointment.index', [
             'patient' => Auth::guard('patient')->user(),
-            'doctors' => Doctor::all(),
+            'doctors' => Doctor::where('is_employed', 1)->get(),
             'departaments' => Departament::all()
         ]);
     }
