@@ -28,7 +28,8 @@
                         </div>
                         <div class="form-group">
                             <label for="results">Rezultatet</label>
-                            <textarea name="results" class="form-control" required></textarea>
+                            {{--TODO- TEXTAREA NEEDS MORE ROWS --}}
+                            <textarea row="200" name="results" class="form-control" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-success">Shto Analizën</button>
                         <a href="{{ route('technologist-dashboard') }}" class="btn btn-secondary">Kthehu</a>

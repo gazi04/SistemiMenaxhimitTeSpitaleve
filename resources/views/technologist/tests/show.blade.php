@@ -26,7 +26,7 @@
                             </p>
                             <p><strong>Data:</strong> {{ $test->created_at->format('d F Y') }}</p>
                             <p><strong>Tipi i Analizës:</strong> {{ $test->test_type }}</p>
-                            <p><strong>Rezultatet:</strong> {{ $test->results }}</p>
+                            <p><strong>Rezultatet:</strong><br> {!! nl2br(e($test->results)) !!}</p>
                             <hr />
                         </div>
 
