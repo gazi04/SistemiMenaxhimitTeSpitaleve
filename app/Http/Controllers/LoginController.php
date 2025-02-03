@@ -19,26 +19,12 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        if (Auth::guard('admin')->check()) {
-            return redirect()->route('admin-dashboard');
-        }
-        if (Auth::guard('doctor')->check()) {
-            return redirect()->route('doctor-dashboard');
-        }
-        if (Auth::guard('patient')->check()) {
-            return redirect()->route('patient-dashboard');
-        }
-        if (Auth::guard('nurse')->check()) {
-            return redirect()->route('nurse-dashboard');
-        }
-
-
-        if (Auth::guard('technologist')->check()) {
-            return redirect()->route('technologist-dashboard');
-        }
-        if (Auth::guard('receptionist')->check()) {
-            return redirect()->route('receptionist-dashboard');
-        }
+        if (Auth::guard('admin')->check()) { return redirect()->route('admin-dashboard'); }
+        if (Auth::guard('doctor')->check()) { return redirect()->route('doctor-dashboard'); }
+        if (Auth::guard('patient')->check()) { return redirect()->route('patient-dashboard'); }
+        if (Auth::guard('nurse')->check()) { return redirect()->route('nurse-dashboard'); }
+        if (Auth::guard('technologist')->check()) { return redirect()->route('technologist-dashboard'); }
+        if (Auth::guard('receptionist')->check()) { return redirect()->route('receptionist-dashboard'); }
 
         return view('auth.login');
     }
@@ -53,74 +39,84 @@ class LoginController extends Controller
         $admin = Admin::where($credentials)->first();
 
         if ($admin) {
-            $this->isEmployed($admin);
-            try {
-                Auth::guard('admin')->login($admin);
-            } catch (Exception $e) {
-                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            if (!$admin->is_employed) {
+                return redirect()->route('login')->with('error', 'Nuk mund të hyni në sistem sepse jeni pushuar nga puna.');
             }
+
+            try { Auth::guard('admin')->login($admin); }
+            catch (Exception $e) {
+                return redirect()->route('login')->with('error', 'Identifikimi dështoi. Ju lutemi provoni përsëri më vonë.');
+            }
+
             return redirect()->route('admin-dashboard');
         }
 
         $doctor = Doctor::where($credentials)->first();
         if ($doctor) {
-            try {
-                $this->isEmployed($doctor);
-            } catch (Exception $e) {
-                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            if (!$doctor->is_employed) {
+                return redirect()->route('login')->with('error', 'Nuk mund të hyni në sistem sepse jeni pushuar nga puna.');
             }
-            Auth::guard('doctor')->login($doctor);
+
+            try { Auth::guard('doctor')->login($doctor); }
+            catch (Exception $e) {
+                return redirect()->route('login')->with('error', 'Identifikimi dështoi. Ju lutemi provoni përsëri më vonë.');
+            }
+
             return redirect()->route('doctor-dashboard');
         }
 
         $patient = Patient::where($credentials)->first();
         if ($patient) {
-            try {
-                Auth::guard('patient')->login($patient);
-            } catch (Exception $e) {
-                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            try { Auth::guard('patient')->login($patient); }
+            catch (Exception $e) {
+                return redirect()->route('login')->with('error', 'Identifikimi dështoi. Ju lutemi provoni përsëri më vonë.');
             }
             return redirect()->route('patient-dashboard');
         }
 
         $nurse = Nurse::where($credentials)->first();
         if ($nurse) {
-            $this->isEmployed($nurse);
-            try {
-                Auth::guard('nurse')->login($nurse);
-            } catch (Exception $e) {
-                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            if (!$nurse->is_employed) {
+                return redirect()->route('login')->with('error', 'Nuk mund të hyni në sistem sepse jeni pushuar nga puna.');
             }
+
+            try { Auth::guard('nurse')->login($nurse); }
+            catch (Exception $e) {
+                return redirect()->route('login')->with('error', 'Identifikimi dështoi. Ju lutemi provoni përsëri më vonë.');
+            }
+
             return redirect()->route('nurse-dashboard');
         }
 
         $technologist = Technologist::where($credentials)->first();
         if ($technologist) {
-            $this->isEmployed($technologist);
-            try {
-                Auth::guard('technologist')->login($technologist);
-            } catch (Exception $e) {
-                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            if (!$technologist->is_employed) {
+                return redirect()->route('login')->with('error', 'Nuk mund të hyni në sistem sepse jeni pushuar nga puna.');
             }
+
+            try { Auth::guard('technologist')->login($technologist); }
+            catch (Exception $e) {
+                return redirect()->route('login')->with('error', 'Identifikimi dështoi. Ju lutemi provoni përsëri më vonë.');
+            }
+
             return redirect()->route('technologist-dashboard');
         }
 
         $receptionist = Receptionist::where($credentials)->first();
         if ($receptionist) {
-            $this->isEmployed($receptionist);
-            try {
-                Auth::guard('receptionist')->login($receptionist);
-            } catch (Exception $e) {
-                return redirect()->route('login')->with('message', 'Identifikimi deshtoi. Prove serish me vone.');
+            if (!$receptionist->is_employed) {
+                return redirect()->route('login')->with('error', 'Nuk mund të hyni në sistem sepse jeni pushuar nga puna.');
             }
+
+            try { Auth::guard('receptionist')->login($receptionist); }
+            catch (Exception $e) {
+                return redirect()->route('login')->with('error', 'Identifikimi dështoi. Ju lutemi provoni përsëri më vonë.');
+            }
+
             return redirect()->route('receptionist-dashboard');
         }
 
-        /* TODO- NEED TO DISPLAY THIS ERROR TO THE END-USER */
-        return redirect()->route('login')->with('message', 'Kredencialet e pavlefshme');
-        /* return back()->withErrors([ */
-        /*     'credentials' => 'Invalid ID Number or Personal ID.', */
-        /* ]); */
+        return redirect()->route('login')->with('error', 'Kredencialet e pavlefshme');
     }
 
     public function logout(Request $request)
@@ -144,15 +140,7 @@ class LoginController extends Controller
             Auth::guard('receptionist')->logout();
         }
 
-        return redirect('/login');
-    }
-
-    private function isEmployed(Model $model)
-    {
-        if (!$model->is_employed) {
-            return 'nuk mund te kyqesh je pushuar nga puna';
-        }
-        return true;
+        return redirect()->route('home-page');
     }
 
     public function openCreatePatientview()

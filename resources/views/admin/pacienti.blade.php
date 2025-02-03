@@ -15,22 +15,15 @@
                     {{ session('error') }}
                 </div>
             @endif
-            <div class="row">
-                <div class="col-sm-5 col-5">
-                    <h4 class="page-title">Pacientët</h4>
+            <h1 class="text-center">Kërko Pacientin</h1>
+            <form method="POST" action="{{ route('search-patients') }}" class="mb-4">
+                @csrf
+                <div class="input-group">
+                    <input type="text" id="search-input" name="searchingTerm" class="form-control" placeholder="Kerko sipas emrit ose email-it" autocomplete="off">
+                    &nbsp;&nbsp;
+                    <input class="btn btn-primary" type="submit" value="Kërko" />
                 </div>
-            </div>
-            <div class="row">
-                Kërko Pacientin
-                {{--TODO- TEK SEARCH BAR DUHET TE APLIKOHET TEMPLATI--}}
-                <form method="POST" action="{{ route('search-patients') }}" class="mb-4">
-                    @csrf
-                    <div class="input-group">
-                        <input type="text" id="search-input" name="searchingTerm" class="form-control" placeholder="Kerko sipas emrit ose email-it" autocomplete="off">
-                        <input type="submit" value="Kërko" />
-                    </div>
-                </form>
-            </div>
+            </form>
             <div class="row">
                 <div class="col-md-12">
                     <div class="table-responsive">

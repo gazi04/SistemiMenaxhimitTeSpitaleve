@@ -11,7 +11,7 @@
       type="image/x-icon"
       href="{{ asset('assets/img/favicon.ico') }}"
     />
-    <title>Hospital Login</title>
+    <title>Faqja e hyrjes</title>
     <link
       rel="stylesheet"
       type="text/css"
@@ -54,7 +54,7 @@
                             </div>
 
                         <div class="form-group">
-                            <label for="id_number">ID Number:</label>
+                            <label for="id_number">Numri ID</label>
                             <input
                                     type="text"
                                     name="id_number"
@@ -66,7 +66,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="personal_id">Personal ID</label>
+                            <label for="personal_id">ID personale</label>
                             <input
                                     type="password"
                                     name="personal_id"
@@ -77,7 +77,7 @@
                         </div>
 
                         <div class="form-group text-right">
-                            <a href="{{ route('create-patient-view') }}">Krijo nje llogari te pacientit</a>
+                            <a href="{{ route('create-patient-view') }}">Krijo një llogari të pacientit</a>
                         </div>
 
                         <div class="form-group text-center">
@@ -86,6 +86,9 @@
                                     value="Login"
                                     class="btn btn-primary account-btn"
                                     />
+                        </div>
+                        <div class="form-group text-center">
+                            <a href="{{ route('home-page') }}">Kthehu në faqen kryesore</a>
                         </div>
                     </form>
                 </div>
