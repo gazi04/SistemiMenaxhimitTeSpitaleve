@@ -2,7 +2,7 @@
     <div class="header-left">
         <a href="{{ route('admin-dashboard') }}" class="logo">
             <img src="{{ asset('assets/img/logo.png') }}" width="35" height="35" alt="" />
-            <span>Paraklinika</span>
+            <span>SMS</span>
         </a>
     </div>
     <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
@@ -13,7 +13,7 @@
                 <span class="user-img"><img class="rounded-circle" src="{{ asset('assets/img/user.jpg') }}"
                                                                    width="40" alt="Admin" />
                     <span class="status online"></span></span>
-                <span>Administratori</span>
+                <span>Administratori/ja</span>
             </a>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="{{ route('logout') }}">Çkyçu</a>

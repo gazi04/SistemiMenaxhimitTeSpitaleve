@@ -16,11 +16,24 @@ use App\Http\Middleware\PatientMiddleware;
 use App\Http\Middleware\NurseMiddleware;
 use App\Http\Middleware\TechnologistMiddleware;
 use App\Http\Middleware\ReceptionistMiddleware;
+use App\Models\Departament;
 use Illuminate\Support\Facades\App;
 
 Route::get('/', function () {
-    return redirect()->route('login');
-});
+    return view('home.index', ['dep' => Departament::find(1)]);
+})->name('home-page');
+
+Route::get('/departamentet', function() {
+    return view('home.departament', ['dep' => Departament::find(1)]);
+})->name('departamentet-view');
+
+Route::get('/doktoret', function() {
+    return view('home.doctors');
+})->name('doctors-view');
+
+Route::get('/rreth-nesh', function() {
+    return view('home.about');
+})->name('about-view');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
