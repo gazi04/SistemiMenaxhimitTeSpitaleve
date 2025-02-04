@@ -44,7 +44,7 @@
         <p>Kjo është ID-ja yte për llogarinë tënde në sistemin për menaxhimin e spitalit: <strong>{{ $staffId }}</strong></p>
         <p>Kështu që ruaje atë në një vend të sigurtë.</p>
         <br>
-        <p class="footer">Ju lutemi të mos iu përgjigjeni këtij emaili, sepse ky është një email i autorizuar.</p>
+        <p class="footer">Ju lutemi të mos iu përgjigjeni këtij emaili, sepse ky është një email i automatizuar.</p>
     </div>
 </body>
 </html>
