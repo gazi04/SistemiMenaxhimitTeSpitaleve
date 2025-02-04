@@ -168,5 +168,6 @@ Route::middleware(TechnologistMiddleware::class)->group(function () {
 /* -------------------------------RECEPTIONIST DASHBOARD------------------------------- */
 Route::middleware(ReceptionistMiddleware::class)->group(function () {
     Route::get('/receptionist/dashboard', [ReceptionistController::class, 'index'])->name('receptionist-dashboard');
-    Route::post('/change-status', [ReceptionistController::class, 'changeStatus'])->name('change-status');
+    Route::post('/change-status', [ReceptionistController::class, 'confirmPatientHasArrivedView'])->name('confirm-change-status');
+    Route::post('/confirm/patient', [ReceptionistController::class, 'confirmChageStatus'])->name('confirm-appointment-status-change');
 });
