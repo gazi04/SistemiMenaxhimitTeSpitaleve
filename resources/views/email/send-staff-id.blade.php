@@ -40,7 +40,7 @@
 </head>
 <body>
     <div class="email-container">
-        <h1>Pershendetje {{ $name }} {{ $lastname }},</h1>
+        <h1>Përshëndetje {{ $name }} {{ $lastname }},</h1>
         <p>Kjo është ID-ja yte për llogarinë tënde në sistemin për menaxhimin e spitalit: <strong>{{ $staffId }}</strong></p>
         <p>Kështu që ruaje atë në një vend të sigurtë.</p>
         <br>

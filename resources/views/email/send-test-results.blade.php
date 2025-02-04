@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ID e pacientit</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,9 +40,9 @@
 </head>
 <body>
     <div class="email-container">
-        <h1>Përshëndetje {{ $firstName }},</h1>
-        <p>Kjo është ID-ja yte për llogarinë e pacientit: <strong>{{ $patientId }}</strong></p>
-        <p>Kështu që ruaje atë në një vend të sigurtë.</p>
+        <h1>Përshëndetje {{ $patientName }} {{ $patienLastname }},</h1>
+        <p>Rezultatet e testit tuaj <b>{{ $testType }}</b>  janë përfunduar, ju tani keni akses nga profili juaj në sistemin tonë për menaxhimin e spitalit.</p>
+        <p><strong>Rezultatet:</strong><br> {!! nl2br(e($results)) !!}</p>
         <br>
         <p class="footer">Ju lutemi të mos iu përgjigjeni këtij emaili, sepse ky është një email i automatizuar.</p>
     </div>

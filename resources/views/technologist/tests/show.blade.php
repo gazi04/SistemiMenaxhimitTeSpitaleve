@@ -6,6 +6,15 @@
     @include('technologist.includes.sidebar')
     <div class="page-wrapper">
         <div class="content">
+            @if (session('message'))
+                <div id="notify" class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @elseif (session('error'))
+                <div id="notify" class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-md-8">
                     <div class="analysis-print">
@@ -34,10 +43,12 @@
                             <p><strong>Faleminderit qe keni Zgjedhur Spitalin tone!</strong></p>
                         </div>
                     </div>
-                    <button class="btn btn-primary mt-2 mt-sm-3 mt-md-4" onclick="printDetails()">Informo
-                        Pacientin</button>
-                    <a href="{{ route('technologist-dashboard') }}"
-                        class="btn btn-secondary mt-2 mt-sm-3 mt-md-4">Kthehu te Lista</a>
+                    <form method="POST" action="{{ route('inform-patient') }}">
+                        @csrf
+                        <input type="hidden" name="test_id" value="{{ $test->id }}" />
+                        <button type="submit" class="btn btn-primary mt-2 mt-sm-3 mt-md-4">Dërgo rezultatet e testit</button>
+                    </form>
+                    <a href="{{ route('technologist-dashboard') }}" class="btn btn-secondary mt-2 mt-sm-3 mt-md-4">Kthehu te Lista</a>
                 </div>
 
                 <aside class="col-md-4 mt-2 mt-sm-3 mt-md-4">

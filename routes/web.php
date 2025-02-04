@@ -162,6 +162,7 @@ Route::middleware(TechnologistMiddleware::class)->group(function () {
     Route::post('/test/create', [TechnologistController::class, 'store'])->name('technologist.tests.store');
     Route::post('/test', [TestController::class, 'searchTests'])->name('search-tests');
     Route::get('/tests/{id}', [TechnologistController::class, 'show'])->name('technologist.tests.show');
+    Route::post('/send/test', [TechnologistController::class, 'sendTestToPatient'])->name('inform-patient');
 });
 
 /* -------------------------------RECEPTIONIST DASHBOARD------------------------------- */
