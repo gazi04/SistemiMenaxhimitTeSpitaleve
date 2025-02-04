@@ -9,7 +9,7 @@ class NurseController extends Controller
 {
     public function dashboard()
     {
-        $medications = Medication::all();
+        $medications = Medication::paginate(10);
         return view('nurse.nurse-dashboard', compact('medications'));
     }
     public function stoku()

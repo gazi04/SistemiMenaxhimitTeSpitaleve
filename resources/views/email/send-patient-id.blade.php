@@ -41,11 +41,11 @@
 </head>
 <body>
     <div class="email-container">
-        <h1>Pershendetje {{ $firstName }},</h1>
+        <h1>Përshëndetje {{ $firstName }},</h1>
         <p>Kjo është ID-ja yte për llogarinë e pacientit: <strong>{{ $patientId }}</strong></p>
         <p>Kështu që ruaje atë në një vend të sigurtë.</p>
         <br>
-        <p class="footer">Ju lutemi të mos iu përgjigjeni këtij emaili, sepse ky është një email i autorizuar.</p>
+        <p class="footer">Ju lutemi të mos iu përgjigjeni këtij emaili, sepse ky është një email i automatizuar.</p>
     </div>
 </body>
 </html>

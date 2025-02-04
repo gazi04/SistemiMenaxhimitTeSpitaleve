@@ -35,7 +35,7 @@
                                     <td>{{ $test->id }}</td>
                                     <td>{{ $test->patient->first_name }} {{ $test->patient->last_name }}</td>
                                     <td>{{ $test->test_type }}</td>
-                                    <td>{{ $test->created_at->format('d F Y') }}</td>
+                                    <td>{{ $test->created_at->format('d-m-Y') }}</td>
                                     <td>
                                         <a href="{{ route('technologist.tests.show', $test->id) }}" class="btn btn-info btn-sm">Shiko</a>
                                     </td>
@@ -43,6 +43,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $tests->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>

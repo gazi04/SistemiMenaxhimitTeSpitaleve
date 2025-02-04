@@ -137,6 +137,9 @@ Route::middleware(PatientMiddleware::class)->group(function () {
 
     Route::get('/get/doctors/{departmentId}', [AppointmentController::class, 'getDoctorsByDepartment']);
     Route::get('/get/department/{doctorId}', [AppointmentController::class, 'getDepartmentByDoctor']);
+
+    Route::get('/get/diagnoses', [DiagnoseController::class, 'displayDiagnosesView'])->name('display-diagnoses-view');
+    Route::get('/get/tests', [TestController::class, 'displayTestView'])->name('displays-tests-view');
 });
 
 /* -------------------------------NURSE DASHBOARD------------------------------- */
@@ -152,7 +155,6 @@ Route::middleware(NurseMiddleware::class)->group(function () {
 
 });
 
-
 /* -------------------------------TECHNOLOGIST DASHBOARD------------------------------- */
 Route::middleware(TechnologistMiddleware::class)->group(function () {
     Route::get('/dashboard', [TechnologistController::class, 'dashboard'])->name('technologist-dashboard');
@@ -160,6 +162,7 @@ Route::middleware(TechnologistMiddleware::class)->group(function () {
     Route::post('/test/create', [TechnologistController::class, 'store'])->name('technologist.tests.store');
     Route::post('/test', [TestController::class, 'searchTests'])->name('search-tests');
     Route::get('/tests/{id}', [TechnologistController::class, 'show'])->name('technologist.tests.show');
+    Route::post('/send/test', [TechnologistController::class, 'sendTestToPatient'])->name('inform-patient');
 });
 
 /* -------------------------------RECEPTIONIST DASHBOARD------------------------------- */

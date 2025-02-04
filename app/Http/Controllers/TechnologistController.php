@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Test;
-use App\Models\Patient; // Add this line
+use App\Models\Patient;
+use App\Mail\SendTestResultsToPatient;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\ValidationException;
 
 class TechnologistController extends Controller
 {
@@ -55,5 +59,33 @@ class TechnologistController extends Controller
         $allTests = Test::with('patient')->where('id', '!=', $id)->get();
 
         return view('technologist.tests.show', compact('test', 'allTests'));
+    }
+
+    public function sendTestToPatient(Request $request)
+    {
+        try { $request->validate(['test_id' => 'required|integer|exists:tests,id']); }
+        catch (ValidationException $ex) {
+            return back()->with('error', "Mesazhi i emailit nuk mund t'i dërgohet pacientit, sepse informacioni i nevojshëm për testin ishte i pavlefshëm.");
+        }
+
+        try { $test = Test::findOrFail($request->test_id); }
+        catch (\Throwable $th) {
+            return back()->with('error', "Email mesazhi nuk mund t'i dërgohet pacientit, sepse testi nuk u gjet në bazën e të dhënave, provoni më vonë.");
+        }
+
+        $techno = Auth::guard('technologist')->user();
+        try {
+            Mail::to($test->patient->email)->send(new SendTestResultsToPatient(
+                $techno->first_name .' '. $techno->last_name,
+                $techno->email,
+                $test->patient->first_name,
+                $test->patient->last_name,
+                $test->test_type,
+                $test->results
+            ));
+        } catch (\Exception $ex) {
+            return back()->with('error', "Mesazhi i emailit nuk mund të dërgohet, ka një problem me sistemin, provoni më vonë ose dërgoni emailin në formë manuale.");
+        }
+        return back()->with('message', 'Email-i iu dërgua pacientit me sukses.');
     }
 }

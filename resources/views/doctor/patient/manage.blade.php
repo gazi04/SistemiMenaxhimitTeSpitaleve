@@ -6,11 +6,11 @@
 <div class="page-wrapper">
     <div class="container mt-5">
         @if (session('message'))
-            <div class="alert alert-success">
+            <div id="notify" class="alert alert-success">
                 {{ session('message') }}
             </div>
         @elseif (session('error'))
-            <div class="alert alert-danger">
+            <div id="notify" class="alert alert-danger">
                 {{ session('error') }}
             </div>
         @endif
@@ -27,7 +27,6 @@
         </form>
 
         @if ($patients->isEmpty())
-            <!-- Bootstrap danger alert -->
             <div class="alert alert-danger text-center" role="alert">
                 Nuk u gjet asnje perdorues qe pershtatet me kerkimin tuaj.
             </div>
@@ -53,7 +52,7 @@
                                 <td>{{ $patient->gender ? 'Mashkull' : 'Femer' }}</td>
                                 <td>{{ $patient->phone_number }}</td>
                                 <td>{{ $patient->email }}</td>
-                                <td>{{ $patient->email_verified_at ? 'Yes' : 'No' }}</td>
+                                <td>{{ $patient->email_verified_at ? 'Po' : 'Jo' }}</td>
                                 <td>
                                     <form method="GET" action="{{ route('show-patient') }}">
                                         <input type="hidden" name="id" value="{{ $patient->id }}" />
@@ -64,6 +63,8 @@
                         @endforeach
                     </tbody>
                 </table>
+                <br>
+                {{ $patients->links('pagination::bootstrap-4') }}
             </div>
         @endif
     </div>

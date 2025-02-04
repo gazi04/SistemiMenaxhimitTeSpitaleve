@@ -72,28 +72,30 @@
                 @if($appointments->isEmpty())
                     <p>Nuk u gjetën termine.</p>
                 @else
-                    <div class="table-responsive">
-                        <table class="table table-border tableColour-white mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Data dhe Ora</th>
-                                    <th>Doktori</th>
-                                    <th>Diagnoza</th>
-                                    <th>Terapia</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($appointments as $appointment)
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-border table-striped custom-table">
+                                <thead>
                                     <tr>
-                                        <td>{{ \Carbon\Carbon::parse($appointment->start_time)->format('d-m-Y H:i') }}</td>
-                                        <td>{{ $appointment->doctor->first_name }} {{ $appointment->doctor->last_name }}</td>
-                                        <td>{{ $appointment->diagnosis ? $appointment->diagnosis->notes : 'Nuk ka diagnozë' }}
-                                        </td>
-                                        <td>{{ $appointment->therapy ? $appointment->therapy->notes : 'Nuk ka terapi' }}</td>
+                                        <th>Doktori</th>
+                                        <th>Diagnoza</th>
+                                        <th>Terapia</th>
+                                        <th>Data dhe Ora</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($appointments as $appointment)
+                                        <tr>
+                                            <td>{{ $appointment->doctor->first_name }} {{ $appointment->doctor->last_name }}</td>
+                                            <td>{{ $appointment->diagnosis ? $appointment->diagnosis->notes : 'Nuk ka diagnozë' }}</td>
+                                            <td>{{ $appointment->therapy ? $appointment->therapy->notes : 'Nuk ka terapi' }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($appointment->start_time)->format('d-m-Y H:i') }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            {{ $appointments->appends(['id' => $patient->id, 'appointments_page' => request()->input('appointments_page')])->links('pagination::bootstrap-4') }}
+                        </div>
                     </div>
                 @endif
             </div>
@@ -104,7 +106,31 @@
                 </div>
             </div>
             <div class="row">
-                {{--TODO- THE TESTS RESULTS NEED TO BE DISPLAYE--}}
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-border table-striped custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Pacienti</th>
+                                    <th>Tipi i Analizës</th>
+                                    <th>Rezultatet</th>
+                                    <th>Data e Analizave</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($tests as $test)
+                                    <tr>
+                                        <td>{{ $test->patient->first_name }} {{ $test->patient->last_name }}</td>
+                                        <td>{{ $test->test_type }}</td>
+                                        <td>{!! nl2br(e($test->results)) !!}</td>
+                                        <td>{{ $test->created_at->format('d-m-Y') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {{ $tests->appends(['id' => $patient->id, 'tests_page' => request()->input('tests_page')])->links('pagination::bootstrap-4') }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

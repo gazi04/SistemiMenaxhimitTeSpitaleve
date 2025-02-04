@@ -45,7 +45,7 @@
             <p>Ky email është për t'ju informuar për një anulim të takimit tuaj më {{ \Carbon\Carbon::parse($appointment_date)->format('d-m-Y H:i') }}.</p>
             <p><b>Me respekt,</b></p>
             <p>{{ $doctor_name }}.</p>
-            <p class="footer">Ju lutemi të mos iu përgjigjeni këtij emaili, sepse ky është një email i autorizuar.</p>
+            <p class="footer">Ju lutemi të mos iu përgjigjeni këtij emaili, sepse ky është një email i automatizuar.</p>
         </div>
     </body>
 </html>

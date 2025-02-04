@@ -15,6 +15,6 @@ class DoctorController extends Controller
 
     public function openManagePatientView()
     {
-        return view('doctor.patient.manage', ['patients' => Patient::all()]);
+        return view('doctor.patient.manage', ['patients' => Patient::paginate(10)]);
     }
 }
