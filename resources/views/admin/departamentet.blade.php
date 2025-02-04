@@ -64,6 +64,8 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <br>
+                        {{ $departaments->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>

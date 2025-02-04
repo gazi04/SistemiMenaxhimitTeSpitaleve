@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Test;
-use App\Models\Patient; // Add this line
+use App\Models\Patient;
 
 class TechnologistController extends Controller
 {

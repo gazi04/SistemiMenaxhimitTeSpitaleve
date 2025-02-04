@@ -52,7 +52,7 @@
                                 <td>{{ $patient->gender ? 'Mashkull' : 'Femer' }}</td>
                                 <td>{{ $patient->phone_number }}</td>
                                 <td>{{ $patient->email }}</td>
-                                <td>{{ $patient->email_verified_at ? 'Yes' : 'No' }}</td>
+                                <td>{{ $patient->email_verified_at ? 'Po' : 'Jo' }}</td>
                                 <td>
                                     <form method="GET" action="{{ route('show-patient') }}">
                                         <input type="hidden" name="id" value="{{ $patient->id }}" />
@@ -63,6 +63,8 @@
                         @endforeach
                     </tbody>
                 </table>
+                <br>
+                {{ $patients->links('pagination::bootstrap-4') }}
             </div>
         @endif
     </div>

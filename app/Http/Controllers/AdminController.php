@@ -26,7 +26,7 @@ class AdminController extends Controller
     public function index() { return redirect()->route('open-admin-view'); }
 
     /* -------------------------------DEPARTAMENTS CRUD OPERATIONS------------------------------- */
-    public function displayDepartaments() { return view('admin.departamentet', ['departaments' => Departament::all()]); }
+    public function displayDepartaments() { return view('admin.departamentet', ['departaments' => Departament::paginate(10)]); }
 
     public function openCreateDepartamentView() { return view('admin.shto-departamente'); }
 

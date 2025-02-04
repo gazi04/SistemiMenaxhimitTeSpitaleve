@@ -94,6 +94,8 @@
                                 @endforelse
                             </tbody>
                         </table>
+                        <br>
+                        {{ $medications->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>

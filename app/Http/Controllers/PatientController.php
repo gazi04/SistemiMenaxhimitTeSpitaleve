@@ -19,7 +19,7 @@ class PatientController extends Controller
 
     public function indexForAdmin()
     {
-        return view('admin.pacienti', ['patients' => Patient::lazy()]);
+        return view('admin.pacienti', ['patients' => Patient::paginate(10)]);
     }
 
     public function modifyPatientView($id)
