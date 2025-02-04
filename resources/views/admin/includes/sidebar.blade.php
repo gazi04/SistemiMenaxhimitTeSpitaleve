@@ -27,9 +27,6 @@
                         <span>Departmentet</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ url('appointments') }}"><i class="fa fa-calendar"></i> <span>Terminet</span></a>
-                </li>
             </ul>
         </div>
     </div>
