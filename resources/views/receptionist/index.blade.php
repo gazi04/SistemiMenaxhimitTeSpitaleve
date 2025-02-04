@@ -55,11 +55,13 @@
                                             </td>
                                             <td>{{ ucfirst($appointment->status) }}</td>
                                             <td>
-                                                <form method="POST" action="{{ route('change-status') }}">
+
+                                                <form method="POST" action="{{ route('confirm-change-status') }}">
                                                     @csrf
                                                     <input type="hidden" name="appointment_id" value="{{ $appointment->id }}" />
                                                     <input type="submit" class="btn btn-primary" value="Pacienti ka ardh" />
                                                 </form>
+
                                                 <br>
                                             </td>
                                         </tr>
