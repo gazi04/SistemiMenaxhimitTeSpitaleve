@@ -8,7 +8,7 @@
             <div class="content">
                 <div class="row">
                     <div class="col-lg-8 offset-lg-2">
-                        <h4 class="page-title">Modifiko te dhenat e Departmentit</h4>
+                        <h4 class="page-title">Krijo një Departament të ri</h4>
                     </div>
                 </div>
                 <div class="row">
@@ -24,9 +24,7 @@
                                 <textarea cols="30" rows="7" class="form-control" id="description" name="description" required></textarea>
                             </div>
                             <div class="m-t-20 text-center">
-                                <button type="submit" class="btn btn-primary submit-btn">
-                                    Ruaj të dhënat
-                                </button>
+                                <button type="submit" class="btn btn-primary submit-btn">Ruaj të dhënat</button>
                             </div>
                         </form>
                     </div>

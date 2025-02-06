@@ -83,7 +83,7 @@ class PatientController extends Controller
             ->orWhere('last_name', 'LIKE', "%{$query}%")
             ->orWhere('email', 'LIKE', "%{$query}%")
             ->orWhere('phone_number', 'LIKE', "%{$query}%")
-            ->get();
+            ->paginate(10);
 
         if(Auth::guard('admin')->check()) {
             return view('admin.pacienti', ['patients' => $results]);

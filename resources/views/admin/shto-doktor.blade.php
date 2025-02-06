@@ -12,6 +12,11 @@
                     </div>
                 </div>
                 <div class="row">
+                    @if (session('error'))
+                        <div id="notify" class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <div class="col-lg-8 offset-lg-2">
                         <form action="{{ route('create-doctor') }}" method="POST">
                             @csrf
@@ -25,7 +30,7 @@
                                 </div>
                                 <div class="col-sm-6 mt-4">
                                     <div class="form-group">
-                                        <label>Emri <span class="text-danger">*</span></label>
+                                        <label>Emri</label>
                                         <input class="form-control" type="text" name="emri" placeholder="Shkruani emrin" />
                                         @error('emri') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>
@@ -40,7 +45,7 @@
 
                                 <div class="col-sm-12">
                                     <div class="from-group">
-                                        <label>Email <span class="text-danger">*</span></label>
+                                        <label>Email</label>
                                         <input class="form-control" type="email" name="email" placeholder="Shkruani email-in" />
                                         @error('email') <span class="text-danger">{{ $message }}</span> @enderror
                                     </div>

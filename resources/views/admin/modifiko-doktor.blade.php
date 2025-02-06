@@ -13,7 +13,7 @@
             @endif
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
-                    <h4 class="page-title">Modifiko Doktor/esh</h4>
+                    <h4 class="page-title">Modifiko Doktorin/esh</h4>
                 </div>
             </div>
             <div class="row">
@@ -23,8 +23,9 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>ID e Doktorit <span class="text-danger">*</span></label>
-                                    <input class="form-control" name="id" type="text" value="{{ $id }}" readonly="" />
+                                    <label>ID e Doktorit</label>
+                                    <input class="form-control" name="id" type="hidden" value="{{ $id }}" readonly="" />
+                                    <input class="form-control" type="text" value="{{ $id_number }}" readonly="" />
                                 </div>
                             </div>
                             <div class="col-sm-6">

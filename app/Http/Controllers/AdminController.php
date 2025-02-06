@@ -193,7 +193,7 @@ class AdminController extends Controller
     public function createDoctor(Request $request)
     {
         $validated = $request->validate([
-            'numri_personal' => 'required|integer',
+            'numri_personal' => 'required|integer|unique:doctors,personal_id',
             'departamenti' => 'required|integer|exists:departaments,id',
             'emri' => 'required|string',
             'mbiemri' => 'required|string',
@@ -303,7 +303,7 @@ class AdminController extends Controller
     public function createNurse(Request $request)
     {
         $validated = $request->validate([
-            'numri_personal' => 'required|integer',
+            'numri_personal' => 'required|integer|unique:nurses,personal_id',
             'emri' => 'required|string',
             'mbiemri' => 'required|string',
             'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
@@ -412,7 +412,7 @@ class AdminController extends Controller
     public function createReceptionist(Request $request)
     {
         $validated = $request->validate([
-            'numri_personal' => 'required|integer',
+            'numri_personal' => 'required|integer|unique:receptionists,personal_id',
             'emri' => 'required|string',
             'mbiemri' => 'required|string',
             'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',
@@ -518,7 +518,7 @@ class AdminController extends Controller
     public function createTechnologist(Request $request)
     {
         $validated = $request->validate([
-            'numri_personal' => 'required|integer',
+            'numri_personal' => 'required|integer|unique:technologists,personal_id',
             'emri' => 'required|string',
             'mbiemri' => 'required|string',
             'numri_kontaktues' => 'required|numeric|max_digits:15|min_digits:7',

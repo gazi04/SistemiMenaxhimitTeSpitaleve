@@ -19,7 +19,7 @@
             <form method="POST" action="{{ route('search-patients') }}" class="mb-4">
                 @csrf
                 <div class="input-group">
-                    <input type="text" id="search-input" name="searchingTerm" class="form-control" placeholder="Kerko sipas emrit ose email-it" autocomplete="off">
+                    <input type="text" id="search-input" name="searchingTerm" class="form-control" placeholder="Kerko sipas emrit, email-it, numrit personal dhe numrit të telefonit " autocomplete="off">
                     &nbsp;&nbsp;
                     <input class="btn btn-primary" type="submit" value="Kërko" />
                 </div>

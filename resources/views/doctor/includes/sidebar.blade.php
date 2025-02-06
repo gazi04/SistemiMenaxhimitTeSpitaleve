@@ -4,10 +4,6 @@
             <ul>
                 <li class="menu-title">Menyja Kryesore</li>
                 <li>
-                    <a href="{{ route('doctor-dashboard') }}"><i class="fa fa-dashboard"></i><span>Paneli i
-                            Doktorit</span></a>
-                </li>
-                <li>
                     <a href="{{ route('manage-patients') }}"><i class="fa fa-wheelchair"></i><span>Menaxho Pacientet</span></a>
                 </li>
                 <li>
