@@ -6,6 +6,15 @@
     @include('technologist.includes.sidebar')
     <div class="page-wrapper">
         <div class="content">
+            @if (session('message'))
+                <div id="notify" class="alert alert-success">
+                    {{ session('message') }}
+                </div>
+            @elseif (session('error'))
+                <div id="notify" class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             <div class="row">
                 <div class="col-sm-4 col-3">
                     <h4 class="page-title">Analizat</h4>

@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>ID e Admin <span class="text-danger">*</span></label>
+                                    <label>ID e Admin </label>
                                     <input class="form-control" type="text" value="{{ $id_number }}" readonly="" />
                                 </div>
                             </div>
@@ -37,14 +37,14 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label>Emri <span class="text-danger">*</span></label>
+                                    <label>Emri</label>
                                     <input name="emri" class="form-control" type="text" placeholder="Shkruani emrin" value="{{ $adminName }}" />
                                     @error('emri') <div class="alert alert-danger"> {{ $message }} </div> @enderror
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="from-group">
-                                    <label>Email <span class="text-danger">*</span></label>
+                                    <label>Email</label>
                                     <input name="email" class="form-control" type="email" placeholder="Shkruani email-in" value="{{ $adminEmail }}" />
                                     @error('email')
                                     <div class="text-danger">{{ $message }}</div>

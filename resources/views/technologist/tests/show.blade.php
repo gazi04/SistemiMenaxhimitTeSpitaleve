@@ -33,7 +33,7 @@
                             <p><strong>Emri i Pacientit:</strong> {{ $test->patient->first_name }}
                                 {{ $test->patient->last_name }}
                             </p>
-                            <p><strong>Data:</strong> {{ $test->created_at->format('d F Y') }}</p>
+                            <p><strong>Data:</strong> {{ $test->created_at->format('d-m-Y') }}</p>
                             <p><strong>Tipi i Analizës:</strong> {{ $test->test_type }}</p>
                             <p><strong>Rezultatet:</strong><br> {!! nl2br(e($test->results)) !!}</p>
                             <hr />
@@ -82,7 +82,7 @@
                                         </h6>
                                         <p>
                                             <i aria-hidden="true" class="fa fa-calendar"></i>
-                                            {{ $test->created_at->format('d F Y') }}
+                                            {{ $test->created_at->format('d-m-Y') }}
                                         </p>
                                     </div>
                                 </li>

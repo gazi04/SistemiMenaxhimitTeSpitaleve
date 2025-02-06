@@ -65,12 +65,12 @@ class TechnologistController extends Controller
     {
         try { $request->validate(['test_id' => 'required|integer|exists:tests,id']); }
         catch (ValidationException $ex) {
-            return back()->with('error', "Mesazhi i emailit nuk mund t'i dërgohet pacientit, sepse informacioni i nevojshëm për testin ishte i pavlefshëm.");
+            return redirect()->route('technologist-dashboard')->with('error', "Mesazhi i emailit nuk mund t'i dërgohet pacientit, sepse informacioni i nevojshëm për testin ishte i pavlefshëm.");
         }
 
         try { $test = Test::findOrFail($request->test_id); }
         catch (\Throwable $th) {
-            return back()->with('error', "Email mesazhi nuk mund t'i dërgohet pacientit, sepse testi nuk u gjet në bazën e të dhënave, provoni më vonë.");
+            return redirect()->route('technologist-dashboard')->with('error', "Email mesazhi nuk mund t'i dërgohet pacientit, sepse testi nuk u gjet në bazën e të dhënave, provoni më vonë.");
         }
 
         $techno = Auth::guard('technologist')->user();
@@ -84,8 +84,8 @@ class TechnologistController extends Controller
                 $test->results
             ));
         } catch (\Exception $ex) {
-            return back()->with('error', "Mesazhi i emailit nuk mund të dërgohet, ka një problem me sistemin, provoni më vonë ose dërgoni emailin në formë manuale.");
+            return redirect()->route('technologist-dashboard')->with('error', "Mesazhi i emailit nuk mund të dërgohet, ka një problem me sistemin, provoni më vonë ose dërgoni emailin në formë manuale.");
         }
-        return back()->with('message', 'Email-i iu dërgua pacientit me sukses.');
+        return redirect()->route('technologist-dashboard')->with('message', 'Email-i iu dërgua pacientit me sukses.');
     }
 }

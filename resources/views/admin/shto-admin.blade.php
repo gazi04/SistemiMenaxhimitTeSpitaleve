@@ -23,16 +23,16 @@
                                         @error('numri_personal')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
-                                <div class="col-sm-6 mt-4">
+                                <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label>Emri <span class="text-danger">*</span></label>
+                                        <label>Emri</label>
                                         <input class="form-control" type="text" name="emri" value="{{ old('emri') }}" placeholder="Shkruani emrin" required><br>
                                         @error('emri')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="from-group">
-                                        <label>Email <span class="text-danger">*</span></label>
+                                        <label>Email</label>
                                         <input class="form-control" type="text" name="email" value="{{ old('email') }}" placeholder="Shkruani email-in" required><br>
                                         @error('email')<span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
