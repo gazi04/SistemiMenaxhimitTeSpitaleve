@@ -21,7 +21,7 @@
                 <div class="form-group">
                     <label for="type">Lloji</label>
                     <select class="form-control" id="type" name="type" required>
-                        <option value="Injeksion">Injeksio</option>
+                        <option value="Injeksion">Injeksion</option>
                         <option value="Infuzion">Infuzion</option>
                     </select>
                 </div>

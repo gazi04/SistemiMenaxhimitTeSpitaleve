@@ -54,7 +54,7 @@
                                                     data-target="#orderModal{{ $medication->id }}"
                                                     onclick="setMedName('{{ $medication->name }}', '{{ $medication->id }}')">Porosit</button>
                                             @else
-                                                <button class="btn btn-primary">Shiko</button>
+                                                <button class="btn btn-primary">Sasia e mjaftueshme</button>
                                             @endif
                                         </td>
                                     </tr>

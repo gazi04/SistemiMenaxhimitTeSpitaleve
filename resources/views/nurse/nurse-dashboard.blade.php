@@ -75,7 +75,7 @@
                                         <td>{{ $medication->stock }}</td>
                                         <td class="text-right">
                                             <form action="{{ route('medications.use') }}" method="POST"
-                                                class="d-flex align-items-center">
+                                                class="d-flex align-items-center justify content end">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{ $medication->id }}">
                                                 <input type="number" name="stock" class="form-control form-control-sm mr-2"

@@ -10,7 +10,7 @@
     <ul class="nav user-menu float-right">
         <li class="nav-item dropdown has-arrow">
             <a href="#" class="dropdown-toggle nav-link user-link" data-toggle="dropdown">
-                <span class="user-img"><img class="rounded-circle" src="{{ asset('assets/img/user.jpg') }}" width="40"
+                <span class="user-img"><img class="rounded-circle" src="{{ asset('assets/img/doctor-thumb-03.jpg') }}"
                         alt="Admin" />
                     <span class="status online"></span></span>
                 <span>Teknologu</span>
