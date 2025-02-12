@@ -21,8 +21,13 @@ return new class extends Migration
             $table->string('phone_number', 15)->unique();
             $table->string('email', 50)->unique();
             $table->timestamps();
+        });
 
-            $table->foreign('departament_id')->references('id')->on('departaments');
+        Schema::table('doctors', function (Blueprint $table) {
+            $table->foreign('departament_id')
+                ->references('id')
+                ->on('departaments')
+                ->onDelete('cascade');
         });
     }
 
