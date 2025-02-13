@@ -152,6 +152,7 @@ class AppointmentController extends Controller
 
         $upcomingAppointments = Appointment::where('doctor_id', $doctorId)
             ->where('start_time', '>', now())
+            ->where('status', '=', 'Në pritje')
             ->join('patients', 'appointments.patient_id', '=', 'patients.id')
             ->select('appointments.*', 'patients.first_name', 'patients.last_name')
             ->orderBy('start_time', 'desc')
