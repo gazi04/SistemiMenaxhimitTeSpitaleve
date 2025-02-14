@@ -22,7 +22,7 @@ class NurseController extends Controller
     public function orderMedication(Request $request)
     {
         $medication = Medication::find($request->medication_id);
-        $medication->stock += $request->quantity; // Increase stock by the quantity ordered
+        $medication->stock += $request->quantity;
         $medication->save();
 
         return redirect()->route('stoku')->with('message', 'Porosia është vendosur me sukses!');
@@ -68,7 +68,7 @@ class NurseController extends Controller
             $query->where('type', $medicationType);
         }
 
-        $medications = $query->get();
+        $medications = $query->paginate(10);
 
         return view('nurse.nurse-dashboard', compact('medications'));
     }
