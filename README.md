@@ -1,8 +1,8 @@
-# Hospital Management System 🏥
+# 🏥 Hospital Management System 
 
 This project is a web-based Hospital Management System (SMS) designed to optimize and automate administrative and clinical processes within a hospital environment. Developed as a technical report for the subject "SEW" (Software Engineering and Web Design) at the "Kadri Zeka" Public University in Gjilan, the system aims to improve efficiency, security, and data management for all stakeholders.
 
-## Core Features 💫
+## 💫 Core Features 
 
 The system is built around a role-based structure, providing personalized access and functionality for different users. Key features include:
 
@@ -17,7 +17,7 @@ The system is built around a role-based structure, providing personalized access
 - **Reporting and Analysis:** The system generates reports and analyses to assist the administration and other staff in making informed decisions.
     
 
-## Technology Stack 💻
+## 💻 Technology Stack 
 
 The technical report details the use of various technologies to build this robust system, including:
 
@@ -28,7 +28,7 @@ The technical report details the use of various technologies to build this robus
 - **Database:** A secure and efficient database system is used to store all patient information, medical records, and other critical data.
     
 
-## Benefits 🚀
+## 🚀 Benefits 
 
 - **Efficiency:** The system streamlines administrative tasks, reduces manual workload, and speeds up access to critical information.
     
